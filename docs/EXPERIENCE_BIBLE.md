@@ -347,11 +347,12 @@ abonelik veya editoryal bakım yoktur.
 - İki dil aynı anda yan yana basılmaz. Tek aktif açıklama dili vardır; terminal kimliği
   İngilizce kalırken açıklama aynı alanda yer değiştirir. Böylece görsel ve dilsel kakafoni
   oluşmaz.
-- İngilizce `/` aynı zamanda `x-default`; Türkçe `/tr`, İspanyolca `/es` ve Fransızca `/fr` ayrı,
+- İngilizce `/` aynı zamanda `x-default`; Türkçe `/tr`, İspanyolca `/es`, Fransızca `/fr`
+  ve Japonca `/ja` ayrı,
   self-canonical sayfalardır. Karşılıklı `hreflang`, sitemap ve görünür gerçek bağlantılar
   kullanılır; IP, cookie, `Accept-Language` veya yalnız `localStorage` ile otomatik
   yönlendirme yapılmaz.
-- `lang en|tr|es|fr` ile görünür `LANG EN/TR/ES/FR` bağlantıları aynı canonical rotalara gider. `home`,
+- `lang en|tr|es|fr|ja` ile görünür `LANG EN/TR/ES/FR/JA` bağlantıları aynı canonical rotalara gider. `home`,
   aktif dil kökünü korur. Yeni diller aynı merkezi açıklama kataloğu ve bu sınır üzerinden
   eklenir; çekirdek terminal metinleri kopyalanmaz.
 

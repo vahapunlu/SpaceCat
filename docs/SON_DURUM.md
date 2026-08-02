@@ -1000,3 +1000,28 @@ doğrulandı. `/fr/`, `/fr`ye `301` yönlenir.
 
 **GitHub:** `https://github.com/vahapunlu/SpaceCat` · `main` · başlangıç commit'i
 `9b3e9bd` · secret/build kapısı temiz · çalışma ağacı senkron.
+
+## 52. DÖRDÜNCÜ YEREL DİL: KONTROLLÜ JAPONCA — 2 AĞUSTOS 2026 — CODEX
+
+- `/ja`, Japonca açıklama ve arama katmanı olarak ayrı canonical rotada hazırlandı.
+  İngilizce `/`, Türkçe `/tr`, İspanyolca `/es`, Fransızca `/fr`, Japonca `/ja` ve
+  `x-default` karşılıklı `hreflang` ile sitemap kayıtlarını taşır.
+- Terminalin ana dili değişmez: komutlar, prompt, dosya sistemi, görev kontrolü başlıkları,
+  görev/ajans adları, ASCII sahneler ve `SOURCE / PLANNED / MODEL / SIMULATED / GO / HOLD /
+  T-0` sözlüğü İngilizcedir. Japonca yalnız anlam, yönlendirme, ürün, güven ve
+  erişilebilirlik katmanında görünür.
+- `lang en|tr|es|fr|ja` ve görünür `LANG` bağlantıları beş canonical rota arasında geçer.
+  Aktif dil tekrarlanmaz, `home` Japonca kökü korur ve aynı anda tek açıklama dili görünür.
+- Japonca CJK satır yapısı, sabit Command Deck ve mobil yardım düzeni özel responsive
+  doğrulama kapısından geçmeden production'a alınmaz.
+- Yeni API, backend, abonelik, harici font, çalışma zamanı çeviri servisi veya editoryal
+  bakım zorunluluğu eklenmedi.
+
+**Doğrulama:** Japonca ana ekran/`help` 390×844, `help` 320×700 ve ana ekran 1280×800
+gerçek tarayıcı QA'sında taşmasızdır. CJK karakterleri okunur, Command Deck görünür,
+`[EN] [TR] [ES] [FR]` bağlantıları doğru ve `lang ja` → `lang en` → `lang ja` geçişi
+çalışır. 26 paket toplam **1117 kontrol** ile başarılıdır.
+
+**Production:** `a0ac0d8d` · `https://spacecat.watch/ja` `HTTP 200`; Japonca canonical,
+`ja_JP`, JSON-LD, sitemap, beşli `hreflang` ve açıklama kataloğu canlı kaynakta
+doğrulandı. `/ja/`, `/ja`ya `301` yönlenir.

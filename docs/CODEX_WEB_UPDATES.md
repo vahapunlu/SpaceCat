@@ -1561,3 +1561,31 @@ gerçek tarayıcı boyutlarında yatay taşmasızdır. Command Deck alt kenarda 
 Fransızca `html lang`, self-canonical, `fr_FR`, JSON-LD, görünür ürün metni, `FR_HELP`,
 dörtlü `hreflang` ve `lang fr` sözleşmesi doğrulandı. `/fr/` kalıcı olarak `/fr`ye 301
 yönlenir; canlı sitemap Fransızca canonical URL'yi taşır.
+
+## Faz 21.11 · Dördüncü Yerel Dil: Kontrollü Japonca — CODEX — 2 Ağustos 2026
+
+- Japonca `/ja`, mevcut dar yerelleştirme anayasasının dördüncü yerel dili olarak ayrı,
+  crawlable ve self-canonical rotada kuruldu. `/`, `/tr`, `/es`, `/fr`, `/ja` ve
+  `x-default` karşılıklı `hreflang` taşır; Japonca canonical sitemap'e eklendi.
+- Prompt, komutlar/argümanlar, dosya yolları, görev kontrolü başlıkları, görev/ajans adları,
+  ASCII sahneler ve doğruluk sözlüğü İngilizce kaldı. Japonca; SEO ve JavaScript öncesi
+  içerik, `help` açıklamaları, operatör rehberi, canlı görev ipuçları, ürün/güven metinleri
+  ve erişilebilirlik etiketinde kullanılır.
+- Merkezi `JA_HELP`, diğer açıklama kataloglarıyla aynı seçim sınırına bağlandı.
+  `lang en|tr|es|fr|ja` canonical rotalar arasında geçer; aktif dil tekrarlanmaz, `home`
+  Japonca kökü korur ve otomatik IP/tarayıcı yönlendirmesi yapılmaz.
+- Worker `/ja` için `<html lang="ja">`, `og:locale=ja_JP`, Japonca WebPage/App JSON-LD,
+  arama metni ve görünür statik içerik üretir. CJK satır kırılımı ayrı mobil gerçek tarayıcı
+  kapısından geçirilir; harici font, çeviri servisi, yeni API veya backend eklenmez.
+
+**Doğrulama:** Japonca ana ekran ve `help` 390×844, `help` 320×700, ana ekran 1280×800
+gerçek tarayıcı boyutlarında yatay taşmasızdır. CJK metinleri okunur, Command Deck alt
+kenarda görünür, terminal çekirdeği İngilizce kalır ve `lang ja` → `lang en` → `lang ja`
+gidiş dönüşü başarılıdır. 26 web/güvenlik test paketi toplam **1117 kontrol** ile geçmiştir.
+
+**Maliyet:** Sıfır; mevcut Worker ve statik açıklama katalogları paylaşılır.
+
+**Production:** `a0ac0d8d` · `https://spacecat.watch/ja` `HTTP 200`; canlı kaynakta
+Japonca `html lang`, self-canonical, `ja_JP`, JSON-LD, görünür ürün metni, `JA_HELP`,
+beşli `hreflang` ve `lang ja` sözleşmesi doğrulandı. `/ja/` kalıcı olarak `/ja`ya 301
+yönlenir; canlı sitemap Japonca canonical URL'yi taşır.

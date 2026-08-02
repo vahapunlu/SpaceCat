@@ -21,6 +21,7 @@ const entries = [
   { path: '/tr', date: terminalDate },
   { path: '/es', date: terminalDate },
   { path: '/fr', date: terminalDate },
+  { path: '/ja', date: terminalDate },
   { path: '/live', date: terminalDate },
   { path: '/launch', date: terminalDate },
   { path: '/iss', date: terminalDate },

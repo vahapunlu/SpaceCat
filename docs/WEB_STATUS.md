@@ -38,9 +38,10 @@
 - **Command Deck:** Gerçek prompt normal terminalde viewport altına sabittir. Dominant
   animasyonlarda aynı alan çalışan kanalın durumunu ve `ESC / EXIT` çıkışını gösterir;
   320/390 px telefon ve 1280 px masaüstü QA'sı taşmasızdır.
-- **Diller:** İngilizce `/` + `x-default`; Türkçe `/tr`; İspanyolca `/es`; Fransızca `/fr`.
+- **Diller:** İngilizce `/` + `x-default`; Türkçe `/tr`; İspanyolca `/es`; Fransızca `/fr`;
+  Japonca `/ja`.
   Terminal çekirdeği İngilizce, kullanıcı açıklamaları tek aktif dilde görünür.
-  `lang en|tr|es|fr`, karşılıklı
+  `lang en|tr|es|fr|ja`, karşılıklı
   `hreflang`, self-canonical ve sitemap kayıtları hazırdır.
 
 ## 📁 Dosyalar (`web/`)
