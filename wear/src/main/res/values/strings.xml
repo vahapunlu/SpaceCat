@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Space Cat</string>
+    <string name="tile_label">Next Launch</string>
+    <string name="complication_label">Launch Countdown</string>
+    <string name="complication_go_label">Launch GO Odds</string>
+</resources>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPACE CAT Docking Reel Frame</title>
+<style>
+  :root{--green:#00e68a;--amber:#ffb86c;--red:#ff5c57;--grey:#8f9ba7;--bg:#020407}
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+  html.capture body{width:648px;height:1152px}
+  html.capture .reel{transform:scale(.6);transform-origin:0 0}
+  body{font-family:"SF Mono","JetBrains Mono","Fira Code",Menlo,Consolas,monospace;color:var(--green)}
+  .reel{position:relative;width:1080px;height:1920px;overflow:hidden;background:
+    radial-gradient(1100px 1200px at 50% 35%,#0b1820 0%,#04080d 48%,#000 100%)}
+  .reel::before{content:"";position:absolute;inset:0;z-index:10;pointer-events:none;opacity:.34;
+    background:repeating-linear-gradient(to bottom,transparent 0 5px,rgba(0,0,0,.36) 5px 7px)}
+  .reel::after{content:"";position:absolute;inset:0;z-index:11;pointer-events:none;
+    box-shadow:inset 0 0 150px rgba(0,0,0,.9),inset 0 0 24px rgba(0,230,138,.12)}
+  .top{position:absolute;top:132px;left:75px;right:75px;display:flex;justify-content:space-between;
+    color:var(--grey);font-size:25px;letter-spacing:.12em;text-shadow:none}
+  .live{color:var(--green)}
+  .hero{position:absolute;top:225px;left:70px;right:70px;text-align:center}
+  .kicker{font-size:25px;letter-spacing:.18em;color:var(--amber);text-shadow:0 0 12px rgba(255,184,108,.48)}
+  h1{margin:24px auto 12px;font-size:68px;line-height:1.04;letter-spacing:.035em;font-weight:700;
+    color:var(--green);text-shadow:0 0 17px rgba(0,230,138,.55)}
+  .sub{font-size:28px;color:var(--grey);letter-spacing:.035em;text-shadow:none}
+  .shell{position:absolute;top:500px;left:65px;width:950px;height:980px;padding:27px 29px;
+    border:2px solid rgba(0,230,138,.42);background:rgba(1,5,8,.92);box-shadow:
+    0 0 55px rgba(0,230,138,.12) inset,0 0 36px rgba(0,230,138,.09)}
+  .shell.amber{border-color:rgba(255,184,108,.6);box-shadow:0 0 60px rgba(255,184,108,.12) inset}
+  .shell.red{border-color:rgba(255,92,87,.65);box-shadow:0 0 60px rgba(255,92,87,.12) inset}
+  .screen{margin:0;white-space:pre;color:var(--green);font-size:19px;line-height:1.19;letter-spacing:0;
+    text-shadow:0 0 9px rgba(0,230,138,.55)}
+  .flightdeck{position:absolute;left:29px;right:29px;bottom:28px;height:252px;padding:22px 24px;
+    border-top:1px solid rgba(0,230,138,.46);background:linear-gradient(180deg,rgba(0,230,138,.025),rgba(0,230,138,.075));
+    color:var(--green);text-shadow:0 0 8px rgba(0,230,138,.38)}
+  .deck-title{display:flex;justify-content:space-between;margin-bottom:19px;color:var(--grey);font-size:17px;letter-spacing:.14em}
+  .deck-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-bottom:22px}
+  .deck-cell{padding-right:14px;border-right:1px solid rgba(0,230,138,.19)}
+  .deck-cell:last-child{border-right:0}.deck-label{font-size:14px;color:var(--grey);letter-spacing:.14em}
+  .deck-value{margin-top:8px;font-size:25px;letter-spacing:.035em}
+  .phase-line{display:flex;align-items:center;gap:13px;font-size:15px;color:var(--grey);letter-spacing:.08em}
+  .phase-line span{color:rgba(143,155,167,.55)}.phase-line .done{color:var(--green)}.phase-line .active{color:var(--amber)}
+  .pulse{width:9px;height:9px;background:var(--green);box-shadow:0 0 12px rgba(0,230,138,.9)}
+  .amber .flightdeck{border-color:rgba(255,184,108,.5);background:linear-gradient(180deg,rgba(255,184,108,.02),rgba(255,184,108,.08));color:var(--amber)}
+  .amber .screen{color:var(--amber);text-shadow:0 0 10px rgba(255,184,108,.48)}
+  .red .screen{color:var(--red);text-shadow:0 0 10px rgba(255,92,87,.48)}
+  .telemetry{position:absolute;left:65px;right:65px;top:1515px;padding:18px 22px;border-left:4px solid var(--amber);
+    background:rgba(255,184,108,.05);font-size:23px;line-height:1.45;color:var(--amber);text-shadow:none}
+  .telemetry b{color:var(--grey);font-weight:400}
+  .footer{position:absolute;left:75px;right:75px;bottom:158px;text-align:center}
+  .cta{font-size:31px;letter-spacing:.1em;color:var(--green);text-shadow:0 0 11px rgba(0,230,138,.5)}
+  .url{margin-top:18px;font-size:39px;color:var(--amber);letter-spacing:.035em;text-shadow:0 0 12px rgba(255,184,108,.45)}
+  .cursor{display:inline-block;width:18px;height:34px;margin-left:8px;vertical-align:-5px;background:var(--green)}
+  .boot .shell{top:500px;height:985px}
+  .boot .screen{font-size:21px;line-height:1.2}
+  .boot .flightdeck{height:205px}
+  .cta-scene .shell{top:430px;height:900px}
+  .cta-scene .telemetry{top:1390px}
+  .cta-scene .footer{bottom:270px}
+  .cta-scene h1{font-size:76px}
+</style>
+</head>
+<body>
+<div class="reel" id="reel">
+  <div class="top"><span>SPACE CAT // SC-FDL/20</span><span class="live">● LOCAL SIM</span></div>
+  <div class="hero"><div class="kicker" id="kicker"></div><h1 id="title"></h1><div class="sub" id="sub"></div></div>
+  <div class="shell" id="shell"><pre class="screen" id="screen"></pre><div class="flightdeck" id="flightdeck"></div></div>
+  <div class="telemetry" id="telemetry"></div>
+  <div class="footer"><div class="cta" id="cta"></div><div class="url" id="url"></div></div>
+</div>
+<script>
+const scenes={
+  boot:{cls:'boot',kicker:'NEW SYSTEM CARTRIDGE DETECTED',title:'A TERMINAL HID TWO GAMES.',sub:'This is cartridge 20.',telemetry:'<b>STATUS</b> READY &nbsp;│&nbsp; <b>VOICE</b> COMMS ON &nbsp;│&nbsp; <b>NETWORK</b> NONE',deck:['FLIGHT PROGRAM','RENDEZVOUS','PORT A','ACQUISITION','LOCAL SIM','ARMED'],phase:0,cta:'PRESS ENTER // BEGIN APPROACH',url:'',screen:String.raw`+--------------------------------------------------------------+
+|              SC GAME SYSTEM // CARTRIDGE 20                |
+|                                                              |
+|                                                              |
+|                         /\_/\                                |
+|                        ( o.o )                               |
+|                         > ^ <                                |
+|                                                              |
+|                                                              |
+|          O R B I T A L   R E N D E Z V O U S               |
+|                                                              |
+|              MATCH MOMENTUM. EARN CAPTURE.                  |
+|                                                              |
+|                                                              |
+|     OBJECTIVE   SOFT CAPTURE AT STATION PORT A              |
+|                                                              |
+|     PROCEDURE   HOLD 25 · HOLD 12 · FINE RCS FINAL          |
+|                                                              |
+|     RECORD      DEVICE LOCAL · NO GLOBAL SCORE              |
+|                                                              |
+|                                                              |
+|                [ ENTER / BEGIN APPROACH ]                    |
+|                                                              |
+|                                                              |
+|         SC STATION COMMS ARMED · CHANNEL READY              |
+|                                                              |
+|             TRAINING MODEL · NOT FLIGHT SOFTWARE            |
++--------------------------------------------------------------+`},
+  wide:{kicker:'SC STATION CONTROL // ONLINE',title:'BEGIN APPROACH',sub:'Camera 01 · Wide acquisition',telemetry:'<b>RANGE</b> 40.6 &nbsp;│&nbsp; <b>CLOSE</b> +0.160 &nbsp;│&nbsp; <b>DRIFT</b> -0.015 &nbsp;│&nbsp; <b>RCS</b> COARSE',deck:['RELATIVE RANGE','40.6 M','CLOSING RATE','+0.160 M/S','LATERAL DRIFT','-0.015 M/S'],phase:1,cta:'MATCH POSITION. MATCH VELOCITY.',url:'',screen:String.raw`SC-FDL/20  ORBITAL RENDEZVOUS  ·  CAM 01 WIDE
+PROFILE NOMINAL  ·  TRANSFER  ·  RCS COARSE
+
+   .                  .                 .              +---+
+                                                        |SC |
+        .                      .                        +---+
+
+                                      APPROACH CORRIDOR
+                                     .................
+                                                       [   |
+             [C>                                      > A |
+                                     .................[   |
+
+                                                         |
+                    .                .                    |
+
+       .                       .                          |
+
+                                                .        |
+
+                                                         |
+                           .                             STATION
+
+R 40.6  VX +0.160  VY -0.015  ALIGN 0.0`},
+  hold25:{kicker:'FLIGHT RULE // CLEARANCE GATE',title:'HOLD POINT 25',sub:'Null closing. Null drift. Maintain.',telemetry:'<b>RANGE</b> 24.9 &nbsp;│&nbsp; <b>CLOSE</b> +0.082 &nbsp;│&nbsp; <b>DRIFT</b> +0.018 &nbsp;│&nbsp; <b>HOLD</b> 2.1 SEC',deck:['RELATIVE RANGE','24.9 M','HOLD TIMER','02.1 SEC','ALIGN ERROR','0.2 DEG'],phase:2,cta:'STABILIZE // WAIT FOR CLEARANCE',url:'',screen:String.raw`SC-FDL/20  ORBITAL RENDEZVOUS  ·  CAM 01 WIDE
+PROFILE NOMINAL  ·  HOLD 25  ·  RCS COARSE
+
+  HOLD 25  STABILIZE  [########..]
+  NULL CLOSING / DRIFT · MAINTAIN 2.5 SEC
+
+                                      APPROACH CORRIDOR
+                                     .................
+                                                       [   |
+                              [C>                     > A |
+                                     .................[   |
+
+                                                         |
+              .                              .           |
+
+     .                                                   |
+
+                                                         |
+                        .                       .         |
+
+                                                        STATION
+
+R 24.9  VX +0.082  VY +0.018  ALIGN 0.2`},
+  hold12:{kicker:'SC STATION CONTROL // RANGE 12',title:'FINE RCS SELECTED',sub:'Precision translation mode',telemetry:'<b>RANGE</b> 11.8 &nbsp;│&nbsp; <b>CLOSE</b> +0.061 &nbsp;│&nbsp; <b>DRIFT</b> -0.009 &nbsp;│&nbsp; <b>RCS</b> FINE',deck:['RELATIVE RANGE','11.8 M','CLOSING RATE','+0.061 M/S','ATTITUDE ERROR','0.1 DEG'],phase:3,cta:'HOLD 12 // FINAL CLEARANCE PENDING',url:'',screen:String.raw`SC-FDL/20  ORBITAL RENDEZVOUS  ·  CAM 02 CORRIDOR
+PROFILE NOMINAL  ·  HOLD 12  ·  RCS FINE
+
+  HOLD 12  STABILIZE  [######....]
+  NULL CLOSING / DRIFT · MAINTAIN 2.5 SEC
+
+                                                   +======+
+                                                   |  SC  |
+                                                   +======+
+                  ..................................[    ||
+                                      [C>        ==\  ||
+                                                PORT>A||
+                  ................................==/  ||
+                                                   [    ||
+
+                                                          ||
+         .                     .                          ||
+
+                                                          ||
+
+R 11.8  VX +0.061  VY -0.009  ALIGN 0.1`},
+  final:{kicker:'CLEAR FINAL APPROACH',title:'PORT A // CAPTURE GO',sub:'Camera 03 · Closing inside envelope',telemetry:'<b>RANGE</b> 2.7 &nbsp;│&nbsp; <b>CLOSE</b> +0.093 &nbsp;│&nbsp; <b>DRIFT</b> +0.004 &nbsp;│&nbsp; <b>FUEL</b> 71%',deck:['CAPTURE RANGE','2.7 M','CLOSING RATE','+0.093 M/S','PORT ALIGNMENT','99.9%'],phase:4,cta:'SOFT CAPTURE IS A CONVERSATION WITH MOMENTUM.',url:'',screen:String.raw`SC-FDL/20  ORBITAL RENDEZVOUS  ·  CAM 03 PORT
+PROFILE NOMINAL  ·  FINAL  ·  RCS FINE
+
+                                                         |||||||
+                                                  +------||||
+                                                /        ||||
+                                              /    [PORT A]
+              ................................<===========
+                                      [C>     <  CAPTURE  >
+              ................................<===========
+                                              \    [PORT A]
+                                                \        ||||
+                                                  +------||||
+                                                         |||||||
+
+               .                         .              |||||||
+
+                                                         |||||||
+
+R 2.7  VX +0.093  VY +0.004  ALIGN 0.1`},
+  complete:{cls:'amber',kicker:'SC STATION CONTROL // CAPTURE',title:'MISSION COMPLETE',sub:'Soft capture confirmed',telemetry:'<b>GRADE</b> A &nbsp;│&nbsp; <b>SCORE</b> 1684 &nbsp;│&nbsp; <b>FUEL</b> 69% &nbsp;│&nbsp; <b>HOLD POINTS</b> 2/2',deck:['CAPTURE LATCHES','4 / 4','RELATIVE MOTION','0.000 M/S','FLIGHT STATUS','SECURED'],phase:5,cta:'THE VOID PURRS BACK.',url:'',screen:String.raw`+--------------------------------------------------------------+
+|              SC GAME SYSTEM // CAPTURE COMPLETE             |
+|                                                              |
+|                         /\_/\                                |
+|                        ( ^.^ )                               |
+|                         > ^ <                                |
+|                                                              |
+|          M I S S I O N   C O M P L E T E                   |
+|                                                              |
+|                    SOFT CAPTURE CONFIRMED                    |
+|                                                              |
+|              GRADE A · SCORE 1684 · BEST 1684               |
+|                                                              |
+|        RANGE 0.0 · VX +0.093 · VY +0.004 · FUEL 69%         |
+|                                                              |
+|               SOFT CAPTURE. THE VOID PURRS BACK.            |
+|                                                              |
+|                [ ENTER / RETRY APPROACH ]                    |
+|                                                              |
+|                   POST-FLIGHT DEBRIEF BELOW                  |
++--------------------------------------------------------------+`},
+  cta:{cls:'cta-scene',kicker:'SPACE CAT // LAUNCH TERMINAL',title:'FIND THE CARTRIDGE.',sub:'The terminal is deeper than it looks.',telemetry:'<b>HINT</b> NOT EVERY EXECUTABLE IS INDEXED. START WITH: TREE /',deck:['SYSTEM','SPACE CAT','CARTRIDGE','20','ACCESS','OPEN'],phase:6,cta:'NO SIGNUP · NO TUTORIAL · JUST EXPLORE',url:'spacecat.watch<span class="cursor"></span>',screen:String.raw`visitor@spacecat:~$ _
+
+
+                   /\_/\
+                  ( o.o )     CARTRIDGE 20
+                   > ^ <      STATUS: HIDDEN
+
+
+     /usr/games/README.TXT
+     ├── LANDER.COM
+     └── DOCKING.COM
+
+
+     TWO FLIGHT DYNAMICS PROGRAMS.
+     ONE TERMINAL.
+     ZERO INSTRUCTIONS ON THE FRONT DOOR.
+
+
+visitor@spacecat:~$ find / -name "*.COM"`}
+};
+const params=new URLSearchParams(location.search);
+if(params.get('capture')==='1')document.documentElement.classList.add('capture');
+const key=params.get('scene')||'boot';
+const s=scenes[key]||scenes.boot;
+document.getElementById('reel').className='reel '+(s.cls||'');
+document.getElementById('shell').className='shell '+(s.cls==='amber'?'amber':s.cls==='red'?'red':'');
+document.getElementById('kicker').textContent=s.kicker;
+document.getElementById('title').textContent=s.title;
+document.getElementById('sub').textContent=s.sub;
+document.getElementById('screen').textContent=s.screen;
+document.getElementById('telemetry').innerHTML=s.telemetry;
+const phases=['ACQUIRE','HOLD 25','HOLD 12','FINAL','CAPTURE'];
+const deck=s.deck||['SYSTEM','NOMINAL','GUIDANCE','ACTIVE','LINK','LOCKED'];
+document.getElementById('flightdeck').innerHTML=`<div class="deck-title"><span>RELATIVE NAVIGATION SOLUTION</span><span><i class="pulse"></i> TRACKING</span></div><div class="deck-grid">${[0,2,4].map(i=>`<div class="deck-cell"><div class="deck-label">${deck[i]}</div><div class="deck-value">${deck[i+1]}</div></div>`).join('')}</div><div class="phase-line">${phases.map((p,i)=>`<span class="${i<s.phase?'done':i===s.phase?'active':''}">${i<s.phase?'■':i===s.phase?'◆':'□'} ${p}</span>`).join('<span>··</span>')}</div>`;
+document.getElementById('cta').textContent=s.cta;
+document.getElementById('url').innerHTML=s.url;
+</script>
+</body>
+</html>

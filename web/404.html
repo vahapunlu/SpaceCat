@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 — SPACE CAT</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+  :root{--green:#00E68A;--amber:#FFB86C;--red:#FF5C57;--grey:#9AA5B1;--bg:#05070a;
+    --mono:'SF Mono','JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(120% 120% at 50% 0%,#0a0f16 0%,var(--bg) 60%,#000 100%);
+    color:var(--green);font-family:var(--mono);font-size:15px;line-height:1.6;
+    padding:24px;text-shadow:0 0 6px rgba(0,230,138,.4)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.26) 2px 3px)}
+  .dim{color:var(--grey);text-shadow:none}
+  .amber{color:var(--amber)}
+  .red{color:var(--red)}
+  a{color:var(--amber);text-decoration:none;border-bottom:1px dotted rgba(255,184,108,.5)}
+  pre{color:var(--amber);line-height:1.15;text-shadow:0 0 8px rgba(255,184,108,.4);margin:10px 0}
+  h1{font-size:clamp(40px,12vw,90px);margin:0;letter-spacing:.06em;
+    text-shadow:0 0 14px rgba(0,230,138,.55)}
+</style>
+</head>
+<body>
+<div>
+  <div class="dim">visitor@spacecat:~$ cat <span class="red">this-page</span></div>
+  <h1>404</h1>
+  <div><span class="red">cat: this-page: no such file or directory</span></div>
+  <pre>
+   /\_/\
+  ( o.o )   the page drifted out of orbit.
+   &gt; ^ &lt;    even Félicette can't find it.
+  </pre>
+  <div>→ <a href="/">return to the terminal</a> <span class="dim">and try</span> <span class="amber">sudo launch</span> 🚀</div>
+</div>
+</body>
+</html>

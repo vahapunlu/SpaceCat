@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRIVACY.TXT — SPACE CAT</title>
+<meta name="robots" content="index,follow">
+<meta name="description" content="Privacy policy for Space Cat: Launch Terminal on Wear OS, watchOS and spacecat.watch.">
+<link rel="canonical" href="https://spacecat.watch/privacy">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<style>
+  :root{--green:#00E68A;--amber:#FFB86C;--grey:#9AA5B1;--bg:#05070a;
+    --mono:'SF Mono','JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{margin:0;min-height:100dvh;background:radial-gradient(120% 120% at 50% 0%,#0a0f16 0%,var(--bg) 60%,#000 100%);
+    color:var(--green);font-family:var(--mono);font-size:15px;line-height:1.6;
+    padding:
+      calc(clamp(16px,5vw,48px) + env(safe-area-inset-top,0px))
+      calc(clamp(16px,5vw,48px) + env(safe-area-inset-right,0px))
+      calc(clamp(16px,5vw,48px) + env(safe-area-inset-bottom,0px))
+      calc(clamp(16px,5vw,48px) + env(safe-area-inset-left,0px));
+    overflow-wrap:anywhere;text-shadow:0 0 6px rgba(0,230,138,.4)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.26) 2px 3px)}
+  .wrap{max-width:760px;margin:0 auto;position:relative}
+  h1{color:var(--green);font-size:clamp(22px,6vw,34px);letter-spacing:.08em;margin:0 0 4px}
+  .dim{color:var(--grey);text-shadow:none}
+  .amber{color:var(--amber)}
+  h2{color:var(--amber);font-size:16px;letter-spacing:.12em;margin:26px 0 6px}
+  a{color:var(--amber);text-decoration:none;border-bottom:1px dotted rgba(255,184,108,.5)}
+  hr{border:0;border-top:1px dashed rgba(154,165,177,.35);margin:14px 0}
+  .big{color:#e9f1ee;font-size:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="dim">visitor@spacecat:~$ cat PRIVACY.TXT</div>
+  <h1>PRIVACY POLICY</h1>
+  <div class="dim">Space Cat: Launch Terminal — app &amp; website · effective 2026-08-01</div>
+  <hr>
+  <p class="big">Short version: <span class="amber">we collect no personal data.</span> No accounts, no ads, no tracking profiles and no analytics SDKs in the app.</p>
+
+  <h2>THE APP (Wear OS &amp; watchOS)</h2>
+  <p>Space Cat: Launch Terminal runs entirely on your watch. It does not require an account,
+  does not collect, store, sell or share any personal information, and contains no advertising
+  or third-party tracking SDKs. Notification preferences and favorites are stored locally on your device only.</p>
+  <p>To show launch data, the app talks directly from your device to public, keyless APIs:
+  <span class="amber">Launch Library 2</span> (The Space Devs), <span class="amber">Spaceflight News API</span>,
+  <span class="amber">Open-Meteo</span> and <span class="amber">wheretheiss.at</span>.
+  These requests contain no personal data beyond what any internet request technically includes (your IP address,
+  handled per those services' own policies).</p>
+
+  <h2>THIS WEBSITE (spacecat.watch)</h2>
+  <p>No cookies, no login and no forms. Space data is fetched either directly by your browser or through
+  read-only, same-origin adapters that cache public source data. A launch you save via
+  <span class="amber">remind</span> goes straight from your browser to your own calendar.</p>
+  <p>Terminal progress, recent public-data snapshots, training scores and discovery hints may be stored in your
+  browser only. They are not sent back to us. We use Cloudflare Web Analytics — a cookieless service that
+  provides aggregate traffic measurements without creating advertising profiles or storing identifiers on
+  your device.</p>
+
+  <h2>CHANGES &amp; CONTACT</h2>
+  <p>If this policy ever changes, the new text will appear at this address.
+  Questions: <a href="mailto:vahapunlu@gmail.com">vahapunlu@gmail.com</a> (BE Engineering).</p>
+
+  <hr>
+  <div class="dim">EOF — <a href="/">return to terminal</a> 🐈🚀</div>
+</div>
+</body>
+</html>

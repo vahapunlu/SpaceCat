@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Tek renk roket silüeti (bildirim ikonu) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M24,4c6,5.5 8.2,13.7 8.2,20.3l-4.9,4.9h-6.6l-4.9,-4.9c0,-6.6 2.2,-14.8 8.2,-20.3zM24,15.5m-3.4,0a3.4,3.4 0,1 1,6.8 0a3.4,3.4 0,1 1,-6.8 0M20.2,31.5l3.8,11l3.8,-11z" />
+</vector>

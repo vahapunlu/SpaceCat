@@ -1,0 +1,34 @@
+{
+  "tr": {
+    "headlines": [
+      "Fırlatmayı Kaçırma",
+      "Canlı Geri Sayım Bileğinde",
+      "Her Roket. Her Görev.",
+      "Bileğinde Görev Kontrolü",
+      "Tek Fiyat. Abonelik Yok."
+    ],
+    "descriptions": [
+      "Her ajansın fırlatmalarını canlı geri sayım, GO/HOLD ve akıllı uyarılarla izle.",
+      "Görev dosyaları, fırlatma pencereleri ve uzay haberleri artık doğrudan bileğinde.",
+      "T-10, T-1 saat, GO/HOLD ve erteleme uyarılarıyla hiçbir kalkışı kaçırma.",
+      "Telefonsuz çalışan Wear OS terminali. Saat yüzünde gerçek, canlı geri sayım.",
+      "Tek fiyat. Her şey dahil. Abonelik yok. Uzay meraklıları için üretildi."
+    ]
+  },
+  "en": {
+    "headlines": [
+      "Never Miss Liftoff",
+      "Live T-Minus On Your Wrist",
+      "Every Launch. Every Agency.",
+      "Mission Control On Your Wrist",
+      "One Price. No Subscription."
+    ],
+    "descriptions": [
+      "Track every orbital launch with live T-minus, GO/HOLD status, and smart alerts.",
+      "Mission files, launch windows, pad weather, and spaceflight news on your wrist.",
+      "Get T-10, T-1 hour, status-change, and delay alerts without notification spam.",
+      "A standalone Wear OS launch terminal with a real countdown on your watch face.",
+      "One price. Everything included. No subscription. Built for people who watch the sky."
+    ]
+  }
+}

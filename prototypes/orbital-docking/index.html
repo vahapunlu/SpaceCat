@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070a">
+<title>SPACE CAT :: Orbital Rendezvous Lab</title>
+<style>
+  :root{
+    --green:#00E68A;--amber:#FFB86C;--red:#FF5C57;--grey:#9AA5B1;
+    --bg:#05070a;--panel:#080b10;--mono:'SF Mono','JetBrains Mono','Fira Code',ui-monospace,Menlo,Consolas,'DejaVu Sans Mono',monospace;
+    --glow:0 0 6px rgba(0,230,138,.45)
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:#000;color:var(--green)}
+  body{
+    min-height:100vh;min-height:100dvh;font:14px/1.45 var(--mono);letter-spacing:.02em;
+    background:radial-gradient(110% 100% at 50% 0%,#0b1119 0%,var(--bg) 58%,#000 100%);
+    text-shadow:var(--glow);overflow-x:hidden;-webkit-font-smoothing:antialiased
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:5;
+    background:repeating-linear-gradient(to bottom,transparent 0 2px,rgba(0,0,0,.25) 2px 3px)
+  }
+  main{
+    width:min(980px,100%);margin:0 auto;padding:
+      calc(14px + env(safe-area-inset-top,0px))
+      calc(14px + env(safe-area-inset-right,0px))
+      calc(18px + env(safe-area-inset-bottom,0px))
+      calc(14px + env(safe-area-inset-left,0px))
+  }
+  .eyebrow{color:var(--grey);text-shadow:none;letter-spacing:.16em;font-size:11px}
+  h1{font-size:clamp(21px,5vw,38px);line-height:1.05;margin:4px 0;color:var(--green);letter-spacing:.04em}
+  .brief{margin:5px 0 12px;color:var(--grey);text-shadow:none;max-width:78ch}
+  .brief b{color:var(--amber);font-weight:500}
+  .rule{border:0;border-top:1px dashed rgba(154,165,177,.3);margin:12px 0}
+  .screen-shell{position:relative;max-width:100%;background:#020408;border:1px solid rgba(0,230,138,.3);border-radius:5px;padding:9px;box-shadow:0 0 26px rgba(0,230,138,.1) inset}
+  .screen-shell[data-mode="intro"]{animation:gameBoot .55s steps(4,end) both}
+  .screen-shell[data-mode="gameover"]{border-color:rgba(255,92,87,.52);box-shadow:0 0 28px rgba(255,92,87,.12) inset;animation:gameSignalBreak .34s steps(3,end) both}
+  .screen-shell[data-mode="gameover"] #screen{color:var(--red);text-shadow:0 0 7px rgba(255,92,87,.42)}
+  .screen-shell[data-mode="victory"]{border-color:rgba(255,184,108,.52);box-shadow:0 0 28px rgba(255,184,108,.12) inset}
+  .screen-shell[data-mode="victory"] #screen{color:var(--amber);text-shadow:0 0 8px rgba(255,184,108,.42)}
+  @keyframes gameBoot{0%{opacity:.22;filter:brightness(1.8)}55%{opacity:.72}100%{opacity:1;filter:none}}
+  @keyframes gameSignalBreak{0%{opacity:.25;transform:translateX(-1px)}45%{opacity:.9;transform:translateX(1px)}100%{opacity:1;transform:none}}
+  #screen{
+    display:block;margin:0;max-width:100%;overflow:hidden;white-space:pre;
+    color:var(--green);font:clamp(5px,1.72vw,12px)/1.08 var(--mono);letter-spacing:0;
+    text-shadow:0 0 5px rgba(0,230,138,.5);user-select:none;-webkit-user-select:none
+  }
+  .telemetry{display:flex;flex-wrap:wrap;gap:2px 13px;margin:8px 0 3px;color:var(--amber);text-shadow:none;font-size:12px}
+  .telemetry span span{color:var(--grey)}
+  .truth{color:var(--grey);font-size:10.5px;text-shadow:none;letter-spacing:.04em;margin-top:5px}
+  .debrief{margin:8px 0 0;padding:9px;border-left:2px solid var(--amber);color:var(--amber);background:rgba(255,184,108,.04);font:11px/1.35 var(--mono);white-space:pre-wrap;text-shadow:none}
+  .controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0 8px}
+  button{
+    appearance:none;-webkit-appearance:none;min-height:48px;border:1px solid rgba(0,230,138,.48);border-radius:3px;
+    background:#07110d;color:var(--green);font:11px/1.2 var(--mono);letter-spacing:.02em;text-shadow:var(--glow);
+    cursor:pointer;touch-action:none;padding:6px 4px
+  }
+  button:active,button.active{background:var(--green);color:#001;text-shadow:none}
+  button:focus-visible{outline:1px dashed var(--amber);outline-offset:3px}
+  button:disabled{opacity:.45;cursor:default}
+  .actions{display:flex;flex-wrap:wrap;gap:8px}
+  .actions button{min-width:150px;padding-inline:14px;color:var(--amber);border-color:rgba(255,184,108,.52);touch-action:manipulation}
+  #start{color:#001;background:var(--green);border-color:var(--green);font-weight:700}
+  .keys{color:var(--grey);text-shadow:none;font-size:11px;margin:9px 0 0}
+  .keys b{color:var(--amber);font-weight:500}
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+  .result{color:var(--amber)}
+  @media(max-width:600px){
+    main{padding-left:10px;padding-right:10px}
+    .controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    button{font-size:10px}
+    .actions{display:grid;grid-template-columns:1fr 1fr}
+    .actions button{min-width:0}
+    .telemetry{font-size:10.5px;gap:1px 9px}
+  }
+  @media(max-width:340px){.eyebrow{letter-spacing:.1em}}
+  @media(prefers-reduced-motion:reduce){body::before{opacity:.42}.screen-shell[data-mode="intro"],.screen-shell[data-mode="gameover"]{animation:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">SPACE CAT FLIGHT DYNAMICS LAB · SC-FDL/20</div>
+  <h1>ORBITAL RENDEZVOUS</h1>
+  <p class="brief">Approach the station through the docking corridor. Match position and relative velocity before contact. <b>Slow is smooth. Smooth is docked.</b></p>
+  <hr class="rule">
+
+  <section aria-labelledby="sim-title">
+    <h2 id="sim-title" class="sr-only">ASCII orbital docking simulator</h2>
+    <div class="screen-shell">
+      <pre id="screen" role="img" aria-label="ASCII orbital rendezvous training display"></pre>
+    </div>
+    <div class="telemetry" aria-hidden="true">
+      <span><span>RANGE</span> <b id="range">--</b></span>
+      <span><span>CLOSE</span> <b id="closing">--</b></span>
+      <span><span>DRIFT</span> <b id="drift">--</b></span>
+      <span><span>FUEL</span> <b id="fuel">--</b></span>
+      <span><span>MET</span> <b id="met">--</b></span>
+      <span><span>PHASE</span> <b id="phase">--</b></span>
+      <span><span>BEST</span> <b id="best">0</b></span>
+    </div>
+    <div class="truth">TRAINING MODEL · SYMBOLIC RELATIVE MOTION · NOT TELEMETRY · NOT FLIGHT SOFTWARE</div>
+  </section>
+
+  <div class="controls" aria-label="Relative translation controls">
+    <button type="button" data-control="left" aria-label="Fire retrograde thruster">← RETRO<br>[A / ←]</button>
+    <button type="button" data-control="right" aria-label="Fire prograde thruster">PROGRADE →<br>[D / →]</button>
+    <button type="button" data-control="up" aria-label="Translate up">↑ NORMAL<br>[W / ↑]</button>
+    <button type="button" data-control="down" aria-label="Translate down">↓ ANTI-NORMAL<br>[S / ↓]</button>
+  </div>
+
+  <div class="actions">
+    <button id="start" type="button">[BEGIN APPROACH]</button>
+    <button id="pause" type="button" disabled>[PAUSE]</button>
+    <button id="reset" type="button">[RESET]</button>
+    <button id="comms" type="button" aria-pressed="true">[COMMS ON]</button>
+    <button id="rcs" type="button">[RCS COARSE]</button>
+    <button id="profile" type="button">[PROFILE NOMINAL]</button>
+  </div>
+  <div id="channel" class="truth">VOICE CHANNEL · SC STATION CONTROL · ARMED · BEGIN APPROACH TO OPEN</div>
+  <pre id="debrief" class="debrief" hidden></pre>
+  <p class="keys"><b>ENTER</b> begin/retry · <b>P</b> pause · <b>F</b> fine/coarse RCS · obey HOLD 25 and HOLD 12 clearances</p>
+  <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <audio id="radio" preload="none"></audio>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var W=64,H=28,PORT_X=53,HULL_X=59,TARGET_Y=15,STORE_KEY='sc_docking_prototype_v1';
+  var DT=.06,THRUST_COARSE=.18,THRUST_FINE=.055,N=.0042,FUEL_RATE=3.1,LIMIT=180,MOTION_SCALE=2.4;
+  var PROFILE_ORDER=['NOMINAL','CROSS DRIFT','LOW FUEL'];
+  var PROFILES={
+    'NOMINAL':{x:12.35,y:15,vx:.16,vy:-.015,fuel:100},
+    'CROSS DRIFT':{x:12.35,y:11.8,vx:.14,vy:.10,fuel:100},
+    'LOW FUEL':{x:12.35,y:16.5,vx:.18,vy:-.055,fuel:52}
+  };
+
+  function initialState(profileName){
+    var name=PROFILES[profileName]?profileName:'NOMINAL',p=PROFILES[name];
+    return {x:p.x,y:p.y,vx:p.vx,vy:p.vy,fuel:p.fuel,time:0,done:false,paused:true,
+      started:false,thruster:null,thrustFx:0,result:null,score:0,grade:'—',profile:name,
+      rcsMode:'COARSE',phase:'TRANSFER',holdTimer:0,holdPoints:0,clear25:false,clear12:false,
+      procedureEvent:null,procedureAbort:null,pulseCount:0,maxClosing:Math.abs(p.vx),
+      maxDrift:Math.abs(p.vy),maxOffset:Math.abs(p.y-TARGET_Y)};
+  }
+  function applyControls(current,controls,dt){
+    var s=Object.assign({},current);
+    if(s.done||s.paused||s.fuel<=0)return s;
+    var ax=(controls.right?1:0)-(controls.left?1:0);
+    var ay=(controls.down?1:0)-(controls.up?1:0);
+    if(ax||ay){
+      var scale=ax&&ay?Math.SQRT1_2:1,thrust=s.rcsMode==='FINE'?THRUST_FINE:THRUST_COARSE;
+      s.vx+=ax*thrust*scale*dt;
+      s.vy+=ay*thrust*scale*dt;
+      s.fuel=Math.max(0,s.fuel-FUEL_RATE*dt*(s.rcsMode==='FINE'?.42:1)*(ax&&ay?1.35:1));
+      s.thruster=ax<0?'left':ax>0?'right':ay<0?'up':'down';
+      s.thrustFx=.22;
+    }
+    return s;
+  }
+  function controlPulse(current,name){
+    var c={left:false,right:false,up:false,down:false};
+    if(name in c)c[name]=true;
+    var s=Object.assign({},current,{paused:false});
+    s.pulseCount=(s.pulseCount||0)+1;
+    return applyControls(s,c,s.rcsMode==='FINE'?.11:.22);
+  }
+  function procedureStep(current,dt){
+    var s=Object.assign({},current),range=PORT_X-s.x,offset=Math.abs(s.y-TARGET_Y);
+    s.procedureEvent=null;
+    if(!s.clear25){
+      s.phase=range<=25?'HOLD 25':'TRANSFER';
+      if(range<=25){
+        var stable25=Math.abs(s.vx)<=.16&&Math.abs(s.vy)<=.10&&offset<=1.8;
+        s.holdTimer=stable25?s.holdTimer+dt:0;
+        if(s.holdTimer>=2.5){s.clear25=true;s.holdPoints=1;s.holdTimer=0;s.phase='APPROACH 12';s.procedureEvent='CLEAR25';}
+        else if(range<20)s.procedureAbort='HOLD POINT 25 OVERRUN';
+      }
+    }else if(!s.clear12){
+      s.phase=range<=12?'HOLD 12':'APPROACH 12';
+      if(range<=12){
+        var stable12=Math.abs(s.vx)<=.12&&Math.abs(s.vy)<=.07&&offset<=1.1&&s.rcsMode==='FINE';
+        s.holdTimer=stable12?s.holdTimer+dt:0;
+        if(s.holdTimer>=2.5){s.clear12=true;s.holdPoints=2;s.holdTimer=0;s.phase='FINAL';s.procedureEvent='CLEAR12';}
+        else if(range<8)s.procedureAbort='HOLD POINT 12 OVERRUN';
+      }
+    }else s.phase='FINAL';
+    return s;
+  }
+  function stepState(current,controls,dt){
+    var s=applyControls(current,controls,dt);
+    if(s.done||s.paused)return s;
+    var rx=s.x-PORT_X;
+    var orbitalAx=3*N*N*rx+2*N*s.vy;
+    var orbitalAy=-2*N*s.vx;
+    s.vx+=orbitalAx*dt;
+    s.vy+=orbitalAy*dt;
+    s.x+=s.vx*dt*MOTION_SCALE;
+    s.y+=s.vy*dt*MOTION_SCALE;
+    s.time+=dt;
+    s.maxClosing=Math.max(s.maxClosing||0,Math.abs(s.vx));
+    s.maxDrift=Math.max(s.maxDrift||0,Math.abs(s.vy));
+    s.maxOffset=Math.max(s.maxOffset||0,Math.abs(s.y-TARGET_Y));
+    if(!Object.values(controls).some(Boolean)){
+      s.thrustFx=Math.max(0,(s.thrustFx||0)-dt);
+      if(!s.thrustFx)s.thruster=null;
+    }
+    return procedureStep(s,dt);
+  }
+  function verdict(s){
+    if(s.procedureAbort)return {code:'PROCEDURE',label:s.procedureAbort+' — APPROACH ABORTED'};
+    if(s.time>=LIMIT)return {code:'TIME',label:'RENDEZVOUS WINDOW EXPIRED'};
+    if(s.x<1||s.y<3||s.y>H-3)return {code:'LOST',label:'VEHICLE OUTSIDE TRACKING VOLUME'};
+    var alignment=Math.abs(s.y-TARGET_Y);
+    if(s.x>=PORT_X&&alignment<=1.1){
+      if(s.clear25&&s.clear12&&s.rcsMode==='FINE'&&s.vx>=.015&&s.vx<=.22&&Math.abs(s.vy)<=.12&&alignment<=.7)
+        return {code:'DOCKED',label:'SOFT CAPTURE CONFIRMED'};
+      return {code:'CONTACT',label:'HARD CONTACT — CAPTURE ABORTED'};
+    }
+    if(s.x>=HULL_X)return {code:'COLLISION',label:'STATION KEEP-OUT ZONE VIOLATION'};
+    return null;
+  }
+  function score(s,result){
+    if(!result||result.code!=='DOCKED')return 0;
+    return Math.max(1,Math.round(
+      s.fuel*10+s.holdPoints*300+Math.max(0,.22-s.vx)*800+
+      Math.max(0,.12-Math.abs(s.vy))*700+Math.max(0,.7-Math.abs(s.y-TARGET_Y))*200+
+      Math.max(0,70-s.pulseCount)*5
+    ));
+  }
+  function grade(points,result){
+    if(!result||result.code!=='DOCKED')return 'F';
+    return points>=1850?'S':points>=1600?'A':points>=1350?'B':'C';
+  }
+  function debriefText(s,result){
+    var reason=result.code==='DOCKED'?'TEXTBOOK APPROACH':
+      result.code==='PROCEDURE'?'CLEARANCE GATE VIOLATED':
+      result.code==='CONTACT'?'CONTACT VELOCITY OUTSIDE LIMITS':
+      result.code==='COLLISION'?'KEEP-OUT ZONE VIOLATION':result.label;
+    return 'SC-FDL/20  POST-FLIGHT DEBRIEF\n'+
+      'RESULT          '+result.code+'\nGRADE           '+s.grade+'\nPROFILE         '+s.profile+'\n'+
+      'MAX CLOSING     '+s.maxClosing.toFixed(3)+'\nMAX DRIFT       '+s.maxDrift.toFixed(3)+'\n'+
+      'RCS PULSES      '+s.pulseCount+'\nFUEL REMAINING  '+Math.round(s.fuel)+'%\n'+
+      'HOLD POINTS     '+s.holdPoints+'/2\nSTATION VERDICT '+reason;
+  }
+  function readRecord(){
+    try{
+      var record=JSON.parse(localStorage.getItem(STORE_KEY)||'null');
+      if(record&&Number.isFinite(record.best)&&Number.isFinite(record.attempts))return record;
+    }catch(e){}
+    return {best:0,attempts:0,dockings:0};
+  }
+  function writeResult(result,points){
+    var record=readRecord();record.attempts++;
+    if(result.code==='DOCKED')record.dockings++;
+    record.best=Math.max(record.best,points||0);record.last=result.code;
+    try{localStorage.setItem(STORE_KEY,JSON.stringify(record));}catch(e){}
+    return record;
+  }
+  function blank(){return Array.from({length:H},function(){return Array(W).fill(' ');});}
+  function put(g,x,y,text){
+    x=Math.round(x);y=Math.round(y);
+    if(y<0||y>=H)return;
+    for(var i=0;i<text.length;i++)if(x+i>=0&&x+i<W&&text[i]!==' ')g[y][x+i]=text[i];
+  }
+  function line(g,x1,x2,y,c){for(var x=x1;x<=x2;x++)put(g,x,y,c);}
+  function signed(value,digits){return (value>=0?'+':'')+value.toFixed(digits);}
+  function center(g,y,text){put(g,Math.max(1,Math.floor((W-text.length)/2)),y,text);}
+  function cabinetFrame(g,label){
+    put(g,0,0,'+'+'-'.repeat(W-2)+'+');put(g,0,H-1,'+'+'-'.repeat(W-2)+'+');
+    for(var y=1;y<H-1;y++){put(g,0,y,'|');put(g,W-1,y,'|');}
+    center(g,1,label);
+  }
+  function introGrid(record){
+    var g=blank();cabinetFrame(g,'SC GAME SYSTEM // CARTRIDGE 20');
+    center(g,4,'/\\_/\\');center(g,5,'( o.o )');center(g,6,'> ^ <');
+    center(g,9,'O R B I T A L   R E N D E Z V O U S');
+    center(g,11,'MATCH MOMENTUM. EARN CAPTURE.');
+    put(g,6,14,'OBJECTIVE   SOFT CAPTURE AT STATION PORT A');
+    put(g,6,16,'PROCEDURE   HOLD 25 · HOLD 12 · FINE RCS FINAL');
+    put(g,6,18,'RECORD      '+record.best+' PTS · '+record.dockings+' DOCKINGS');
+    center(g,21,'[ ENTER / BEGIN APPROACH ]');
+    center(g,24,'SC STATION COMMS OPTIONAL · DEVICE LOCAL');
+    center(g,26,'TRAINING MODEL · NOT FLIGHT SOFTWARE');
+    return g;
+  }
+  function endGrid(s,record){
+    var success=s.result.code==='DOCKED',g=blank(),range=Math.max(0,PORT_X-s.x);
+    cabinetFrame(g,success?'SC GAME SYSTEM // CAPTURE COMPLETE':'SC GAME SYSTEM // SIGNAL LOST');
+    center(g,4,'/\\_/\\');center(g,5,success?'( ^.^ )':'( x.x )');center(g,6,'> ^ <');
+    center(g,9,success?'M I S S I O N   C O M P L E T E':'G A M E   O V E R');
+    center(g,11,s.result.label);
+    center(g,14,'GRADE '+s.grade+' · SCORE '+s.score+' · BEST '+record.best);
+    center(g,16,'RANGE '+range.toFixed(1)+' · VX '+signed(s.vx,3)+' · VY '+signed(s.vy,3)+' · FUEL '+Math.round(s.fuel)+'%');
+    center(g,19,success?'SOFT CAPTURE. THE VOID PURRS BACK.':'FLIGHT DATA SAVED. MOMENTUM WINS THIS ROUND.');
+    center(g,22,'[ ENTER / RETRY APPROACH ]');
+    center(g,25,'POST-FLIGHT DEBRIEF BELOW');
+    return g;
+  }
+
+  var screen=document.getElementById('screen'),screenShell=screen.parentElement,rangeOut=document.getElementById('range');
+  var closingOut=document.getElementById('closing'),driftOut=document.getElementById('drift');
+  var fuelOut=document.getElementById('fuel'),metOut=document.getElementById('met');
+  var phaseOut=document.getElementById('phase'),bestOut=document.getElementById('best');
+  var debrief=document.getElementById('debrief'),announcer=document.getElementById('announcer');
+  var startButton=document.getElementById('start'),pauseButton=document.getElementById('pause');
+  var resetButton=document.getElementById('reset'),commsButton=document.getElementById('comms');
+  var rcsButton=document.getElementById('rcs'),profileButton=document.getElementById('profile');
+  var channel=document.getElementById('channel'),radio=document.getElementById('radio');
+  var buttons=Array.from(document.querySelectorAll('[data-control]'));
+  var selectedProfile='NOMINAL';
+  var controls={left:false,right:false,up:false,down:false},state=initialState(selectedProfile),last=0,accumulator=0;
+  var stars=[[3,5],[8,21],[12,9],[17,24],[22,5],[26,18],[31,8],[36,23],[40,4],[44,20],[48,7],[51,25],[58,4],[61,22]];
+  var commsOn=true,voiceQueue=[],currentVoice=null,voiceCalls={};
+  var voiceMeta={
+    online:{label:'CHANNEL CHECK',priority:1},range25:{label:'HOLD POINT 25',priority:1},
+    clear25:{label:'CLEAR TO RANGE 12',priority:2},range12:{label:'HOLD POINT 12',priority:1},
+    clear12:{label:'CLEAR FINAL APPROACH',priority:2},range5go:{label:'SOFT CAPTURE GO',priority:2},
+    closingHigh:{label:'CLOSING RATE HIGH',priority:3},driftHigh:{label:'DRIFT LIMIT',priority:3},
+    docked:{label:'SOFT CAPTURE',priority:4},contact:{label:'CAPTURE ABORT',priority:4},
+    procedureAbort:{label:'CLEARANCE VIOLATION',priority:4}
+  };
+
+  function channelText(message){channel.textContent='VOICE CHANNEL · SC STATION CONTROL · '+message;}
+  function stopVoice(){
+    radio.pause();radio.removeAttribute('src');radio.load();voiceQueue=[];currentVoice=null;
+    channelText(commsOn?(state.started?'ONLINE':'ARMED · BEGIN APPROACH TO OPEN'):'OFF');
+  }
+  function playNextVoice(){
+    if(!commsOn||currentVoice||!voiceQueue.length)return;
+    currentVoice=voiceQueue.shift();
+    radio.src=(document.documentElement.dataset.commsRoot||'comms/')+currentVoice.id+'.mp3';
+    channelText('TRANSMITTING · '+voiceMeta[currentVoice.id].label);
+    radio.play().catch(function(){
+      currentVoice=null;channelText('AUDIO BLOCKED · TAP COMMS OFF / ON');
+    });
+  }
+  function stationCall(id){
+    if(!commsOn||voiceCalls[id]||!voiceMeta[id])return;
+    voiceCalls[id]=true;
+    var call={id:id,priority:voiceMeta[id].priority};
+    if(currentVoice&&call.priority>currentVoice.priority){
+      radio.pause();currentVoice=null;voiceQueue.unshift(call);
+    }else voiceQueue.push(call);
+    playNextVoice();
+  }
+  function resetVoiceCalls(){voiceCalls={};}
+  function toggleComms(){
+    commsOn=!commsOn;commsButton.setAttribute('aria-pressed',String(commsOn));
+    commsButton.textContent=commsOn?'[COMMS ON]':'[COMMS OFF]';stopVoice();voiceCalls={};
+    if(commsOn){
+      channelText(state.started?'ONLINE':'ARMED · BEGIN APPROACH TO OPEN');
+      if(state.started)stationCall('online');
+    }
+    announcer.textContent='Station communications '+(commsOn?'enabled.':'disabled.');
+  }
+  radio.addEventListener('ended',function(){currentVoice=null;channelText(commsOn?'ONLINE':'OFF');playNextVoice();});
+  radio.addEventListener('error',function(){currentVoice=null;if(commsOn)channelText('SIGNAL ERROR');});
+
+  function reset(){
+    state=initialState(selectedProfile);controls.left=controls.right=controls.up=controls.down=false;
+    stopVoice();resetVoiceCalls();
+    buttons.forEach(function(b){b.classList.remove('active');b.disabled=true;});
+    startButton.disabled=false;startButton.textContent='[BEGIN APPROACH]';
+    pauseButton.disabled=true;pauseButton.textContent='[PAUSE]';
+    profileButton.disabled=false;rcsButton.textContent='[RCS COARSE]';debrief.hidden=true;debrief.textContent='';
+    announcer.textContent='Approach reset. Press Enter or Begin Approach.';render();
+  }
+  function begin(){
+    if(state.done){reset();}
+    state.started=true;state.paused=false;startButton.disabled=true;
+    buttons.forEach(function(b){b.disabled=false;});
+    pauseButton.disabled=false;profileButton.disabled=true;pauseButton.textContent='[PAUSE]';last=performance.now();
+    if(commsOn)stationCall('online');
+    announcer.textContent='Orbital rendezvous training started.';render();
+  }
+  function togglePause(){
+    if(!state.started||state.done)return;
+    state.paused=!state.paused;pauseButton.textContent=state.paused?'[RESUME]':'[PAUSE]';
+    release();last=performance.now();announcer.textContent=state.paused?'Training paused.':'Training resumed.';render();
+  }
+  function toggleRcs(){
+    if(state.done)return;
+    state.rcsMode=state.rcsMode==='COARSE'?'FINE':'COARSE';
+    rcsButton.textContent='[RCS '+state.rcsMode+']';
+    announcer.textContent='RCS mode '+state.rcsMode+'.';render();
+  }
+  function cycleProfile(){
+    if(state.started&&!state.done)return;
+    var index=PROFILE_ORDER.indexOf(selectedProfile);
+    selectedProfile=PROFILE_ORDER[(index+1)%PROFILE_ORDER.length];
+    profileButton.textContent='[PROFILE '+selectedProfile+']';reset();
+  }
+  function engage(name){
+    if(!state.started||state.done||state.paused)return;
+    if(!controls[name])state=controlPulse(state,name);
+    controls[name]=true;
+    buttons.forEach(function(b){if(b.dataset.control===name)b.classList.add('active');});
+    render();
+  }
+  function disengage(name){
+    controls[name]=false;
+    buttons.forEach(function(b){if(b.dataset.control===name)b.classList.remove('active');});
+  }
+  function release(){Object.keys(controls).forEach(function(name){disengage(name);});}
+  function finish(result){
+    state.done=true;state.paused=true;state.result=result;state.score=score(state,result);state.grade=grade(state.score,result);
+    var record=writeResult(result,state.score);release();
+    buttons.forEach(function(b){b.disabled=true;});pauseButton.disabled=true;
+    startButton.disabled=false;profileButton.disabled=false;startButton.textContent='[RETRY APPROACH]';
+    if(result.code==='DOCKED')stationCall('docked');
+    else if(result.code==='CONTACT'||result.code==='COLLISION')stationCall('contact');
+    else if(result.code==='PROCEDURE')stationCall('procedureAbort');
+    debrief.hidden=false;debrief.textContent=debriefText(state,result);
+    announcer.textContent=result.label+'. Grade '+state.grade+'. Score '+state.score+'. Best '+record.best+'.';render();
+  }
+  function cameraMode(range){return range<=5?'PORT':range<=12?'CORRIDOR':'WIDE';}
+  function cameraCraftX(range,camera){
+    if(camera==='PORT')return 31+(5-range)*4.2;
+    if(camera==='CORRIDOR')return 25+(12-range)*2.35;
+    return state.x;
+  }
+  function drawStation(g,camera){
+    if(camera==='WIDE'){
+      for(var y=5;y<H-2;y++)put(g,59,y,'|');
+      put(g,55,6,'+---+');put(g,55,7,'|SC |');put(g,55,8,'+---+');
+      put(g,54,TARGET_Y-1,'[   |');put(g,53,TARGET_Y,'> A |');put(g,54,TARGET_Y+1,'[   |');
+      put(g,56,H-4,'STATION');return;
+    }
+    if(camera==='CORRIDOR'){
+      for(var cy=4;cy<H-2;cy++)put(g,58,cy,'||');
+      put(g,51,5,'+======+');put(g,51,6,'|  SC  |');put(g,51,7,'+======+');
+      put(g,54,TARGET_Y-2,'[    ||');put(g,52,TARGET_Y-1,'==\\  ||');
+      put(g,51,TARGET_Y,'PORT>A||');put(g,52,TARGET_Y+1,'==/  ||');put(g,54,TARGET_Y+2,'[    ||');
+      line(g,18,51,TARGET_Y-3,'.');line(g,18,51,TARGET_Y+3,'.');return;
+    }
+    for(var py=3;py<H-2;py++)put(g,57,py,'|||||||');
+    put(g,50,TARGET_Y-4,'+------||||');put(g,48,TARGET_Y-3,'/       ||||');
+    put(g,47,TARGET_Y-2,'/   [PORT A]');put(g,46,TARGET_Y-1,'<===========');
+    put(g,46,TARGET_Y,'<  CAPTURE  >');put(g,46,TARGET_Y+1,'<===========');
+    put(g,47,TARGET_Y+2,'\\   [PORT A]');put(g,48,TARGET_Y+3,'\\       ||||');
+    put(g,50,TARGET_Y+4,'+------||||');line(g,12,45,TARGET_Y-4,'.');line(g,12,45,TARGET_Y+4,'.');
+  }
+  function render(){
+    var g=blank(),record=readRecord(),range=Math.max(0,PORT_X-state.x),alignment=Math.abs(state.y-TARGET_Y);
+    if(!state.started&&!state.done){
+      screenShell.dataset.mode='intro';screen.setAttribute('aria-label','Space Cat Orbital Rendezvous opening briefing');
+      screen.textContent=introGrid(record).map(function(row){return row.join('');}).join('\n');
+      rangeOut.textContent='--';closingOut.textContent='--';driftOut.textContent='--';fuelOut.textContent=Math.round(state.fuel)+'%';
+      metOut.textContent='0:00';phaseOut.textContent='BRIEFING';bestOut.textContent=record.best;return;
+    }
+    if(state.result){
+      screenShell.dataset.mode=state.result.code==='DOCKED'?'victory':'gameover';
+      screen.setAttribute('aria-label',state.result.code==='DOCKED'?'Orbital rendezvous mission complete':'Orbital rendezvous game over');
+      screen.textContent=endGrid(state,record).map(function(row){return row.join('');}).join('\n');
+      rangeOut.textContent=range.toFixed(1);closingOut.textContent=signed(state.vx,3);driftOut.textContent=signed(state.vy,3);
+      fuelOut.textContent=Math.round(state.fuel)+'%';metOut.textContent=Math.floor(state.time/60)+':'+String(Math.floor(state.time)%60).padStart(2,'0');
+      phaseOut.textContent=state.result.code==='DOCKED'?'COMPLETE':'GAME OVER';bestOut.textContent=record.best;return;
+    }
+    screenShell.dataset.mode='flight';
+    screen.setAttribute('aria-label','ASCII orbital rendezvous training display');
+    var camera=cameraMode(range),holdProgress=Math.min(10,Math.floor(state.holdTimer/2.5*10));
+    put(g,1,0,'SC-FDL/20  ORBITAL RENDEZVOUS  ·  CAM '+(camera==='WIDE'?'01':camera==='CORRIDOR'?'02':'03'));
+    put(g,1,1,'PROFILE '+state.profile+'  ·  '+state.phase+'  ·  RCS '+state.rcsMode);
+    stars.forEach(function(star){put(g,star[0],star[1],'.');});
+    if(camera==='WIDE'){
+      line(g,37,PORT_X-1,TARGET_Y-2,'.');line(g,37,PORT_X-1,TARGET_Y+2,'.');
+      put(g,38,TARGET_Y-3,'APPROACH CORRIDOR');
+    }
+    drawStation(g,camera);
+    var cx=Math.round(cameraCraftX(range,camera));
+    var verticalScale=camera==='PORT'?2.2:camera==='CORRIDOR'?1.5:1;
+    var cy=Math.round(TARGET_Y+(state.y-TARGET_Y)*verticalScale),craft='[C>';
+    if(state.thruster==='left')craft='*[C>';
+    else if(state.thruster==='right')craft='[C>*';
+    put(g,cx-(state.thruster==='left'?2:1),cy,craft);
+    if(state.thruster==='up')put(g,cx,cy+1,'*');
+    if(state.thruster==='down')put(g,cx,cy-1,'*');
+    if(state.paused&&!state.done){put(g,23,10,'*** SIM PAUSED ***');}
+    if(!state.done&&(state.phase==='HOLD 25'||state.phase==='HOLD 12')){
+      put(g,3,3,state.phase+'  STABILIZE  ['+'#'.repeat(holdProgress)+'.'.repeat(10-holdProgress)+']');
+      put(g,3,4,state.phase==='HOLD 12'&&state.rcsMode!=='FINE'?'SELECT FINE RCS TO RECEIVE CLEARANCE':'NULL CLOSING / DRIFT · MAINTAIN 2.5 SEC');
+    }
+    put(g,1,H-1,'R '+range.toFixed(1)+'  VX '+signed(state.vx,3)+'  VY '+signed(state.vy,3)+'  ALIGN '+alignment.toFixed(1));
+    screen.textContent=g.map(function(row){return row.join('');}).join('\n');
+    rangeOut.textContent=range.toFixed(1);closingOut.textContent=signed(state.vx,3);
+    driftOut.textContent=signed(state.vy,3);fuelOut.textContent=Math.round(state.fuel)+'%';
+    metOut.textContent=Math.floor(state.time/60)+':'+String(Math.floor(state.time)%60).padStart(2,'0');
+    phaseOut.textContent=state.phase;bestOut.textContent=record.best;
+  }
+
+  function controlForKey(key){
+    return ({arrowleft:'left',a:'left',arrowright:'right',d:'right',arrowup:'up',w:'up',arrowdown:'down',s:'down'})[key];
+  }
+  document.addEventListener('keydown',function(event){
+    var key=String(event.key||'').toLowerCase(),control=controlForKey(key);
+    if(control){event.preventDefault();engage(control);return;}
+    if(key==='enter'){event.preventDefault();begin();}
+    if(key==='p'){event.preventDefault();togglePause();}
+    if(key==='r'){event.preventDefault();reset();}
+    if(key==='f'){event.preventDefault();toggleRcs();}
+  });
+  document.addEventListener('keyup',function(event){var control=controlForKey(String(event.key||'').toLowerCase());if(control)disengage(control);});
+  window.addEventListener('blur',release);
+  document.addEventListener('visibilitychange',function(){release();last=performance.now();});
+  buttons.forEach(function(button){
+    var name=button.dataset.control;
+    button.addEventListener('pointerdown',function(event){event.preventDefault();try{button.setPointerCapture(event.pointerId);}catch(e){}engage(name);});
+    button.addEventListener('pointerup',function(event){event.preventDefault();disengage(name);});
+    button.addEventListener('pointercancel',function(){disengage(name);});
+    button.addEventListener('lostpointercapture',function(){disengage(name);});
+  });
+  document.addEventListener('pointerup',release);
+  startButton.addEventListener('click',begin);pauseButton.addEventListener('click',togglePause);
+  resetButton.addEventListener('click',reset);commsButton.addEventListener('click',toggleComms);
+  rcsButton.addEventListener('click',toggleRcs);profileButton.addEventListener('click',cycleProfile);
+
+  function frame(now){
+    var elapsed=Math.min(.25,Math.max(0,(now-last)/1000));last=now;
+    if(state.started&&!state.paused&&!state.done&&!document.hidden){
+      accumulator+=elapsed;
+      while(accumulator>=DT){
+        state=stepState(state,controls,DT);accumulator-=DT;
+        var voiceRange=PORT_X-state.x,voiceAlignment=Math.abs(state.y-TARGET_Y);
+        if(voiceRange<=25)stationCall('range25');
+        if(voiceRange<=12)stationCall('range12');
+        if(state.procedureEvent==='CLEAR25')stationCall('clear25');
+        if(state.procedureEvent==='CLEAR12')stationCall('clear12');
+        if(voiceRange<=9&&state.vx>.42)stationCall('closingHigh');
+        if(voiceRange<=9&&Math.abs(state.vy)>.3)stationCall('driftHigh');
+        if(voiceRange<=5&&state.vx>=.015&&state.vx<=.32&&Math.abs(state.vy)<=.25&&voiceAlignment<=1.1)
+          stationCall('range5go');
+        var result=verdict(state);if(result){finish(result);break;}
+      }
+      render();
+    }
+    requestAnimationFrame(frame);
+  }
+  window.DockingSim={W:W,H:H,PORT_X:PORT_X,HULL_X:HULL_X,TARGET_Y:TARGET_Y,
+    initialState:initialState,applyControls:applyControls,controlPulse:controlPulse,
+    stepState:stepState,verdict:verdict,score:score};
+  reset();last=performance.now();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

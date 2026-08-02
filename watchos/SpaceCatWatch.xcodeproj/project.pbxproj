@@ -1,0 +1,642 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0AC0754CB7ABEE7B3A90DA7F /* SpaceCatWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB89DAECBAD59746E18BB36 /* SpaceCatWatchApp.swift */; };
+		0EEC45F3D8B5707CD78D9AD7 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9ADE1A31178FECF3B478BD /* Models.swift */; };
+		14CB36BE3D1A196E991353E4 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D097F21C5729A5BB108DCC10 /* AboutView.swift */; };
+		14DD20F886A736CD5C865949 /* EventStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438B19A7904369F0D1CC21D /* EventStore.swift */; };
+		1D96758C73660A028634B941 /* NewsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F982A5A7A44CE28919AE82FA /* NewsViews.swift */; };
+		251203BE1C28E5DA0E3BF96A /* NewsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860DBD13B3F815B6973A0975 /* NewsStore.swift */; };
+		2AAE86AFD2D8305C8BC4B482 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 74C5EF0312F3C1AC0C10C412 /* PrivacyInfo.xcprivacy */; };
+		3BD1B704F4AE8CBB832B0202 /* SpaceCatWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEA0EA323A08EA5D2B6C05D /* SpaceCatWidgets.swift */; };
+		3F1AC28A403469B10AAB11C4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD35CFC974E322A7B71F01EB /* SettingsView.swift */; };
+		449E038D405D2D80326E5004 /* SpaceCatWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 4D20FBE6B57BBD4BBD1E7289 /* SpaceCatWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		44F2E578F0261C8ADDEDA5A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2432E1966326F37EB5260007 /* Assets.xcassets */; };
+		5B7F893AE8FE5F8784F8754D /* LaunchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC2AEAC5DC67B5C9F06872 /* LaunchStore.swift */; };
+		5BA63A64D833B233DD12D315 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72A1B09A5D71D477E1BE1D0 /* Theme.swift */; };
+		AA4F7826D66889305D314681 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5660AD36CCDB958367763F71 /* Favorites.swift */; };
+		AA67D9F082BB76AAED08C1D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000137413CAEED34BB54FAB5 /* ContentView.swift */; };
+		B39169F9B25F7D53D369ADFE /* CalendarLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC46D6A5CB73892CE2AA95 /* CalendarLink.swift */; };
+		BBBFECC956C2C3979367B5D8 /* SpaceCatWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B8163EF312C0610EC2F57993 /* SpaceCatWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C0D51152E0BF6D71EF8ABBC5 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A2567B5AF8EB5C570913E3 /* DetailView.swift */; };
+		C35095A3151C7FF5250B3EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8ACD67D0698FF0989CDB55D /* Assets.xcassets */; };
+		D5503D15D0BF90D9EFEF0057 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE6A612A29711AA5777BA1 /* Notifications.swift */; };
+		E4DAC8BD21D91E9A2857E173 /* IssStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09140F4971CAA787D9421445 /* IssStore.swift */; };
+		EC30A814B533DD206C88D9DE /* ManageFavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD487E3ACF659A46F051510 /* ManageFavoritesView.swift */; };
+		F7EC098275B3B2DE879EE682 /* WeatherStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7B47F45BD4566A90A0CB8B /* WeatherStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0C2D4855E49D8DD32E337FAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47ED8F982E85388193F6BA69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 324F616F95FAFDE6DF85A38C;
+			remoteInfo = SpaceCatWatch;
+		};
+		DF10C5FBAD85BB77485F7A3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47ED8F982E85388193F6BA69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C16C180DE0AC0CEBCA03E427;
+			remoteInfo = SpaceCatWidgets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		942A8E92FBD46D266FA3F4C3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BBBFECC956C2C3979367B5D8 /* SpaceCatWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D9B50EBAC412FE5ACA8D96B7 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				449E038D405D2D80326E5004 /* SpaceCatWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		000137413CAEED34BB54FAB5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		09140F4971CAA787D9421445 /* IssStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssStore.swift; sourceTree = "<group>"; };
+		2432E1966326F37EB5260007 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2438B19A7904369F0D1CC21D /* EventStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventStore.swift; sourceTree = "<group>"; };
+		45DC46D6A5CB73892CE2AA95 /* CalendarLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarLink.swift; sourceTree = "<group>"; };
+		4D20FBE6B57BBD4BBD1E7289 /* SpaceCatWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceCatWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5660AD36CCDB958367763F71 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		61CE6A612A29711AA5777BA1 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		74C5EF0312F3C1AC0C10C412 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		860DBD13B3F815B6973A0975 /* NewsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsStore.swift; sourceTree = "<group>"; };
+		93DF976DE73985C3912FEBDC /* SpaceCatContainer.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SpaceCatContainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99AC2AEAC5DC67B5C9F06872 /* LaunchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchStore.swift; sourceTree = "<group>"; };
+		ADD487E3ACF659A46F051510 /* ManageFavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFavoritesView.swift; sourceTree = "<group>"; };
+		B8163EF312C0610EC2F57993 /* SpaceCatWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpaceCatWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8ACD67D0698FF0989CDB55D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CA7B47F45BD4566A90A0CB8B /* WeatherStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStore.swift; sourceTree = "<group>"; };
+		CD35CFC974E322A7B71F01EB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CFAD4783AC78F51015693EB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D097F21C5729A5BB108DCC10 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		E4A2567B5AF8EB5C570913E3 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		ECB89DAECBAD59746E18BB36 /* SpaceCatWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCatWatchApp.swift; sourceTree = "<group>"; };
+		F72A1B09A5D71D477E1BE1D0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		F982A5A7A44CE28919AE82FA /* NewsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViews.swift; sourceTree = "<group>"; };
+		FD9ADE1A31178FECF3B478BD /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		FDEA0EA323A08EA5D2B6C05D /* SpaceCatWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCatWidgets.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4FBFE59120CCDD98E2499C22 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				CFAD4783AC78F51015693EB1 /* Info.plist */,
+				FDEA0EA323A08EA5D2B6C05D /* SpaceCatWidgets.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		77D1B53B5102322E2BFFD7FF /* ContainerAssets */ = {
+			isa = PBXGroup;
+			children = (
+				C8ACD67D0698FF0989CDB55D /* Assets.xcassets */,
+			);
+			path = ContainerAssets;
+			sourceTree = "<group>";
+		};
+		A28CA1467A7DDF76CE6FC938 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				93DF976DE73985C3912FEBDC /* SpaceCatContainer.app */,
+				4D20FBE6B57BBD4BBD1E7289 /* SpaceCatWatch.app */,
+				B8163EF312C0610EC2F57993 /* SpaceCatWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9BD926E9EF9DB9C513257DE = {
+			isa = PBXGroup;
+			children = (
+				77D1B53B5102322E2BFFD7FF /* ContainerAssets */,
+				ED83F6C132318E0AFA39D4F2 /* Sources */,
+				4FBFE59120CCDD98E2499C22 /* Widgets */,
+				A28CA1467A7DDF76CE6FC938 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ED83F6C132318E0AFA39D4F2 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D097F21C5729A5BB108DCC10 /* AboutView.swift */,
+				2432E1966326F37EB5260007 /* Assets.xcassets */,
+				45DC46D6A5CB73892CE2AA95 /* CalendarLink.swift */,
+				000137413CAEED34BB54FAB5 /* ContentView.swift */,
+				E4A2567B5AF8EB5C570913E3 /* DetailView.swift */,
+				2438B19A7904369F0D1CC21D /* EventStore.swift */,
+				5660AD36CCDB958367763F71 /* Favorites.swift */,
+				09140F4971CAA787D9421445 /* IssStore.swift */,
+				99AC2AEAC5DC67B5C9F06872 /* LaunchStore.swift */,
+				ADD487E3ACF659A46F051510 /* ManageFavoritesView.swift */,
+				FD9ADE1A31178FECF3B478BD /* Models.swift */,
+				860DBD13B3F815B6973A0975 /* NewsStore.swift */,
+				F982A5A7A44CE28919AE82FA /* NewsViews.swift */,
+				61CE6A612A29711AA5777BA1 /* Notifications.swift */,
+				74C5EF0312F3C1AC0C10C412 /* PrivacyInfo.xcprivacy */,
+				CD35CFC974E322A7B71F01EB /* SettingsView.swift */,
+				ECB89DAECBAD59746E18BB36 /* SpaceCatWatchApp.swift */,
+				F72A1B09A5D71D477E1BE1D0 /* Theme.swift */,
+				CA7B47F45BD4566A90A0CB8B /* WeatherStore.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		324F616F95FAFDE6DF85A38C /* SpaceCatWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7174E8EE2455812B198CF838 /* Build configuration list for PBXNativeTarget "SpaceCatWatch" */;
+			buildPhases = (
+				0C6CCDBB30219548B9FCE748 /* Sources */,
+				73B6488EBF549F7C50E08360 /* Resources */,
+				942A8E92FBD46D266FA3F4C3 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				213F72BAD3F479F34A956C8D /* PBXTargetDependency */,
+			);
+			name = SpaceCatWatch;
+			packageProductDependencies = (
+			);
+			productName = SpaceCatWatch;
+			productReference = 4D20FBE6B57BBD4BBD1E7289 /* SpaceCatWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7C3A80B78DBB8F92B693567B /* SpaceCatContainer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF459C72A73CD36FB530F17C /* Build configuration list for PBXNativeTarget "SpaceCatContainer" */;
+			buildPhases = (
+				9D9235EBCB98E009648084AC /* Sources */,
+				2DAD3C3AE7A77A5209A34BC2 /* Resources */,
+				D9B50EBAC412FE5ACA8D96B7 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EE1CB0389795A0C1177284CC /* PBXTargetDependency */,
+			);
+			name = SpaceCatContainer;
+			packageProductDependencies = (
+			);
+			productName = SpaceCatContainer;
+			productReference = 93DF976DE73985C3912FEBDC /* SpaceCatContainer.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		C16C180DE0AC0CEBCA03E427 /* SpaceCatWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 139D93F9A9200CA375376D54 /* Build configuration list for PBXNativeTarget "SpaceCatWidgets" */;
+			buildPhases = (
+				7AAB95D8DFCF08649D675D12 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpaceCatWidgets;
+			packageProductDependencies = (
+			);
+			productName = SpaceCatWidgets;
+			productReference = B8163EF312C0610EC2F57993 /* SpaceCatWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47ED8F982E85388193F6BA69 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					324F616F95FAFDE6DF85A38C = {
+						DevelopmentTeam = W5972G8X8N;
+						ProvisioningStyle = Automatic;
+					};
+					7C3A80B78DBB8F92B693567B = {
+						DevelopmentTeam = W5972G8X8N;
+						ProvisioningStyle = Automatic;
+					};
+					C16C180DE0AC0CEBCA03E427 = {
+						DevelopmentTeam = W5972G8X8N;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 172C59156E8335D4B8AEB350 /* Build configuration list for PBXProject "SpaceCatWatch" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A9BD926E9EF9DB9C513257DE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A28CA1467A7DDF76CE6FC938 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7C3A80B78DBB8F92B693567B /* SpaceCatContainer */,
+				324F616F95FAFDE6DF85A38C /* SpaceCatWatch */,
+				C16C180DE0AC0CEBCA03E427 /* SpaceCatWidgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2DAD3C3AE7A77A5209A34BC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C35095A3151C7FF5250B3EB9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		73B6488EBF549F7C50E08360 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F2E578F0261C8ADDEDA5A6 /* Assets.xcassets in Resources */,
+				2AAE86AFD2D8305C8BC4B482 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0C6CCDBB30219548B9FCE748 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14CB36BE3D1A196E991353E4 /* AboutView.swift in Sources */,
+				B39169F9B25F7D53D369ADFE /* CalendarLink.swift in Sources */,
+				AA67D9F082BB76AAED08C1D1 /* ContentView.swift in Sources */,
+				C0D51152E0BF6D71EF8ABBC5 /* DetailView.swift in Sources */,
+				14DD20F886A736CD5C865949 /* EventStore.swift in Sources */,
+				AA4F7826D66889305D314681 /* Favorites.swift in Sources */,
+				E4DAC8BD21D91E9A2857E173 /* IssStore.swift in Sources */,
+				5B7F893AE8FE5F8784F8754D /* LaunchStore.swift in Sources */,
+				EC30A814B533DD206C88D9DE /* ManageFavoritesView.swift in Sources */,
+				0EEC45F3D8B5707CD78D9AD7 /* Models.swift in Sources */,
+				251203BE1C28E5DA0E3BF96A /* NewsStore.swift in Sources */,
+				1D96758C73660A028634B941 /* NewsViews.swift in Sources */,
+				D5503D15D0BF90D9EFEF0057 /* Notifications.swift in Sources */,
+				3F1AC28A403469B10AAB11C4 /* SettingsView.swift in Sources */,
+				0AC0754CB7ABEE7B3A90DA7F /* SpaceCatWatchApp.swift in Sources */,
+				5BA63A64D833B233DD12D315 /* Theme.swift in Sources */,
+				F7EC098275B3B2DE879EE682 /* WeatherStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7AAB95D8DFCF08649D675D12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BD1B704F4AE8CBB832B0202 /* SpaceCatWidgets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D9235EBCB98E009648084AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		213F72BAD3F479F34A956C8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C16C180DE0AC0CEBCA03E427 /* SpaceCatWidgets */;
+			targetProxy = DF10C5FBAD85BB77485F7A3D /* PBXContainerItemProxy */;
+		};
+		EE1CB0389795A0C1177284CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 324F616F95FAFDE6DF85A38C /* SpaceCatWatch */;
+			targetProxy = 0C2D4855E49D8DD32E337FAD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03460C760A9A5F6C3F01F17C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal.watchkitapp.widgets;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		1F9437A763741270244AB4D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		21A586A75F9951015C703C8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		41F54A880A4DB57DFECB72FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		4F9AB49A85636E6AD1AF85F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		8E00E2A7BF393801602000F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		9543DC4EC1EE1416CE42DF06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal.watchkitapp.widgets;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		E2BACE3DE58723C197283C8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = W5972G8X8N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Space Cat";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spacecat.terminal;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		139D93F9A9200CA375376D54 /* Build configuration list for PBXNativeTarget "SpaceCatWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9543DC4EC1EE1416CE42DF06 /* Debug */,
+				03460C760A9A5F6C3F01F17C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		172C59156E8335D4B8AEB350 /* Build configuration list for PBXProject "SpaceCatWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F9AB49A85636E6AD1AF85F2 /* Debug */,
+				1F9437A763741270244AB4D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7174E8EE2455812B198CF838 /* Build configuration list for PBXNativeTarget "SpaceCatWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E00E2A7BF393801602000F3 /* Debug */,
+				41F54A880A4DB57DFECB72FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EF459C72A73CD36FB530F17C /* Build configuration list for PBXNativeTarget "SpaceCatContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				21A586A75F9951015C703C8C /* Debug */,
+				E2BACE3DE58723C197283C8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 47ED8F982E85388193F6BA69 /* Project object */;
+}

@@ -1,0 +1,35 @@
+# SPACE CAT
+
+> SPACE CAT is a pure DOS-style mission-control terminal for space enthusiasts and the
+> public website for Space Cat: Launch Terminal, a standalone Wear OS application.
+
+## Canonical pages
+
+- [Launch Terminal](https://spacecat.watch/): Product overview and interactive terminal.
+- [Live Launch Sync](https://spacecat.watch/live): The next real rocket T-0 and mission status.
+- [ASCII Launch](https://spacecat.watch/launch): Cinematic modeled launch sequence.
+- [ISS Telemetry](https://spacecat.watch/iss): Live ISS position, altitude and velocity.
+- [Solar Weather](https://spacecat.watch/solar): NOAA planetary K-index and storm state.
+- [Félicette Memorial](https://spacecat.watch/felicette): Terminal archive for Félicette.
+- [Privacy](https://spacecat.watch/privacy): App and website privacy policy.
+
+## Application
+
+- [Google Play](https://play.google.com/store/apps/details?id=com.spacecat.terminal)
+- Platform: Wear OS. A watchOS edition is in review.
+- Model: one-time purchase; no subscription.
+- Developer: BE Engineering.
+
+## Data and accuracy
+
+The website uses Launch Library 2, Spaceflight News API, Open-Meteo, NOAA SWPC and
+wheretheiss.at. Live schedule and status data are distinguished from modeled ASCII ascent
+profiles. SPACE CAT is not affiliated with SpaceX, NASA or any launch agency.
+
+## Official social accounts
+
+- [X](https://x.com/spacecatwatch)
+- [Instagram](https://www.instagram.com/spacecatwatch/)
+
+This file is an experimental machine-readable orientation document. The canonical HTML
+pages and their structured data remain the authoritative descriptions.

@@ -1,0 +1,45 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+
+    <!-- Daire maskesi (tile/complication ikonları için) -->
+    <clip-path android:pathData="M256,0 a256,256 0 1,0 0,512 a256,256 0 1,0 0,-512 Z" />
+
+    <!-- Arka plan -->
+    <path
+        android:fillColor="#101820"
+        android:pathData="M0,0 H512 V512 H0 Z" />
+
+    <!-- Yıldızlar -->
+    <path android:fillColor="#B3FFFFFF" android:pathData="M113,110 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
+    <path android:fillColor="#E6FFB86C" android:pathData="M406.5,120 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <path android:fillColor="#80FFFFFF" android:pathData="M443,330 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path android:fillColor="#997FD1B0" android:pathData="M82.5,378 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+
+    <!-- Yörünge halkası -->
+    <group
+        android:rotation="-18"
+        android:pivotX="256"
+        android:pivotY="256">
+        <path
+            android:strokeColor="#6600E68A"
+            android:strokeWidth="10"
+            android:pathData="M26,256 a230,92 0 1,0 460,0 a230,92 0 1,0 -460,0" />
+    </group>
+    <path android:fillColor="#FFB86C" android:pathData="M28,300 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" />
+
+    <!-- CAT -->
+    <path
+        android:strokeColor="#00E68A"
+        android:strokeWidth="30"
+        android:strokeLineCap="square"
+        android:pathData="M152,182 L102,182 L102,318 L152,318 M188,334 L188,182 L266,182 L266,334 M188,276 L266,276 M302,182 L394,182 M348,182 L348,334" />
+
+    <!-- Kulaklar -->
+    <path android:fillColor="#00E68A" android:pathData="M87,167 L96,112 L140,167 Z M409,167 L400,112 L356,167 Z" />
+
+    <!-- İmleç -->
+    <path android:fillColor="#FFB86C" android:pathData="M416,252 h42 v82 h-42 Z" />
+</vector>

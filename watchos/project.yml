@@ -1,0 +1,89 @@
+name: SpaceCatWatch
+options:
+  deploymentTarget:
+    watchOS: "10.0"
+    iOS: "17.0"
+  createIntermediateGroups: true
+schemes:
+  SpaceCatContainer:
+    build:
+      targets:
+        SpaceCatContainer: all
+    archive:
+      config: Release
+  SpaceCatWatch:
+    build:
+      targets:
+        SpaceCatWatch: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+targets:
+  # Xcode 26 bug'ı workaround'u: watch-only uygulama, App Store yüklemesi için
+  # boş bir iOS kabuk hedefine gömülür (watchapp2-container).
+  SpaceCatContainer:
+    type: application.watchapp2-container
+    platform: iOS
+    sources: [ContainerAssets]
+    dependencies:
+      - target: SpaceCatWatch
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecat.terminal
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 3
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_KEY_CFBundleDisplayName: Space Cat
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        DEVELOPMENT_TEAM: W5972G8X8N
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: false
+        INSTALL_PATH: "$(LOCAL_APPS_DIR)"
+        TARGETED_DEVICE_FAMILY: "1"
+  SpaceCatWatch:
+    type: application
+    platform: watchOS
+    sources: [Sources]
+    dependencies:
+      - target: SpaceCatWidgets
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecat.terminal.watchkitapp
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 3
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_KEY_WKApplication: true
+        INFOPLIST_KEY_WKWatchOnly: true
+        INFOPLIST_KEY_CFBundleDisplayName: Space Cat
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "4"
+        DEVELOPMENT_TEAM: W5972G8X8N
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: true
+  SpaceCatWidgets:
+    type: app-extension
+    platform: watchOS
+    sources: [Widgets]
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: Space Cat
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.spacecat.terminal.watchkitapp.widgets
+        MARKETING_VERSION: 1.0.0
+        CURRENT_PROJECT_VERSION: 3
+        INFOPLIST_KEY_CFBundleDisplayName: Space Cat
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "4"
+        DEVELOPMENT_TEAM: W5972G8X8N
+        CODE_SIGN_STYLE: Automatic
+        SKIP_INSTALL: true

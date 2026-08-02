@@ -1,0 +1,11 @@
+online	Chaser, Space Cat Station. Communications check. Approach corridor is open.
+range25	Range twenty five. Verify closing rate and lateral drift.
+clear25	Hold point one complete. Cleared to range twelve.
+range12	Chaser, Station. Reduce closing velocity. Maintain corridor centerline.
+clear12	Hold point two complete. Fine R C S selected. Cleared for final approach.
+range5go	Alignment nominal. Closing rate within limits. You are go for soft capture.
+closingHigh	Caution. Closing rate high. Apply retrograde thrust.
+driftHigh	Caution. Lateral drift outside corridor. Correct now.
+docked	Soft capture confirmed. Welcome to Space Cat Station.
+contact	Hard contact. Capture failed. Back away from the station.
+procedureAbort	Approach clearance violated. Abort and back away from the station.
