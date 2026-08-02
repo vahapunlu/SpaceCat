@@ -989,7 +989,7 @@ doğrulandı. `/fr/`, `/fr`ye `301` yönlenir.
 ## 51. GITHUB ANA KAYNAK YAYINI — 2 AĞUSTOS 2026 — CODEX
 
 - Güncel SPACE CAT çalışma alanı `vahapunlu/SpaceCat` deposunun `main` dalında tek kaynak
-  olarak yayımlanmak üzere hazırlandı. Eski iki dosyalık web kabuğu güncel Android,
+  olarak yayımlandı. Eski iki dosyalık web kabuğu güncel Android,
   watchOS, web, Worker, bot, test, doküman ve onaylı pazarlama varlıklarıyla değiştirildi.
 - Kök `README.md`, ürünün kapsamını, repo haritasını, doğrulama komutunu ve doğruluk
   ilkelerini GitHub giriş sayfasında açıklar.
@@ -997,3 +997,6 @@ doğrulandı. `/fr/`, `/fr`ye `301` yönlenir.
   dosyaları, Wrangler/Claude durumu, sanal ortamlar ve derleme çıktıları `.gitignore`
   kapsamındadır. Commit öncesi yüksek güvenli anahtar imzası taraması temizdir.
 - Yayın mevcut GitHub `main` tarihçesinin fast-forward devamıdır; force push kullanılmaz.
+
+**GitHub:** `https://github.com/vahapunlu/SpaceCat` · `main` · başlangıç commit'i
+`9b3e9bd` · secret/build kapısı temiz · çalışma ağacı senkron.
