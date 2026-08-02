@@ -30,7 +30,7 @@ ok(notFound.includes('content="noindex"'), '404 is noindex');
 
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 const lastmods = [...sitemap.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)].map((match) => match[1]);
-ok(urls.length === 11, 'sitemap exposes eleven canonical pages');
+ok(urls.length === 12, 'sitemap exposes twelve canonical pages');
 ok(new Set(urls).size === urls.length, 'sitemap URLs are unique');
 ok(urls.every((url) => /^https:\/\/spacecat\.watch\//.test(url)), 'sitemap uses canonical HTTPS host');
 ok(lastmods.length === urls.length, 'every sitemap URL has lastmod');
@@ -46,6 +46,7 @@ ok(index.includes('rel="alternate" hreflang="tr" href="https://spacecat.watch/tr
 ok(index.includes('rel="alternate" hreflang="es" href="https://spacecat.watch/es"'), 'home advertises Spanish alternate');
 ok(index.includes('rel="alternate" hreflang="fr" href="https://spacecat.watch/fr"'), 'home advertises French alternate');
 ok(index.includes('rel="alternate" hreflang="ja" href="https://spacecat.watch/ja"'), 'home advertises Japanese alternate');
+ok(index.includes('rel="alternate" hreflang="de" href="https://spacecat.watch/de"'), 'home advertises German alternate');
 ok(index.includes('rel="alternate" hreflang="x-default" href="https://spacecat.watch/"'), 'home advertises x-default');
 ok(index.includes('out.innerHTML=\'\';\n  typeBoot(0);'), 'JavaScript upgrades the static terminal in place');
 ok(!/<section class="static-terminal"[^>]*(hidden|display:\s*none)/i.test(index), 'static terminal is not hidden');
@@ -63,8 +64,8 @@ ok(index.includes('https://x.com/spacecatwatch'), 'graph links official X accoun
 ok(index.includes('https://www.instagram.com/spacecatwatch/'), 'graph links official Instagram account');
 ok(index.includes('id=com.spacecat.terminal'), 'graph links the Google Play listing');
 
-ok((worker.match(/staticTitle:/g) || []).length === 9, 'all deep and locale routes have static titles');
-ok((worker.match(/staticDescription:/g) || []).length === 9, 'all deep and locale routes have static descriptions');
+ok((worker.match(/staticTitle:/g) || []).length === 10, 'all deep and locale routes have static titles');
+ok((worker.match(/staticDescription:/g) || []).length === 10, 'all deep and locale routes have static descriptions');
 ok(worker.includes('page["@id"] = `${canonical}#webpage`'), 'route worker rewrites WebPage identity');
 ok(worker.includes('page.description = route.description'), 'route worker rewrites JSON-LD description');
 ok(worker.includes('id="staticRouteDescription"'), 'route worker rewrites visible static description');

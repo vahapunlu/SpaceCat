@@ -7,7 +7,7 @@ web experience, and standalone launch tracking for Wear OS and watchOS.
 - Wear OS: [Google Play](https://play.google.com/store/apps/details?id=com.spacecat.terminal)
 - Web terminal: live launch countdowns, source-aware mission states, ISS and deep-space
   tools, ASCII simulations, hidden filesystem stories, and two flight-dynamics games
-- Languages: English, Turkish, Spanish, French, and Japanese explanatory layers; terminal commands
+- Languages: English, Turkish, Spanish, French, Japanese, and German explanatory layers; terminal commands
   and mission-control vocabulary remain English
 
 ## Repository map

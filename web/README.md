@@ -104,10 +104,10 @@ OG kartın kaynağı scratchpad'te üretildi; yeniden üretmek için: 1200×630 
   Dinamik içerik rezervi, `visualViewport` klavye ofseti ve safe-area desteği sayesinde
   komut satırı mobilde tarayıcı/klavye arkasında kalmaz.
 - Kontrollü yerelleştirme: `/` İngilizce + `x-default`, `/tr` Türkçe, `/es` İspanyolca,
-  `/fr` Fransızca, `/ja` Japonca
+  `/fr` Fransızca, `/ja` Japonca, `/de` Almanca
   açıklama katmanıdır. Komutlar, prompt, dosya sistemi, mission-control etiketleri ve ASCII
   evreni İngilizce kalır; yalnız crawlable ürün metni, `help` açıklamaları, operatör
-  yönlendirmesi ve uygulama bilgileri çevrilir. `lang en|tr|es|fr|ja` ile görünür `LANG`
+  yönlendirmesi ve uygulama bilgileri çevrilir. `lang en|tr|es|fr|ja|de` ile görünür `LANG`
   bağlantıları canonical rotaları değiştirir.
 - Responsive terminal yardımı: `help` boşluk dolgulu düz metin yerine semantik satırlardır;
   masaüstünde komut/açıklama iki sütun, 600 px ve altında komut üstte ve `└─` açıklama

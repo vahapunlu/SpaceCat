@@ -1589,3 +1589,31 @@ gidiş dönüşü başarılıdır. 26 web/güvenlik test paketi toplam **1117 ko
 Japonca `html lang`, self-canonical, `ja_JP`, JSON-LD, görünür ürün metni, `JA_HELP`,
 beşli `hreflang` ve `lang ja` sözleşmesi doğrulandı. `/ja/` kalıcı olarak `/ja`ya 301
 yönlenir; canlı sitemap Japonca canonical URL'yi taşır.
+
+## Faz 21.12 · Beşinci Yerel Dil: Kontrollü Almanca — CODEX — 2 Ağustos 2026
+
+- Almanca `/de`, dar yerelleştirme anayasasının beşinci yerel dili olarak ayrı, crawlable
+  ve self-canonical rotada kuruldu. `/`, `/tr`, `/es`, `/fr`, `/ja`, `/de` ve `x-default`
+  karşılıklı `hreflang` taşır; Almanca canonical sitemap'e eklendi.
+- Prompt, komutlar/argümanlar, dosya yolları, görev kontrolü başlıkları, görev/ajans adları,
+  ASCII sahneler ve doğruluk sözlüğü İngilizce kaldı. Almanca yalnız SEO ve JavaScript
+  öncesi içerik, `help` açıklamaları, operatör rehberi, canlı görev ipuçları, ürün/güven
+  metinleri ve erişilebilirlik etiketinde kullanılır.
+- Merkezi `DE_HELP`, diğer açıklama kataloglarıyla aynı seçim sınırına bağlandı.
+  `lang en|tr|es|fr|ja|de` canonical rotalar arasında geçer; aktif dil tekrarlanmaz,
+  `home` Almanca kökü korur ve otomatik IP/tarayıcı yönlendirmesi yapılmaz.
+- Worker `/de` için `<html lang="de">`, `og:locale=de_DE`, Almanca WebPage/App JSON-LD,
+  arama metni ve görünür statik içerik üretir. Uzun Almanca birleşik kelimeler ayrıca mobil
+  satır kırılımı kapısından geçirilir; yeni API, backend veya çeviri servisi eklenmez.
+
+**Doğrulama:** Almanca ana ekran ve `help` 390×844, `help` 320×700, ana ekran 1280×800
+gerçek tarayıcı boyutlarında yatay taşmasızdır. Uzun birleşik kelimelerde satır içi taşma
+sıfır, Command Deck alt kenarda görünür ve `lang de` → `lang en` → `lang de` gidiş dönüşü
+başarılıdır. 26 web/güvenlik test paketi toplam **1138 kontrol** ile geçmiştir.
+
+**Maliyet:** Sıfır; mevcut Worker ve statik açıklama katalogları paylaşılır.
+
+**Production:** `b1a9b7e4` · `https://spacecat.watch/de` `HTTP 200`; canlı kaynakta
+Almanca `html lang`, self-canonical, `de_DE`, JSON-LD, görünür ürün metni, `DE_HELP`,
+altılı `hreflang` ve `lang de` sözleşmesi doğrulandı. `/de/` kalıcı olarak `/de`ye 301
+yönlenir; canlı sitemap Almanca canonical URL'yi taşır.

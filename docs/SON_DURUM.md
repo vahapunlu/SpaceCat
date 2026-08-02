@@ -1025,3 +1025,30 @@ gerçek tarayıcı QA'sında taşmasızdır. CJK karakterleri okunur, Command De
 **Production:** `a0ac0d8d` · `https://spacecat.watch/ja` `HTTP 200`; Japonca canonical,
 `ja_JP`, JSON-LD, sitemap, beşli `hreflang` ve açıklama kataloğu canlı kaynakta
 doğrulandı. `/ja/`, `/ja`ya `301` yönlenir.
+
+## 53. BEŞİNCİ YEREL DİL: KONTROLLÜ ALMANCA — 2 AĞUSTOS 2026 — CODEX
+
+- `/de`, Almanca açıklama ve arama katmanı olarak ayrı canonical rotada hazırlandı.
+  İngilizce `/`, Türkçe `/tr`, İspanyolca `/es`, Fransızca `/fr`, Japonca `/ja`, Almanca
+  `/de` ve `x-default` karşılıklı `hreflang` ile sitemap kayıtlarını taşır.
+- Terminalin ana dili değişmez: komutlar, prompt, dosya sistemi, görev kontrolü başlıkları,
+  görev/ajans adları, ASCII sahneler ve `SOURCE / PLANNED / MODEL / SIMULATED / GO / HOLD /
+  T-0` sözlüğü İngilizcedir. Almanca yalnız anlam, yönlendirme, ürün, güven ve
+  erişilebilirlik katmanında görünür.
+- `lang en|tr|es|fr|ja|de` ve görünür `LANG` bağlantıları altı canonical rota arasında
+  geçer. Aktif dil tekrarlanmaz, `home` Almanca kökü korur ve aynı anda tek açıklama dili
+  görünür.
+- Uzun Almanca kelimeler, mobil `help` düzeni ve sabit Command Deck özel responsive
+  doğrulama kapısından geçmeden production'a alınmaz.
+- Yeni API, backend, abonelik, çalışma zamanı çeviri servisi veya editoryal bakım
+  zorunluluğu eklenmedi.
+
+**Doğrulama:** Almanca ana ekran/`help` 390×844, `help` 320×700 ve ana ekran 1280×800
+gerçek tarayıcı QA'sında taşmasızdır. Uzun Almanca birleşik kelimelerde help satırı taşması
+sıfır, Command Deck görünür, `[EN] [TR] [ES] [FR] [JA]` bağlantıları doğru ve
+`lang de` → `lang en` → `lang de` geçişi çalışır. 26 paket toplam **1138 kontrol** ile
+başarılıdır.
+
+**Production:** `b1a9b7e4` · `https://spacecat.watch/de` `HTTP 200`; Almanca canonical,
+`de_DE`, JSON-LD, sitemap, altılı `hreflang` ve açıklama kataloğu canlı kaynakta
+doğrulandı. `/de/`, `/de`ye `301` yönlenir.

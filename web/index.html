@@ -13,6 +13,7 @@
 <link rel="alternate" hreflang="es" href="https://spacecat.watch/es">
 <link rel="alternate" hreflang="fr" href="https://spacecat.watch/fr">
 <link rel="alternate" hreflang="ja" href="https://spacecat.watch/ja">
+<link rel="alternate" hreflang="de" href="https://spacecat.watch/de">
 <link rel="alternate" hreflang="x-default" href="https://spacecat.watch/">
 <meta property="og:title" content="SPACE CAT :: Launch Terminal">
 <meta property="og:description" content="Every rocket launch, live on your wrist. Agency-agnostic. Standalone. One price, no subscription. Type sudo launch.">
@@ -511,6 +512,7 @@
           <a href="/es" lang="es">ES</a>
           <a href="/fr" lang="fr">FR</a>
           <a href="/ja" lang="ja">JA</a>
+          <a href="/de" lang="de">DE</a>
         </nav>
         <p class="dim" id="staticNoJs">
           JavaScript brings the terminal online. Without it, these mission doors and the
@@ -549,7 +551,7 @@
   var X_URL="https://x.com/spacecatwatch";
   var IG_URL="https://www.instagram.com/spacecatwatch/";
   var localePath=location.pathname.replace(/\/+$/,'');
-  var LOCALE=localePath==='/tr'?'tr':localePath==='/es'?'es':localePath==='/fr'?'fr':localePath==='/ja'?'ja':'en';
+  var LOCALE=localePath==='/tr'?'tr':localePath==='/es'?'es':localePath==='/fr'?'fr':localePath==='/ja'?'ja':localePath==='/de'?'de':'en';
   var HOME_PATH=LOCALE==='en'?'/':'/'+LOCALE;
   document.documentElement.lang=LOCALE;
   var TR_HELP={
@@ -688,11 +690,45 @@
     replay:'Félicette、Apollo 11、Sputnik、STS-1、Voyagerの飛行を再生',
     today:'宇宙史上の今日の出来事を表示'
   };
-  var HELP_COPY={tr:TR_HELP,es:ES_HELP,fr:FR_HELP,ja:JA_HELP};
+  var DE_HELP={
+    'sudo launch':'startet das 30-sekündige ASCII-Startkino für Mission n',
+    track:'folgt dem echten Countdown; die Zündung beginnt beim tatsächlichen T-0',
+    focus:'öffnet dieselbe verifizierte Live-Synchronisierung in einer Vollbild-Missionsansicht',
+    sound:'aktiviert oder sichert den Zündungs-Audiokanal',
+    next:'zeigt die nächsten Live-Starts von Launch Library 2',
+    crosscheck:'vergleicht den LL2-T-0 mit RocketLaunch.Live',
+    stream:'erfasst das sicherste offizielle Übertragungssignal',
+    recent:'zeigt die letzten Flüge und veröffentlichten Ergebnisse',
+    mission:'öffnet die vollständige Missionsakte mit Orbit, Startfenster und Briefing',
+    wx:'zeigt das Wetter am Startplatz und die offizielle GO-Wahrscheinlichkeit',
+    remind:'fügt den Start deinem Kalender hinzu',
+    notify:'aktiviert einen Browseralarm bei T-10 Minuten',
+    patch:'erzeugt ein deterministisches ASCII-Missionsabzeichen',
+    board:'zeigt die nächsten Starts als Abflugtafel',
+    iss:'verfolgt die ISS-Position auf einer Live-ASCII-Weltkarte',
+    pass:'berechnet den nächsten sichtbaren ISS-Überflug in den kommenden 24 Stunden',
+    earth:'öffnet die neuesten Vollbild-Aufnahmen der Erde von NASA DSCOVR EPIC',
+    nightwatch:'erstellt das lokale Beobachtungsbriefing für heute Nacht',
+    apod:'dekodiert NASAs tägliche kosmische Postkarte als ASCII',
+    pulsar:'wandelt die katalogisierte Rotationsperiode lokal in Klang um',
+    transmit:'simuliert lokal ein Paket mit der echten Lichtlaufzeit',
+    lighttime:'prüft die Ankunft nur auf dem Gerät gespeicherter Pakete',
+    solar:'zeigt live das geomagnetische Weltraumwetter von NOAA SWPC',
+    fireball:'zeigt aktuelle atmosphärische Feuerkugel-Erkennungen von NASA/JPL',
+    approach:'zeigt erdnahe Vorbeiflüge der nächsten 60 Tage',
+    moon:'berechnet lokal die heutige Mondphase',
+    signal:'erfasst das heutige Deep-Space-Archivsignal',
+    events:'zeigt Kopplungen, Finsternisse, Vorbeiflüge und Weltraumereignisse',
+    wire:'ruft die neuesten Raumfahrtnachrichten ab',
+    radio:'öffnet die CAPCOM-Audioschleife mit Quindar-Tönen',
+    replay:'spielt einen Flug von Félicette, Apollo 11, Sputnik, STS-1 oder Voyager erneut ab',
+    today:'zeigt heutige Ereignisse der Raumfahrtgeschichte'
+  };
+  var HELP_COPY={tr:TR_HELP,es:ES_HELP,fr:FR_HELP,ja:JA_HELP,de:DE_HELP};
   function helpDescription(command,fallback){var table=HELP_COPY[LOCALE];return table&&table[command]?table[command]:fallback;}
-  function localized(en,tr,es,fr,ja){return LOCALE==='tr'?tr:LOCALE==='es'?(es||en):LOCALE==='fr'?(fr||en):LOCALE==='ja'?(ja||en):en;}
+  function localized(en,tr,es,fr,ja,de){return LOCALE==='tr'?tr:LOCALE==='es'?(es||en):LOCALE==='fr'?(fr||en):LOCALE==='ja'?(ja||en):LOCALE==='de'?(de||en):en;}
   function localeSwitchHtml(){
-    return ['en','tr','es','fr','ja'].filter(function(code){return code!==LOCALE;}).map(function(code){
+    return ['en','tr','es','fr','ja','de'].filter(function(code){return code!==LOCALE;}).map(function(code){
       return '<a href="'+(code==='en'?'/':'/'+code)+'" lang="'+code+'">['+code.toUpperCase()+']</a>';
     }).join(' ');
   }
@@ -769,6 +805,9 @@
   }else if(LOCALE==='ja'){
     hint.innerHTML='<span class="kbd">help</span> と入力 · <span class="kbd">sudo launch</span> = ASCIIシネマ · <span class="kbd">track</span> = 実際のT-0とライブ同期 ▾';
     input.setAttribute('aria-label','ターミナルコマンド入力');
+  }else if(LOCALE==='de'){
+    hint.innerHTML='<span class="kbd">help</span> eingeben · <span class="kbd">sudo launch</span> = ASCII-Kino · <span class="kbd">track</span> = Live-Synchronisierung mit echtem T-0 ▾';
+    input.setAttribute('aria-label','Terminal-Befehlseingabe');
   }
   var DEFAULT_HINT=hint.innerHTML;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -779,6 +818,7 @@
     '/es':'SPACE CAT :: Terminal de Lanzamientos en Vivo',
     '/fr':'SPACE CAT :: Terminal de Lancements en Direct',
     '/ja':'SPACE CAT :: ライブロケット打ち上げターミナル',
+    '/de':'SPACE CAT :: Live-Raketenstart-Terminal',
     '/live':'SPACE CAT :: Live Launch Sync',
     '/launch':'SPACE CAT :: ASCII Launch Sequence',
     '/iss':'SPACE CAT :: ISS Live Telemetry',
@@ -839,7 +879,8 @@
         '<span class="kbd">help</span> yaz · TAB komutları tamamlar ▾',
         'escribe <span class="kbd">help</span> · TAB completa comandos ▾',
         'écrivez <span class="kbd">help</span> · TAB complète les commandes ▾',
-        '<span class="kbd">help</span> と入力 · TABでコマンドを補完 ▾');
+        '<span class="kbd">help</span> と入力 · TABでコマンドを補完 ▾',
+        '<span class="kbd">help</span> eingeben · TAB vervollständigt Befehle ▾');
     return DEFAULT_HINT;
   }
   function pulseHint(html){
@@ -859,7 +900,8 @@
         '<span class="kbd">tree /</span> yaz · terminal menüden daha derindir ▾',
         'escribe <span class="kbd">tree /</span> · el terminal es más profundo que el menú ▾',
         'écrivez <span class="kbd">tree /</span> · le terminal est plus profond que le menu ▾',
-        '<span class="kbd">tree /</span> と入力 · ターミナルはメニューより深い ▾');
+        '<span class="kbd">tree /</span> と入力 · ターミナルはメニューより深い ▾',
+        '<span class="kbd">tree /</span> eingeben · das Terminal ist tiefer als das Menü ▾');
     }else if(cmd==='tree'&&next<2&&(!args.length||args[0]==='/')){
       next=2;
       message='<span class="amber">ROOT MOUNTED</span> · '+localized(
@@ -867,7 +909,8 @@
         '<span class="kbd">cd /observatory</span> ve ardından <span class="kbd">ls</span> dene ▾',
         'prueba <span class="kbd">cd /observatory</span> y después <span class="kbd">ls</span> ▾',
         'essayez <span class="kbd">cd /observatory</span> puis <span class="kbd">ls</span> ▾',
-        '<span class="kbd">cd /observatory</span> の後に <span class="kbd">ls</span> を試す ▾');
+        '<span class="kbd">cd /observatory</span> の後に <span class="kbd">ls</span> を試す ▾',
+        '<span class="kbd">cd /observatory</span> und danach <span class="kbd">ls</span> versuchen ▾');
     }else if(cmd==='cd'&&next<3&&state.cwd.indexOf('/observatory')===0){
       next=3;
       message='<span class="amber">OBSERVATORY ONLINE</span> · '+localized(
@@ -875,7 +918,8 @@
         '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · merak, erişim iznidir ▾',
         '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · la curiosidad es la autorización ▾',
         '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · la curiosité est l’autorisation ▾',
-        '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · 好奇心がアクセス権になる ▾');
+        '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · 好奇心がアクセス権になる ▾',
+        '<span class="kbd">ls</span> · <span class="kbd">cat README.TXT</span> · Neugier ist die Freigabe ▾');
     }
     if(next!==state.guidanceStage){saveGuidanceStage(next);pulseHint(message);}
   }
@@ -1650,10 +1694,10 @@
   function homeMount(){
     el('<div class="brand"><h1>SPACE&nbsp;CAT</h1><div class="sub">LAUNCH&nbsp;TERMINAL</div></div>');
     el('<hr class="rule">');
-    el('<span class="white">LIVE ORBITAL LAUNCH NETWORK</span><span class="dim"> · '+localized('mission control online','görev kontrolü çevrimiçi','control de misión en línea','contrôle de mission en ligne','ミッションコントロール接続中')+'</span>');
+    el('<span class="white">LIVE ORBITAL LAUNCH NETWORK</span><span class="dim"> · '+localized('mission control online','görev kontrolü çevrimiçi','control de misión en línea','contrôle de mission en ligne','ミッションコントロール接続中','Missionskontrolle online')+'</span>');
     el('<hr class="rule">');
     heroMount();
-    el('<div class="terminal-storeline"><span>PACKAGE:</span><span class="ok">WEAR OS</span><span>· '+localized('standalone · no subscription','bağımsız · abonelik yok','autónomo · sin suscripción','autonome · sans abonnement','単独動作 · サブスクリプションなし')+'</span><a href="'+PLAY+'" target="_blank" rel="noopener">[INSTALL]</a><span>· LANG '+LOCALE.toUpperCase()+'</span>'+localeSwitchHtml()+'</div>');
+    el('<div class="terminal-storeline"><span>PACKAGE:</span><span class="ok">WEAR OS</span><span>· '+localized('standalone · no subscription','bağımsız · abonelik yok','autónomo · sin suscripción','autonome · sans abonnement','単独動作 · サブスクリプションなし','eigenständig · kein Abonnement')+'</span><a href="'+PLAY+'" target="_blank" rel="noopener">[INSTALL]</a><span>· LANG '+LOCALE.toUpperCase()+'</span>'+localeSwitchHtml()+'</div>');
   }
 
   function banner(){
@@ -1953,6 +1997,16 @@
         success:'ミッション結果をソースが確認 · <span class="amber">recent</span> と入力',
         anomaly:'ソースが異常を報告 · 軌道は推定しない · <span class="amber">recent</span> と入力',
         awaiting:'T-0を通過したが、ソースは離昇を確認していない · 機体は射点に留まる'
+      }:LOCALE==='de'?{
+        ignition:'Quellenstatus und Echtzeit steuern dieses symbolische Zündungsbild · <span class="amber">track</span> eingeben',
+        ascent:'LL2 meldet laufenden Flug · symbolische Flugbahn, keine Telemetrie · <span class="amber">track</span> eingeben',
+        dual:'Oberstufe und Booster folgen den geplanten Quellenereignissen · Ergebnisse benötigen Quellenbestätigung · <span class="amber">track</span> eingeben',
+        upper:'Oberstufenansicht folgt dem eingebundenen Missionsprofil · keine Telemetrie · <span class="amber">track</span> eingeben',
+        orbit:'Nutzlastaussetzung wird beobachtet · endgültiges Quellenergebnis ausstehend · <span class="amber">recent</span> eingeben',
+        deployed:'Nutzlastaussetzung von der Quelle bestätigt · <span class="amber">recent</span> eingeben',
+        success:'Missionsergebnis von der Quelle bestätigt · <span class="amber">recent</span> eingeben',
+        anomaly:'Quelle meldet eine Anomalie · keine Flugbahn wird abgeleitet · <span class="amber">recent</span> eingeben',
+        awaiting:'T-0 ist verstrichen, aber der Start wurde nicht von der Quelle bestätigt · das Fahrzeug bleibt am Startplatz'
       }:{
         ignition:'source status + real clock drive this symbolic ignition frame · type <span class="amber">track</span>',
         ascent:'LL2 reports flight in progress · symbolic path, not telemetry · type <span class="amber">track</span>',
@@ -1969,12 +2023,14 @@
           'konsolu devralmak için <span class="amber">track</span> · ateşleme sesi için <span class="amber">sound on</span> yaz',
           'escribe <span class="amber">track</span> para asumir la consola · <span class="amber">sound on</span> para activar el audio de ignición',
           'écrivez <span class="amber">track</span> pour prendre la console · <span class="amber">sound on</span> pour armer l’audio d’allumage',
-          '<span class="amber">track</span> でコンソールを引き継ぐ · <span class="amber">sound on</span> で点火音声を作動'):
+          '<span class="amber">track</span> でコンソールを引き継ぐ · <span class="amber">sound on</span> で点火音声を作動',
+          '<span class="amber">track</span> übernimmt die Konsole · <span class="amber">sound on</span> aktiviert den Zündungston'):
         localized('type <span class="amber">sudo launch</span> for the 30-sec cinema · <span class="amber">track</span> to ride the REAL countdown',
           '30 saniyelik sinema için <span class="amber">sudo launch</span> · gerçek geri sayım için <span class="amber">track</span> yaz',
           'escribe <span class="amber">sudo launch</span> para el cine de 30 segundos · <span class="amber">track</span> para seguir la cuenta atrás REAL',
           'écrivez <span class="amber">sudo launch</span> pour le cinéma de 30 secondes · <span class="amber">track</span> pour suivre le compte à rebours RÉEL',
-          '30秒シネマは <span class="amber">sudo launch</span> · 実際のカウントダウンは <span class="amber">track</span>'));
+          '30秒シネマは <span class="amber">sudo launch</span> · 実際のカウントダウンは <span class="amber">track</span>',
+          '<span class="amber">sudo launch</span> für das 30-Sekunden-Kino · <span class="amber">track</span> für den ECHTEN Countdown'));
 
       var exceptional=/hold|tbd|tbc|to be/i.test(String(m.status));
       var flightActive=missionDisposition(m.status).code==='FLIGHT'&&
@@ -2018,7 +2074,7 @@
   function footerMount(){
     el('<details class="foot source-drawer"><summary>SOURCES MOUNTED · OPEN LOG</summary>'+
        '<div class="source-copy">Data: Launch Library 2 · Data by RocketLaunch.Live (standby) · NASA/JPL · NASA DSCOVR EPIC · NASA APOD · NOAA SWPC/OVATION · ATNF reference periods · SatNOGS DB contributors (CC BY-SA 4.0) · IGWN GraceDB · CelesTrak · Spaceflight News API · Open-Meteo · wheretheiss.at. '+
-       localized('Not affiliated with SpaceX, NASA or any agency.','SpaceX, NASA veya herhangi bir uzay ajansıyla bağlantılı değildir.','No está afiliado con SpaceX, NASA ni ninguna agencia espacial.','Non affilié à SpaceX, NASA ou toute autre agence spatiale.','SpaceX、NASA、その他の宇宙機関とは提携していません。')+' © 2026 BE Engineering. · <a href="/privacy">privacy</a></div></details>');
+       localized('Not affiliated with SpaceX, NASA or any agency.','SpaceX, NASA veya herhangi bir uzay ajansıyla bağlantılı değildir.','No está afiliado con SpaceX, NASA ni ninguna agencia espacial.','Non affilié à SpaceX, NASA ou toute autre agence spatiale.','SpaceX、NASA、その他の宇宙機関とは提携していません。','Nicht mit SpaceX, NASA oder einer anderen Raumfahrtorganisation verbunden.')+' © 2026 BE Engineering. · <a href="/privacy">privacy</a></div></details>');
   }
   function clearHomeUtilities(){
     Array.prototype.forEach.call(document.querySelectorAll('[data-home-utility]'),function(node){node.remove();});
@@ -4362,11 +4418,12 @@
         'canlı mount’lar + yerel Black Box<br>her çalıştırılabilir dosya indekslenmez · şununla başla: ',
         'montajes en vivo + Black Box local<br>no todos los ejecutables están indexados · empieza con: ',
         'montages en direct + Black Box locale<br>tous les exécutables ne sont pas indexés · commencez par : ',
-        'ライブマウント + ローカルBlack Box<br>すべての実行ファイルが索引化されるわけではない · 最初は: ')+
+        'ライブマウント + ローカルBlack Box<br>すべての実行ファイルが索引化されるわけではない · 最初は: ',
+        'Live-Mounts + lokale Black Box<br>nicht jede ausführbare Datei ist indiziert · beginne mit: ')+
         '<span class="amber">tree /</span></div>'+
       helpTokens('THE APP',['about','features','platforms','install','price','contact'])+
       helpTokens('MISC',['home','lang','logbook','copy','felicette','share','history','clear'])+
-      '<div class="help-note">'+localized('TAB completes indexed commands','TAB indekslenmiş komutları tamamlar','TAB completa los comandos indexados','TAB complète les commandes indexées','TABで索引済みコマンドを補完')+' · routes: '+esc(SITE+'launch')+' · /live · /iss · /tr · /es · /fr · /ja</div>'+
+      '<div class="help-note">'+localized('TAB completes indexed commands','TAB indekslenmiş komutları tamamlar','TAB completa los comandos indexados','TAB complète les commandes indexées','TABで索引済みコマンドを補完','TAB vervollständigt indizierte Befehle')+' · routes: '+esc(SITE+'launch')+' · /live · /iss · /tr · /es · /fr · /ja · /de</div>'+
       '</div>';},
     about:function(){return LOCALE==='tr'?
       '<span class="white">Space Cat: Launch Terminal</span>, bilek için tasarlanmış ve hiçbir ajansa bağlı olmayan bir roket fırlatma takipçisidir.\n'+
@@ -4384,6 +4441,10 @@
       '<span class="white">Space Cat: Launch Terminal</span>は、手首のために設計された、特定機関に依存しないロケット打ち上げトラッカーです。\n'+
       '「SpaceXウォッチ」ではありません — <span class="white">すべての運用者、すべてのミッション。</span> ウォッチフェイスのコンプリケーションとタイルに常駐し、\n'+
       '実際のカウントダウンを表示し、スマートフォンなしで動作します。':
+      LOCALE==='de'?
+      '<span class="white">Space Cat: Launch Terminal</span> ist ein organisationsunabhängiger Raketenstart-Tracker für dein Handgelenk.\n'+
+      'Keine „SpaceX-Uhr“ — <span class="white">jeder Anbieter, jede Mission.</span> Es lebt in den Komplikationen und Tiles deiner Uhr,\n'+
+      'zeigt einen echten laufenden Countdown und funktioniert ohne verbundenes Smartphone.':
       '<span class="white">Space Cat: Launch Terminal</span> is an agency-agnostic rocket-launch\n'+
       'tracker built for the wrist. Not a "SpaceX watch" — <span class="white">every provider,\n'+
       'every mission.</span> It lives in your watch face complications and tiles,\n'+
@@ -4413,14 +4474,15 @@
     platforms:function(){return 'WEAR OS  <span class="dim">— Android 11+ (Wear OS 3.0+)</span>  <span class="ok" style="text-shadow:none">LIVE</span>\n'+
       '         <span class="dim">Galaxy Watch 4/5/6/7/Ultra · Pixel Watch 1/2/3 · TicWatch Pro 5 …</span>\n'+
       'WATCHOS  <span class="dim">— watchOS 10+ · Apple Watch</span>  <span class="amber">IN REVIEW</span>\n'+
-      '\n<span class="dim">'+localized('Standalone: runs on the watch itself, phone optional.','Bağımsız: doğrudan saatin üzerinde çalışır; telefon isteğe bağlıdır.','Autónomo: funciona en el propio reloj; el teléfono es opcional.','Autonome : fonctionne directement sur la montre ; le téléphone est facultatif.','単独動作: ウォッチ本体で動作し、スマートフォンは任意です。')+'</span>';},
+      '\n<span class="dim">'+localized('Standalone: runs on the watch itself, phone optional.','Bağımsız: doğrudan saatin üzerinde çalışır; telefon isteğe bağlıdır.','Autónomo: funciona en el propio reloj; el teléfono es opcional.','Autonome : fonctionne directement sur la montre ; le téléphone est facultatif.','単独動作: ウォッチ本体で動作し、スマートフォンは任意です。','Eigenständig: läuft direkt auf der Uhr; das Smartphone ist optional.')+'</span>';},
     install:function(){return 'Google Play (Wear OS) — live now:\n  <a href="'+PLAY+'" target="_blank" rel="noopener">'+PLAY+'</a>\n\n'+
       localized('Or beam it straight to your phone — point your camera at the pad:',
         'Ya da doğrudan telefonuna gönder — kameranı aşağıdaki koda doğrult:',
         'O envíalo directamente a tu teléfono — apunta la cámara al código:',
         'Ou envoyez-le directement sur votre téléphone — pointez l’appareil photo vers le code :',
-        'スマートフォンへ直接送信 — カメラをこのコードに向けてください:')+'\n'+qrBlock()+
-      '\nApple App Store (watchOS): <span class="amber">coming soon</span> — '+localized('currently in review.','şu anda incelemede.','actualmente en revisión.','actuellement en cours d’examen.','現在審査中です。');},
+        'スマートフォンへ直接送信 — カメラをこのコードに向けてください:',
+        'Oder direkt auf dein Smartphone senden — richte die Kamera auf diesen Code:')+'\n'+qrBlock()+
+      '\nApple App Store (watchOS): <span class="amber">coming soon</span> — '+localized('currently in review.','şu anda incelemede.','actualmente en revisión.','actuellement en cours d’examen.','現在審査中です。','derzeit in Prüfung.');},
     next:function(){nextFetch();return '<span class="dim">Querying dual-source launch board …</span>';},
     crosscheck:function(a){crosscheckShow(parseInt(a[0],10)||1);return '<span class="dim">Comparing primary and standby T-0 clocks …</span>';},
     stream:function(a){streamShow(parseInt(a[0],10)||1);return '<span class="dim">Scanning approved webcast carriers …</span>';},
@@ -4500,8 +4562,8 @@
     seal:function(){return '<span class="amber">'+esc(veteranSealText(readLogbook()))+'</span>';},
     copy:function(a){return copyCommand(a);},
     wire:function(){wireFetch();return '<span class="dim">Pulling the wire (Spaceflight News API) …</span>';},
-    price:function(){return '<span class="white">'+localized('One price. Everything included. No subscription.','Tek fiyat. Her şey dahil. Abonelik yok.','Un solo pago. Todo incluido. Sin suscripción.','Un seul achat. Tout est inclus. Sans abonnement.','買い切り。すべて込み。サブスクリプションなし。')+'</span>\n<span class="dim">'+localized('A premium tool for space enthusiasts — buy once, own it.','Uzay meraklıları için premium bir araç — bir kez al, senin olsun.','Una herramienta premium para entusiastas del espacio — compra una vez, es tuya.','Un outil premium pour les passionnés d’espace — achetez une fois, il est à vous.','宇宙ファンのためのプレミアムツール — 一度購入すれば、ずっとあなたのもの。')+'</span>';},
-    contact:function(){return localized('Developer','Geliştirici','Desarrollador','Développeur','開発者')+': <span class="white">BE Engineering</span>\n'+localized('Support & feedback','Destek ve geri bildirim','Soporte y comentarios','Assistance et commentaires','サポートとフィードバック')+': <a href="mailto:vahapunlu@gmail.com">vahapunlu@gmail.com</a>';},
+    price:function(){return '<span class="white">'+localized('One price. Everything included. No subscription.','Tek fiyat. Her şey dahil. Abonelik yok.','Un solo pago. Todo incluido. Sin suscripción.','Un seul achat. Tout est inclus. Sans abonnement.','買い切り。すべて込み。サブスクリプションなし。','Ein Preis. Alles enthalten. Kein Abonnement.')+'</span>\n<span class="dim">'+localized('A premium tool for space enthusiasts — buy once, own it.','Uzay meraklıları için premium bir araç — bir kez al, senin olsun.','Una herramienta premium para entusiastas del espacio — compra una vez, es tuya.','Un outil premium pour les passionnés d’espace — achetez une fois, il est à vous.','宇宙ファンのためのプレミアムツール — 一度購入すれば、ずっとあなたのもの。','Ein Premium-Werkzeug für Raumfahrtbegeisterte — einmal kaufen, dauerhaft besitzen.')+'</span>';},
+    contact:function(){return localized('Developer','Geliştirici','Desarrollador','Développeur','開発者','Entwickler')+': <span class="white">BE Engineering</span>\n'+localized('Support & feedback','Destek ve geri bildirim','Soporte y comentarios','Assistance et commentaires','サポートとフィードバック','Support und Feedback')+': <a href="mailto:vahapunlu@gmail.com">vahapunlu@gmail.com</a>';},
     social:function(){return 'SPACE CAT RELAY CHANNELS\n'+
       '  <a href="'+X_URL+'" target="_blank" rel="noopener">X · @spacecatwatch</a>\n'+
       '  <a href="'+IG_URL+'" target="_blank" rel="noopener">Instagram · @spacecatwatch</a>\n'+
@@ -4515,8 +4577,8 @@
     share:function(a){shareShow(parseInt(a[0],10)||1);return '<span class="dim">Preparing flight record …</span>';},
     lang:function(a){
       var target=(a[0]||'').toLowerCase();
-      if(!target)return 'LANGUAGE  <span class="amber">'+LOCALE.toUpperCase()+'</span>\n<span class="dim">usage: lang en · lang tr · lang es · lang fr · lang ja</span>';
-      if(['en','tr','es','fr','ja'].indexOf(target)<0)return '<span class="red">LANGUAGE CHANNEL UNAVAILABLE</span>\n<span class="dim">available: en · tr · es · fr · ja</span>';
+      if(!target)return 'LANGUAGE  <span class="amber">'+LOCALE.toUpperCase()+'</span>\n<span class="dim">usage: lang en · lang tr · lang es · lang fr · lang ja · lang de</span>';
+      if(['en','tr','es','fr','ja','de'].indexOf(target)<0)return '<span class="red">LANGUAGE CHANNEL UNAVAILABLE</span>\n<span class="dim">available: en · tr · es · fr · ja · de</span>';
       if(target===LOCALE)return '<span class="dim">LANGUAGE CHANNEL ALREADY '+target.toUpperCase()+'</span>';
       location.assign(target==='en'?'/':'/'+target);
       return '<span class="dim">SWITCHING LANGUAGE CHANNEL → '+target.toUpperCase()+'</span>';
@@ -4600,18 +4662,18 @@
 
   function featList(){return ''+
     '<div class="feat">'+
-    row('🚀 LIVE TILE',localized('ticking countdown, 24h progress ring, GO/HOLD status','canlı geri sayım, 24 saatlik ilerleme halkası, GO/HOLD durumu','cuenta atrás en vivo, anillo de progreso de 24 h y estado GO/HOLD','compte à rebours en direct, anneau de progression 24 h et état GO/HOLD','ライブカウントダウン、24時間進捗リング、GO/HOLD状態'))+
-    row('⏱ COMPLICATIONS',localized('T-minus on any face: text, progress arc, or GO-odds','her saat yüzünde T-minus: metin, ilerleme yayı veya GO olasılığı','T-minus en cualquier esfera: texto, arco de progreso o probabilidad GO','T-minus sur tout cadran : texte, arc de progression ou probabilité GO','どの文字盤にもT-minusを表示: テキスト、進捗アーク、GO確率'))+
-    row('📡 WATCH LIVE',localized('jump to the official webcast, opens on your phone','resmî yayına geç; telefonunda açılır','abre la transmisión oficial en tu teléfono','ouvre la diffusion officielle sur votre téléphone','公式配信をスマートフォンで開く'))+
-    row('🌦 PAD WX + GO ODDS',localized('launch-site weather &amp; official GO probability','fırlatma sahası hava durumu ve resmî GO olasılığı','meteorología de la plataforma y probabilidad GO oficial','météo du pas de tir et probabilité GO officielle','射点の気象と公式GO確率'))+
-    row('📋 MISSION FILES',localized('vehicle, orbit, pad, window, stats, imagery, logos','araç, yörünge, saha, pencere, istatistik, görsel ve logolar','vehículo, órbita, plataforma, ventana, estadísticas, imágenes y logotipos','véhicule, orbite, pas de tir, fenêtre, statistiques, images et logos','機体、軌道、射点、打ち上げ枠、統計、画像、ロゴ'))+
-    row('🛰 LIVE ISS',localized('station position, altitude &amp; speed, live','istasyonun canlı konumu, irtifası ve hızı','posición, altitud y velocidad de la estación en vivo','position, altitude et vitesse de la station en direct','ISSの位置、高度、速度をライブ表示'))+
-    row('🌌 SPACE EVENTS',localized('spacewalks, dockings, eclipses, flybys','uzay yürüyüşleri, kenetlenmeler, tutulmalar ve yakın geçişler','paseos espaciales, acoplamientos, eclipses y sobrevuelos','sorties extravéhiculaires, amarrages, éclipses et survols','船外活動、ドッキング、食、フライバイ'))+
-    row('📰 THE WIRE',localized('latest spaceflight headlines, on your wrist','son uzay uçuşu haberleri bileğinde','últimos titulares de vuelos espaciales en tu muñeca','derniers titres de l’actualité spatiale à votre poignet','最新の宇宙飛行ニュースを手首に'))+
-    row('⭐ FAVORITES',localized('follow agencies &amp; filter the list + your alerts','ajansları takip et; listeyi ve uyarıları filtrele','sigue agencias y filtra la lista y tus alertas','suivez les agences et filtrez la liste et vos alertes','機関をフォローし、一覧とアラートを絞り込む'))+
-    row('🔔 SMART ALERTS',localized('T-10, T-1h, GO/HOLD, delays, liftoff buzz — all optional','T-10, T-1 saat, GO/HOLD, gecikme ve ateşleme titreşimi — tümü isteğe bağlı','T-10, T-1 h, GO/HOLD, retrasos y vibración de despegue — todo opcional','T-10, T-1 h, GO/HOLD, retards et vibration au décollage — tout est facultatif','T-10、T-1時間、GO/HOLD、延期、離昇振動 — すべて任意'))+
-    row('📅 ADD TO CALENDAR',localized('save any launch in one tap','herhangi bir fırlatmayı tek dokunuşla kaydet','guarda cualquier lanzamiento con un toque','enregistrez tout lancement d’un geste','ワンタップで打ち上げを保存'))+
-    row('🛰 STANDALONE',localized('works without your phone','telefon olmadan çalışır','funciona sin tu teléfono','fonctionne sans votre téléphone','スマートフォンなしで動作'))+
+    row('🚀 LIVE TILE',localized('ticking countdown, 24h progress ring, GO/HOLD status','canlı geri sayım, 24 saatlik ilerleme halkası, GO/HOLD durumu','cuenta atrás en vivo, anillo de progreso de 24 h y estado GO/HOLD','compte à rebours en direct, anneau de progression 24 h et état GO/HOLD','ライブカウントダウン、24時間進捗リング、GO/HOLD状態','laufender Countdown, 24-Stunden-Fortschrittsring und GO/HOLD-Status'))+
+    row('⏱ COMPLICATIONS',localized('T-minus on any face: text, progress arc, or GO-odds','her saat yüzünde T-minus: metin, ilerleme yayı veya GO olasılığı','T-minus en cualquier esfera: texto, arco de progreso o probabilidad GO','T-minus sur tout cadran : texte, arc de progression ou probabilité GO','どの文字盤にもT-minusを表示: テキスト、進捗アーク、GO確率','T-minus auf jedem Zifferblatt: Text, Fortschrittsbogen oder GO-Chance'))+
+    row('📡 WATCH LIVE',localized('jump to the official webcast, opens on your phone','resmî yayına geç; telefonunda açılır','abre la transmisión oficial en tu teléfono','ouvre la diffusion officielle sur votre téléphone','公式配信をスマートフォンで開く','öffnet die offizielle Übertragung auf deinem Smartphone'))+
+    row('🌦 PAD WX + GO ODDS',localized('launch-site weather &amp; official GO probability','fırlatma sahası hava durumu ve resmî GO olasılığı','meteorología de la plataforma y probabilidad GO oficial','météo du pas de tir et probabilité GO officielle','射点の気象と公式GO確率','Wetter am Startplatz und offizielle GO-Wahrscheinlichkeit'))+
+    row('📋 MISSION FILES',localized('vehicle, orbit, pad, window, stats, imagery, logos','araç, yörünge, saha, pencere, istatistik, görsel ve logolar','vehículo, órbita, plataforma, ventana, estadísticas, imágenes y logotipos','véhicule, orbite, pas de tir, fenêtre, statistiques, images et logos','機体、軌道、射点、打ち上げ枠、統計、画像、ロゴ','Fahrzeug, Orbit, Startplatz, Fenster, Statistiken, Bilder und Logos'))+
+    row('🛰 LIVE ISS',localized('station position, altitude &amp; speed, live','istasyonun canlı konumu, irtifası ve hızı','posición, altitud y velocidad de la estación en vivo','position, altitude et vitesse de la station en direct','ISSの位置、高度、速度をライブ表示','Position, Höhe und Geschwindigkeit der Station in Echtzeit'))+
+    row('🌌 SPACE EVENTS',localized('spacewalks, dockings, eclipses, flybys','uzay yürüyüşleri, kenetlenmeler, tutulmalar ve yakın geçişler','paseos espaciales, acoplamientos, eclipses y sobrevuelos','sorties extravéhiculaires, amarrages, éclipses et survols','船外活動、ドッキング、食、フライバイ','Weltraumspaziergänge, Kopplungen, Finsternisse und Vorbeiflüge'))+
+    row('📰 THE WIRE',localized('latest spaceflight headlines, on your wrist','son uzay uçuşu haberleri bileğinde','últimos titulares de vuelos espaciales en tu muñeca','derniers titres de l’actualité spatiale à votre poignet','最新の宇宙飛行ニュースを手首に','aktuelle Raumfahrtnachrichten an deinem Handgelenk'))+
+    row('⭐ FAVORITES',localized('follow agencies &amp; filter the list + your alerts','ajansları takip et; listeyi ve uyarıları filtrele','sigue agencias y filtra la lista y tus alertas','suivez les agences et filtrez la liste et vos alertes','機関をフォローし、一覧とアラートを絞り込む','folge Organisationen und filtere Liste und Alarme'))+
+    row('🔔 SMART ALERTS',localized('T-10, T-1h, GO/HOLD, delays, liftoff buzz — all optional','T-10, T-1 saat, GO/HOLD, gecikme ve ateşleme titreşimi — tümü isteğe bağlı','T-10, T-1 h, GO/HOLD, retrasos y vibración de despegue — todo opcional','T-10, T-1 h, GO/HOLD, retards et vibration au décollage — tout est facultatif','T-10、T-1時間、GO/HOLD、延期、離昇振動 — すべて任意','T-10, T-1 Std., GO/HOLD, Verzögerungen und Startvibration — alles optional'))+
+    row('📅 ADD TO CALENDAR',localized('save any launch in one tap','herhangi bir fırlatmayı tek dokunuşla kaydet','guarda cualquier lanzamiento con un toque','enregistrez tout lancement d’un geste','ワンタップで打ち上げを保存','speichert jeden Start mit einem Fingertipp'))+
+    row('🛰 STANDALONE',localized('works without your phone','telefon olmadan çalışır','funciona sin tu teléfono','fonctionne sans votre téléphone','スマートフォンなしで動作','funktioniert ohne dein Smartphone'))+
     '</div>';}
   function row(a,b){return '<b>'+a+'</b><span>'+b+'</span>';}
 
@@ -6405,7 +6467,7 @@
     else if(cmd==='cat'&&args[0]==='felicette'){ el(CMDS.felicette()); }
     else{ el('<span class="red">'+esc(cmd)+': command not found</span> — type <span class="amber">help</span>'); }
     advanceGuidance(cmd,args);
-    srStatus.textContent=localized('Command '+cmd+' executed. Terminal output updated.',cmd+' komutu çalıştırıldı. Terminal çıktısı güncellendi.','Comando '+cmd+' ejecutado. La salida del terminal se ha actualizado.','Commande '+cmd+' exécutée. La sortie du terminal a été mise à jour.','コマンド '+cmd+' を実行しました。ターミナル出力を更新しました。');
+    srStatus.textContent=localized('Command '+cmd+' executed. Terminal output updated.',cmd+' komutu çalıştırıldı. Terminal çıktısı güncellendi.','Comando '+cmd+' ejecutado. La salida del terminal se ha actualizado.','Commande '+cmd+' exécutée. La sortie du terminal a été mise à jour.','コマンド '+cmd+' を実行しました。ターミナル出力を更新しました。','Befehl '+cmd+' ausgeführt. Terminalausgabe aktualisiert.');
     scroll();
   }
 
@@ -6442,7 +6504,7 @@
       else if(e.key==='ArrowDown'){ if(hi>0){hi--;input.value=state.hist[hi];}else{hi=-1;input.value='';} e.preventDefault(); }
       else if(e.key==='Escape'){
         input.value='';hi=-1;queueCursor();
-        pulseHint('<span class="dim">INPUT CLEARED</span> · '+localized('↑ recalls history · TAB completes commands ▾','↑ geçmişi çağırır · TAB komutları tamamlar ▾','↑ recupera el historial · TAB completa comandos ▾','↑ rappelle l’historique · TAB complète les commandes ▾','↑ で履歴を呼び出す · TABでコマンドを補完 ▾'));
+        pulseHint('<span class="dim">INPUT CLEARED</span> · '+localized('↑ recalls history · TAB completes commands ▾','↑ geçmişi çağırır · TAB komutları tamamlar ▾','↑ recupera el historial · TAB completa comandos ▾','↑ rappelle l’historique · TAB complète les commandes ▾','↑ で履歴を呼び出す · TABでコマンドを補完 ▾','↑ ruft den Verlauf ab · TAB vervollständigt Befehle ▾'));
         e.preventDefault();
       }
       else if(e.key==='Tab'){
