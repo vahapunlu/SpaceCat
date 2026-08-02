@@ -229,6 +229,12 @@
     will-change:transform;contain:layout paint style
   }
   .pingpong-ball::before{content:'●'}
+  .pingpong-vacancy{color:transparent!important;text-shadow:none!important}
+  .pingpong-falling-char{
+    position:fixed;left:0;top:0;z-index:69;pointer-events:none;user-select:none;
+    font:inherit;line-height:1;text-shadow:var(--glow);will-change:transform;
+    contain:layout paint style
+  }
   .pingpong-hit{animation:pingpongHit .12s steps(2,end)}
   @keyframes pingpongHit{
     0%{transform:translateX(0);filter:none}
@@ -3747,6 +3753,7 @@
     if(path==='/usr/games/PINGPONG.COM')return {binary:true,content:
       'SC 50 49 4E 47 50 4F 4E 47\n8088 DISPLAY RESIDENT · ORIGIN UNKNOWN\n'+
       'INTERRUPT VIDEO / CONVENTIONAL MEMORY 2K\nEXECUTABLE PINGPONG.COM\n'+
+      'VARIANT SPACE CAT / GLYPH-GRAVITY MUTATION\n'+
       'BOUNDARY DEVICE-LOCAL VISUAL FICTION / NO DISK WRITE / NO NETWORK'};
     if(path==='/usr/games/SCORES.DAT')return {content:landerStatsText()};
     recordMatch=path.match(/^\/home\/visitor\/flight-records\/sealed-(\d{2})\.log$/);
@@ -4314,6 +4321,7 @@
       '  EXTENDED         16384K\n'+
       '  BLACK BOX        '+String(readLogbook().length).padStart(5,' ')+' sealed sector(s)\n'+
       (state.pingPong?'  RESIDENT VIDEO       2K  PINGPONG.COM\n':'')+
+      (state.pingPong?'  DISPLACED GLYPHS  '+String(state.pingPong.fallen.length).padStart(5,' ')+'  RESTORABLE\n':'')+
       '  EXPERIENCE HEAP  '+String(resources).padStart(5,' ')+' active resource(s)\n\n'+
       '<span class="dim">640K remains enough for anyone who can reach orbit in ASCII.</span>';
   }
@@ -4324,6 +4332,7 @@
       '  '+String(records.length).padStart(3,' ')+' sealed Black Box sector(s)\n'+
       '  '+String(anomalies.length).padStart(3,' ')+' conditional anomaly record(s)\n'+
       '  '+String(state.pingPong?1:0).padStart(3,' ')+' resident video-memory artifact(s)\n'+
+      '  '+String(state.pingPong?state.pingPong.fallen.length:0).padStart(3,' ')+' displaced restorable glyph(s)\n'+
       '    0 bad sectors\n'+
       '    0 lost allocation units\n\n'+
       (state.pingPong
@@ -4392,6 +4401,85 @@
     var maxY=Math.max(minY,Math.min(viewBottom,dockTop)-size-5);
     return {minX:minX,minY:minY,maxX:maxX,maxY:maxY};
   }
+  function pingPongTextHit(x,y){
+    var node=null,offset=0,pos=null;
+    if(document.caretPositionFromPoint){
+      pos=document.caretPositionFromPoint(x,y);
+      if(pos){node=pos.offsetNode;offset=pos.offset;}
+    }else if(document.caretRangeFromPoint){
+      pos=document.caretRangeFromPoint(x,y);
+      if(pos){node=pos.startContainer;offset=pos.startOffset;}
+    }
+    if(!node||node.nodeType!==3||!node.parentElement)return null;
+    var parent=node.parentElement;
+    if(!parent.closest('#output .ln')||parent.closest('a,button,input,.pingpong-vacancy'))return null;
+    var candidates=[offset,offset-1,offset+1],best=null,bestDistance=Infinity;
+    for(var i=0;i<candidates.length;i++){
+      var index=candidates[i];
+      if(index<0||index>=node.data.length||/\s/.test(node.data.charAt(index)))continue;
+      var range=document.createRange();
+      range.setStart(node,index);range.setEnd(node,index+1);
+      var rect=range.getBoundingClientRect();
+      if(!rect.width||!rect.height||x<rect.left-5||x>rect.right+5||y<rect.top-4||y>rect.bottom+4)continue;
+      var distance=Math.abs(x-(rect.left+rect.width/2))+Math.abs(y-(rect.top+rect.height/2));
+      if(distance<bestDistance){bestDistance=distance;best={node:node,index:index,rect:rect,parent:parent};}
+    }
+    return best;
+  }
+  function pingPongDropCharacter(session,hit){
+    if(!hit||session.fallen.length>=32)return false;
+    var node=hit.node,index=hit.index,character=node.data.charAt(index);
+    if(!character||/\s/.test(character)||!node.parentNode)return false;
+    var style=getComputedStyle(hit.parent),tail=node.splitText(index);tail.splitText(1);
+    var vacancy=document.createElement('span');
+    vacancy.className='pingpong-vacancy';vacancy.textContent=character;
+    tail.parentNode.replaceChild(vacancy,tail);
+    var glyph=document.createElement('span');
+    glyph.className='pingpong-falling-char';glyph.setAttribute('aria-hidden','true');
+    glyph.textContent=character;glyph.style.color=style.color;glyph.style.fontFamily=style.fontFamily;
+    glyph.style.fontSize=style.fontSize;glyph.style.fontWeight=style.fontWeight;
+    glyph.style.letterSpacing=style.letterSpacing;
+    document.body.appendChild(glyph);
+    session.glyphHits++;
+    session.fallen.push({glyph:glyph,vacancy:vacancy,character:character,
+      x:hit.rect.left,y:hit.rect.top,vy:24+(session.bounces%5)*9,
+      drift:((character.charCodeAt(0)+session.bounces)%3-1)*9,settled:false});
+    return true;
+  }
+  function pingPongAdvanceFallen(session,dt){
+    var vv=window.visualViewport,viewLeft=vv?vv.offsetLeft:0,viewTop=vv?vv.offsetTop:0;
+    var viewRight=viewLeft+(vv?vv.width:window.innerWidth);
+    var viewBottom=viewTop+(vv?vv.height:window.innerHeight);
+    var dockTop=commandDock&&!commandDock.hidden?commandDock.getBoundingClientRect().top:viewBottom;
+    for(var i=0;i<session.fallen.length;i++){
+      var item=session.fallen[i],size=Math.max(10,item.glyph.offsetHeight||14);
+      if(!item.vacancy.isConnected){
+        if(item.glyph.parentNode)item.glyph.parentNode.removeChild(item.glyph);
+        item.orphaned=true;continue;
+      }
+      var floor=Math.max(viewTop,Math.min(viewBottom,dockTop)-size-3);
+      if(!item.settled){
+        item.vy+=440*dt;item.y+=item.vy*dt;item.x+=item.drift*dt;
+        item.x=Math.max(viewLeft+2,Math.min(viewRight-(item.glyph.offsetWidth||8)-2,item.x));
+        if(item.y>=floor){item.y=floor;item.vy=0;item.settled=true;}
+      }else item.y=Math.min(item.y,floor);
+      item.glyph.style.transform='translate3d('+Math.round(item.x)+'px,'+Math.round(item.y)+'px,0)';
+    }
+    session.fallen=session.fallen.filter(function(item){return !item.orphaned;});
+  }
+  function pingPongRestoreFallen(session){
+    var fallen=session&&session.fallen||[];
+    for(var i=fallen.length-1;i>=0;i--){
+      var item=fallen[i];
+      if(item.glyph&&item.glyph.parentNode)item.glyph.parentNode.removeChild(item.glyph);
+      if(item.vacancy&&item.vacancy.parentNode){
+        var parent=item.vacancy.parentNode;
+        parent.replaceChild(document.createTextNode(item.character),item.vacancy);
+        parent.normalize();
+      }
+    }
+    if(session)session.fallen=[];
+  }
   function pingPongImpact(axis){
     var session=state.pingPong;
     if(!session)return;
@@ -4414,7 +4502,8 @@
   function pingPongStart(){
     if(state.pingPong)return '<span class="dim">PINGPONG.COM already resident · '+state.pingPong.bounces+' wall interrupts</span>';
     experienceStart('pingpong');
-    var session={active:true,bounces:0,startedAt:Date.now(),vx:innerWidth<=600?92:126,vy:innerWidth<=600?76:104,cleaning:false};
+    var session={active:true,bounces:0,startedAt:Date.now(),vx:innerWidth<=600?92:126,
+      vy:innerWidth<=600?76:104,cleaning:false,fallen:[],glyphHits:0};
     state.pingPong=session;
     experienceTimeout('pingpong',function(){
       if(state.pingPong!==session)return;
@@ -4428,6 +4517,7 @@
       function cleanup(){
         if(frame)cancelAnimationFrame(frame);
         if(ball.parentNode)ball.parentNode.removeChild(ball);
+        pingPongRestoreFallen(session);
         var hits=out.querySelectorAll('.pingpong-hit');
         for(var i=0;i<hits.length;i++)hits[i].classList.remove('pingpong-hit');
         if(state.pingPong===session)state.pingPong=null;
@@ -4445,6 +4535,7 @@
         if(state.pingPong!==session)return;
         var dt=Math.min(.045,Math.max(0,(now-last)/1000));last=now;
         bounds=pingPongBounds(ball);
+        var oldX=session.x,oldY=session.y;
         session.x+=session.vx*dt;session.y+=session.vy*dt;
         if(session.x<=bounds.minX||session.x>=bounds.maxX){
           session.x=Math.max(bounds.minX,Math.min(bounds.maxX,session.x));
@@ -4454,6 +4545,15 @@
           session.y=Math.max(bounds.minY,Math.min(bounds.maxY,session.y));
           session.vy*=-1;pingPongImpact('y');
         }
+        var hit=pingPongTextHit(session.x+(ball.offsetWidth||12)/2,session.y+(ball.offsetHeight||12)/2);
+        if(hit&&pingPongDropCharacter(session,hit)){
+          session.x=oldX;session.y=oldY;
+          var dx=session.x+(ball.offsetWidth||12)/2-(hit.rect.left+hit.rect.width/2);
+          var dy=session.y+(ball.offsetHeight||12)/2-(hit.rect.top+hit.rect.height/2);
+          if(Math.abs(dx)>Math.abs(dy)){session.vx*=-1;pingPongImpact('x');}
+          else{session.vy*=-1;pingPongImpact('y');}
+        }
+        pingPongAdvanceFallen(session,dt);
         ball.style.transform='translate3d('+Math.round(session.x)+'px,'+Math.round(session.y)+'px,0)';
         frame=requestAnimationFrame(tick);
       }
@@ -4463,8 +4563,9 @@
   }
   function pingPongRemove(){
     var session=state.pingPong;
-    if(!session)return {bounces:0,seconds:0};
-    var report={bounces:session.bounces,seconds:Math.max(0,Math.round((Date.now()-session.startedAt)/1000))};
+    if(!session)return {bounces:0,seconds:0,glyphs:0};
+    var report={bounces:session.bounces,seconds:Math.max(0,Math.round((Date.now()-session.startedAt)/1000)),
+      glyphs:session.glyphHits};
     experienceClear('pingpong');state.pingPong=null;
     return report;
   }
@@ -4483,7 +4584,8 @@
     experienceTimeout('pongscan',function(){
       var report=pingPongRemove();
       el('<span class="amber">PINGPONG REMOVED</span>\n'+
-        '<span class="dim">'+report.bounces+' wall interrupts · '+report.seconds+' sec resident · 0 files changed · 0 packets sent</span>');
+        '<span class="dim">'+report.bounces+' display interrupts · '+report.glyphs+' glyphs restored · '+
+        report.seconds+' sec resident · 0 files changed · 0 packets sent</span>');
       srStatus.textContent='Legacy Ping-Pong display artifact removed. Terminal display restored.';
       pulseHint('<span class="amber">DISPLAY RESTORED</span> · terminal integrity nominal ▾');
       experienceClear('pongscan');

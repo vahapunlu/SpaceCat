@@ -145,16 +145,22 @@ Paket yeni API, backend, hesap, veri yazımı veya gerçek ağ taraması oluştu
 
 - `/usr/games/PINGPONG.COM`, ana `help` ve TAB listesinden gizli; `tree /`, `cd`, `ls`,
   `cat` ve doğrudan `.COM` çalıştırma davranışıyla keşfedilir.
-- Program gerçek zararlı yazılım değildir: tek bir DOM karakterini görünür viewport içinde
-  hareket ettiren, oturumluk ve cihaz-yerel bir 8088/Ping-Pong saygı duruşudur. Ağ, cookie,
+- Program gerçek zararlı yazılım değildir: tek bir DOS topunu ve geçici ekran gliflerini
+  görünür viewport içinde hareket ettiren, oturumluk ve cihaz-yerel bir 8088/Ping-Pong
+  saygı duruşudur. Ağ, cookie,
   IndexedDB, localStorage, service worker, dosya yazımı veya dış payload kullanmaz.
 - Top Command Deck'in üst sınırında seker; prompt her an görünür ve çalışır. Mobil klavye
   açıldığında `visualViewport` sınırları yeniden hesaplanır.
-- Duvar vuruşları yalnız kısa CRT karakter sarsıntısı üretir; terminal içeriği silinmez veya
-  değiştirilmez. Sayfa yenilemek bütün oturum kalıntısını doğal olarak kaldırır.
+- 1989 CSIR teknik analizindeki davranış temel alınır: top ekran hücresindeki karakteri
+  algılar ve bazı karakterlerden yön değiştirerek seker. Space Cat varyantı vurulan glifi
+  geçici bir restore hücresinde saklar, görsel kopyasını yerçekimiyle ekran tabanına düşürür.
+- Aynı anda en fazla 32 düşen glif bulunur. Canlı hero satırı yeniden çizilirse yetim görsel
+  otomatik kaldırılır; sabit satırlardaki bütün karakterler cleanup sırasında kendi text-node
+  konumuna geri yazılır. Sayfa yenilemek bütün oturum kalıntısını doğal olarak kaldırır.
 - `CHKDSK` yerleşik video-memory imzasını teşhis eder, `SCAN /REMOVE` kernel kaynaklarını ve
-  görsel kalıntıyı tek cleanup yolundan kaldırır; sonuç ekranı sıfır dosya değişikliği ve
-  sıfır ağ paketi sınırını görünür biçimde raporlar.
+  yer değiştiren glif sayısını gösterir. Tek cleanup; bütün karakterleri, animation frame'i
+  ve görsel kalıntıyı kaldırır; sonuç ekranı geri yüklenen glif sayısı, sıfır dosya
+  değişikliği ve sıfır ağ paketi sınırını görünür biçimde raporlar.
 - `prefers-reduced-motion` etkinse top hareket etmez; anomali ve kurtarma yolu anlamını
   korur. Ekran okuyucuya başlangıç/temizleme durumu bildirilir, dekoratif top gizlenir.
 - Bu deneyim oyun kataloğu değildir ve `help`e yeni komut eklemez; eski bir diskte unutulmuş

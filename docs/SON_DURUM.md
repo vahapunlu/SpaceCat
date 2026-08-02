@@ -1081,3 +1081,39 @@ Command Deck görünür, yatay taşma sıfır ve `CHKDSK → SCAN /REMOVE` clean
 **Production:** `77c289d3` · `https://spacecat.watch` `HTTP 200`; canlı kaynakta
 `PINGPONG.COM`, resident-memory teşhisi, `SCAN /REMOVE` ve güvenli cleanup sözleşmesi
 doğrulandı. Yeni API, backend veya maliyet yoktur.
+
+## 55. PINGPONG.SC: KARAKTER ÇARPIŞMASI VE GLİF YERÇEKİMİ — 2 AĞUSTOS 2026 — CODEX
+
+- İlk `PINGPONG.COM` sürümündeki yalnız viewport duvarlarından sekme davranışı geliştirildi.
+  Top artık `caretPositionFromPoint` / `caretRangeFromPoint` ile gerçekten altındaki terminal
+  text-node hücresini bulur; boşlukları ve etkileşimli bağlantıları atlar, glifin yüzüne göre
+  yatay veya dikey yön değiştirir.
+- Tarihî gerçek ayrı tutuldu: 1989 CSIR *Analysis of the Bouncing Ball Virus* raporu,
+  orijinal topun bazı karakterlerden saptığını ve geçtiği hücreyi bir sonraki karede geri
+  yüklediğini belgeler. Karakterin yerçekimiyle düşmesi açıkça `SPACE CAT / GLYPH-GRAVITY
+  MUTATION` adlı yaratıcı varyantımızdır.
+- Vurulan karakterin semantik hücresi şeffaf, genişliği koruyan bir restore noktası olarak
+  kalır; aynı glifin `aria-hidden` görsel kopyası 440 px/s² yerçekimiyle Command Deck'in
+  hemen üstündeki zemine düşer. En fazla 32 aktif glif sınırı vardır.
+- Canlı hero yeniden çiziminde kaynak hücresi ortadan kalkarsa yetim düşen kopya anında
+  kaldırılır. Sabit terminal satırlarında `SCAN /REMOVE`, bütün placeholder'ları gerçek text
+  node'a çevirir, parçalanmış düğümleri normalize eder ve sıfır kalıntı bırakır.
+- `MEM` ve `CHKDSK`, yer değiştirmiş/restorable glif sayısını gösterir. VSAFE sonucu duvar +
+  karakter interrupt sayısını ve geri yüklenen glif sayısını ayrı raporlar.
+- 390×844 mobil tarayıcıda 13 karakter aynı anda düşerken top ve bütün glifler Command Deck
+  üstünde kaldı; yatay taşma sıfır ve prompt erişilebilirdi. Cleanup sonrası ball=0,
+  falling=0, vacancy=0 olarak ölçüldü.
+- `tools/test_web_pingpong.js` 44 kontrole çıktı; caret hit-test, terminal sınırı, 32 glif
+  bütçesi, deterministik yerçekimi, canlı redraw temizliği ve bire bir DOM restorasyonu artık
+  kalıcı regresyon sözleşmesidir.
+
+**Doğrulama:** 27 paket toplam **1182 kontrol** ile başarılıdır. Masaüstünde gerçek
+tarayıcı kaydı 13 glifin düşüp eksiksiz geri döndüğünü; mobil kayıt 13 aktif vacancy ile
+yerçekimi tabanını ve temizleme sonunda sıfır kalıntıyı doğruladı.
+
+**Maliyet/güvenlik:** Yeni API, Worker, storage veya ağ isteği yoktur. Gerçek zararlı kod,
+boot-sector davranışı ve çoğalma mekanizması eklenmemiştir.
+
+**Production:** `1ba3d10e` · `https://spacecat.watch` `HTTP 200`; glyph hit-test,
+falling-character sınıfları, restorable vacancy ve VSAFE restore raporu canlı kaynakta
+doğrulandı.

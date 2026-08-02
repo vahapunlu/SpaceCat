@@ -1650,3 +1650,38 @@ Tam seri 27 paket ve **1165 kontrol** ile başarılıdır. Gerçek tarayıcıda 
 **Production:** `77c289d3` · `https://spacecat.watch` `HTTP 200`; `PINGPONG.COM`,
 `CHKDSK` teşhisi ve yerel VSAFE kurtarma yolu canlıdır. Ek API, cron, backend, abonelik
 ve aylık maliyet yoktur.
+
+## Faz 21.14 · Ping-Pong Text-Cell Physics / Glyph Gravity Mutation — CODEX — 2 Ağustos 2026
+
+- Önceki sürümün yalnız viewport sınırından seken topu, gerçek terminal text-cell çarpışma
+  motoruna yükseltildi. Modern `caretPositionFromPoint` ile WebKit uyumlu
+  `caretRangeFromPoint` fallback'i, top merkezinin altındaki non-whitespace glifi ve tek
+  karakterlik DOM rect'ini bulur.
+- Top, çarpışma yüzüne göre X veya Y hızını tersine çevirir. Böylece metnin üzerinden geçen
+  dekorasyon değil, terminal karakterlerinden gerçekten seken bir display-resident
+  artefakt davranışı oluşur.
+- Vurulan text node üçe ayrılır; orta glif ölçüsünü koruyan şeffaf `pingpong-vacancy`
+  hücresine dönüşür. Aynı glifin ayrı, `aria-hidden` kopyası sabit ivmeyle Command Deck
+  üstündeki dinamik zemine düşer. Aktif bütçe 32 glifle sınırlıdır.
+- Hero gibi canlı yeniden çizilen sahneler orphan-safe'tir: restore hücresi DOM'dan
+  ayrıldığında falling kopya kaldırılır. Sabit satırlarda cleanup ters sırayla bütün
+  placeholder'ları asıl karaktere çevirir ve parent text node'larını normalize eder.
+- VSAFE artık `display interrupts`, toplam `glyph hits` ve `glyphs restored` değerlerini
+  raporlar. `MEM` / `CHKDSK`, aktif displaced glif sayısını gösterir.
+- Dosya kaydı `VARIANT SPACE CAT / GLYPH-GRAVITY MUTATION` diyerek tarihî Ping-Pong ile
+  yaratıcı eklentiyi birbirinden ayırır. Gerçek virüsün boot-sector, replication ve disk
+  davranışları uygulanmaz.
+- Tarihsel doğruluk kaynağı: M. S. Olivier ve H. W. Teitge, *Analysis of the Bouncing Ball
+  Virus*, CSIR Technical Report PKOMP 89/5 (1989). Rapor topun mevcut karakteri kaydedip
+  önceki hücreyi geri yüklediğini ve bazı karakterlerden saptığını açıklar.
+
+**Doğrulama:** Ping-Pong paketi 27'den **44** kontrole, tam seri **1182** kontrole çıktı.
+Masaüstü browser QA'da gerçek `S`, `P`, `A`, `.` glifleri düşüp cleanup ile 0 vacancy / 0
+falling durumuna döndü. 390×844 mobil QA'da 13 glif Command Deck üstündeki zemine düştü;
+prompt görünür, yatay taşma sıfır ve cleanup sonrası bütün ölçümler sıfırdı.
+
+**Maliyet/güvenlik:** Tamamı cihaz-yerel DOM fiziğidir; fetch, socket, persistence,
+service worker, dış payload veya gerçek zararlı kod yoktur.
+
+**Production:** `1ba3d10e` · `https://spacecat.watch` `HTTP 200`; gerçek text-cell
+çarpışması, glyph gravity mutation ve eksiksiz `SCAN /REMOVE` restorasyonu canlıdır.
