@@ -30,6 +30,10 @@ ok(index.includes('width:min(940px,calc(100% - 24px))'),
   'desktop dock follows the terminal content width');
 ok(index.includes('.wrap{') && index.includes('padding-bottom:var(--dock-space)'),
   'terminal content reserves space for the fixed dock');
+ok(index.includes("getBoundingClientRect().height+6"),
+  'dock reserves only a compact six-pixel breathing gap above the prompt');
+ok(/\.crt\{[\s\S]*?padding:[\s\S]*?\n\s+0\n\s+calc\(clamp\(14px,4vw,44px\)/.test(index),
+  'the CRT frame does not duplicate the dock bottom reservation');
 ok(index.includes('--dock-space:76px; --keyboard-offset:0px'),
   'dock has safe initial layout variables');
 ok(index.includes('.command-dock.busy{border-top-color:'),

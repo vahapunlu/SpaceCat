@@ -113,7 +113,7 @@
     padding:
       calc(clamp(14px,4vw,44px) + env(safe-area-inset-top,0px))
       calc(clamp(14px,4vw,44px) + env(safe-area-inset-right,0px))
-      calc(clamp(14px,4vw,44px) + env(safe-area-inset-bottom,0px))
+      0
       calc(clamp(14px,4vw,44px) + env(safe-area-inset-left,0px));
     display:flex;
     text-shadow:var(--glow);
@@ -863,7 +863,7 @@
     var vv=window.visualViewport;
     var keyboardOffset=vv?Math.max(0,window.innerHeight-(vv.height+vv.offsetTop)):0;
     document.documentElement.style.setProperty('--keyboard-offset',Math.round(keyboardOffset)+'px');
-    document.documentElement.style.setProperty('--dock-space',Math.ceil(commandDock.getBoundingClientRect().height+12)+'px');
+    document.documentElement.style.setProperty('--dock-space',Math.ceil(commandDock.getBoundingClientRect().height+6)+'px');
   }
   function commandDockLabel(id){
     return {
@@ -2104,6 +2104,9 @@
   }
   function clearHomeUtilities(){
     Array.prototype.forEach.call(document.querySelectorAll('[data-home-utility]'),function(node){node.remove();});
+  }
+  function enterTerminalSession(){
+    clearHomeUtilities();
   }
   function dockHomeUtilities(){
     var store=out.querySelector('.terminal-storeline');
@@ -6698,9 +6701,16 @@
   function run(raw){
     if(state.busy)return;
     var line=raw.trim();
-    el('<span class="ps1">'+esc(fsPrompt())+'</span> <span class="amber">'+esc(line)+'</span>');
-    if(!line) return;
+    if(!line){
+      el('<span class="ps1">'+esc(fsPrompt())+'</span>');
+      return;
+    }
     var rawParts=line.split(/\s+/), parts=line.toLowerCase().split(/\s+/), cmd=parts[0];
+    /* Store, language switcher and source log belong to the landing screen. Once an
+       operator starts a real session, keep the working output immediately above the
+       persistent Command Deck. `home` deliberately rebuilds those utilities. */
+    if(cmd!=='home')enterTerminalSession();
+    el('<span class="ps1">'+esc(fsPrompt())+'</span> <span class="amber">'+esc(line)+'</span>');
     /* Commands are case-insensitive; arguments preserve case like a real shell.
        This matters for mounted files such as README.txt and CAPCOM payloads. */
     var args=rawParts.slice(1);

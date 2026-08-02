@@ -1685,3 +1685,29 @@ service worker, dış payload veya gerçek zararlı kod yoktur.
 
 **Production:** `1ba3d10e` · `https://spacecat.watch` `HTTP 200`; gerçek text-cell
 çarpışması, glyph gravity mutation ve eksiksiz `SCAN /REMOVE` restorasyonu canlıdır.
+
+## Faz 21.15 · Landing Utility Boundary / Kompakt Command Deck — CODEX — 2 Ağustos 2026
+
+- `PACKAGE / INSTALL / LANG` ve `SOURCES MOUNTED` artık terminal oturumu boyunca yaşayan
+  global alt bilgi değildir; yalnız ana açılış ekranının yardımcı katmanıdır.
+- İlk boş olmayan, `home` dışındaki komut bu iki yardımcı satırı tek cleanup yoluyla
+  kaldırır. Böylece `dir`, `help`, `track` ve diğer çalışma çıktıları mağaza/dil/kaynak
+  satırları tarafından yukarı itilmez. `home` bunları deterministik olarak yeniden kurar.
+- Boş Enter bir oturum geçişi sayılmaz. Mevcut terminal geçmişi, DOS prompt'u, komut
+  semantiği ve route kimliği değişmedi.
+- Command Deck rezervindeki çift alt boşluk kaldırıldı: safe-area dock içinde kalırken CRT
+  alt padding'i sıfırlandı; ölçülen dock yüksekliği üstündeki nefes payı 12 px'ten 6 px'e
+  indi. Son çıktı prompt'a yaklaşır fakat prompt içeriği örtmez.
+- `tools/test_web_command_dock.js` kompakt rezervi ve çift-padding yasağını;
+  `tools/test_web_ux.js` oturuma giriş, `home` restorasyonu ve landing-only yardımcı
+  sınırını kalıcı regresyon sözleşmesine aldı.
+
+**Doğrulama:** Command Deck **39**, UX **35** kontrol; tam seri 27 paket ve **1187**
+kontrol ile başarılıdır. Yerel dosya URL'si tarayıcı güvenlik politikası nedeniyle görsel
+otomasyona açılmadı. Production HTTPS QA'da 1280×720 çalışma akışında utility sayısı
+2 → 0, son çıktı–dock boşluğu 6 px, yatay taşma 0 ölçüldü; `home` utility sayısını yeniden
+2'ye getirdi.
+
+**Maliyet:** Sıfır; tamamı mevcut statik CSS/JavaScript kabuğundadır.
+
+**Production:** `bbaf1748` · `https://spacecat.watch` canlıdır.

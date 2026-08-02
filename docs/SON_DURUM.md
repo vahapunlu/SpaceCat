@@ -1117,3 +1117,27 @@ boot-sector davranışı ve çoğalma mekanizması eklenmemiştir.
 **Production:** `1ba3d10e` · `https://spacecat.watch` `HTTP 200`; glyph hit-test,
 falling-character sınıfları, restorable vacancy ve VSAFE restore raporu canlı kaynakta
 doğrulandı.
+
+## 56. ANA EKRAN YARDIMCILARI VE KOMPAKT COMMAND DECK AKIŞI — 2 AĞUSTOS 2026 — CODEX
+
+- `PACKAGE / [INSTALL] / LANG` satırı ile `SOURCES MOUNTED` çekmecesi artık landing
+  ekranına aittir. İlk gerçek terminal komutunda ikisi de kaldırılır; çalışma oturumunda
+  her çıktının altına tekrar basılmaz.
+- `home`, ana ekranı sıfırdan kurarak mağaza, dil ve kaynak yardımcılarını geri getirir.
+  Boş Enter yardımcıları kaldırmaz; terminal oturumu ancak gerçek bir komutla başlar.
+- Sabit Command Deck'in ölçülen yüksekliği hâlâ içerikte güvenle ayrılır. Ancak CRT'nin
+  aynı alt alanı ikinci kez ayıran padding'i kaldırıldı ve içerik–dock nefes payı 12 px'ten
+  6 px'e indirildi. Prompt örtüşmezken özellikle kısa çıktılarda gereksiz boşluk kaybolur.
+- Kural masaüstü ve mobil için aynıdır. Safe-area hâlâ Command Deck'in kendi padding'inde,
+  sanal klavye ofseti `visualViewport` üzerinden ve dinamik yükseklik `ResizeObserver`
+  üzerinden korunur.
+
+**Doğrulama:** Command Deck paketi **39**, UX paketi **35** kontrole çıktı. Tam seri 27
+paket ve **1187 kontrol** ile başarılıdır. Yerel `file://` görsel otomasyonu tarayıcı
+güvenlik politikası tarafından engellendi; production HTTPS testinde ana ekranda 2 utility,
+`cd /usr/games → dir` sonrasında 0 utility, son çıktı–dock arası **6 px** ve yatay taşma 0
+ölçüldü. `home` sonrasında iki utility wrapper eksiksiz geri geldi.
+
+**Maliyet:** Sıfır; yeni API, Worker, storage, ağ isteği veya bakım yüzeyi yoktur.
+
+**Production:** `bbaf1748` · `https://spacecat.watch` canlıdır.

@@ -382,6 +382,17 @@ abonelik veya editoryal bakım yoktur.
   aktif dil kökünü korur. Yeni diller aynı merkezi açıklama kataloğu ve bu sınır üzerinden
   eklenir; çekirdek terminal metinleri kopyalanmaz.
 
+### Faz 21.15 — Landing utility sınırı — TAMAMLANDI
+
+- `PACKAGE / INSTALL / LANG` ve `SOURCES MOUNTED`, ana açılış ekranının ikincil yardımcı
+  yüzeyleridir; terminalin kalıcı chrome'u değildir.
+- İlk gerçek komut çalışma oturumunu başlatır ve bu yardımcıları kaldırır. Boş Enter bunu
+  yapmaz. `home`, aktif dil kökünde ana ekranı ve yardımcıları yeniden kurar.
+- Kalıcı Command Deck ile içerik arasında yalnız ölçülmüş dock yüksekliği ve küçük bir
+  nefes payı ayrılır. CRT aynı alt boşluğu ikinci kez üretmez.
+- Safe-area Command Deck içinde, sanal klavye konumu `visualViewport` içinde korunur. Bu
+  sadeleşme hiçbir ekran genişliğinde prompt'un üstünün kapanmasına izin vermez.
+
 ## 7. Kopyalanma yaklaşımı
 
 Savunma odağı patent veya görsel engelleme değildir. Avantaj; canlı veriyle davranan sistem,

@@ -25,6 +25,9 @@ ok(index.includes('.mpanel .val{display:block;white-space:nowrap;overflow:hidden
 ok(index.includes('function dockHomeUtilities()'), 'secondary store/source utilities can move below the prompt');
 ok(index.includes("line.setAttribute('data-home-utility','')"), 'docked utility wrappers are explicitly owned for cleanup');
 ok(index.includes('clearHomeUtilities();\n    out.innerHTML=\'\';'), 'home command removes docked utilities before rebuilding');
+ok(index.includes('function enterTerminalSession(){\n    clearHomeUtilities();\n  }'), 'a real terminal session dismisses landing-only utilities');
+ok(index.includes("if(cmd!=='home')enterTerminalSession();"), 'all non-home commands enter the clean working layout');
+ok(index.includes('homeMount();\n    footerMount();\n    dockHomeUtilities();'), 'home deterministically restores install, language and source utilities');
 ok(index.includes('NAV VECTOR'), 'help advances discovery guidance');
 ok(index.includes('ROOT MOUNTED'), 'root tree advances discovery guidance');
 ok(index.includes('cd /observatory'), 'root guidance uses an absolute working path');
