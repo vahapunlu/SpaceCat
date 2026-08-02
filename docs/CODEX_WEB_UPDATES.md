@@ -1617,3 +1617,36 @@ başarılıdır. 26 web/güvenlik test paketi toplam **1138 kontrol** ile geçmi
 Almanca `html lang`, self-canonical, `de_DE`, JSON-LD, görünür ürün metni, `DE_HELP`,
 altılı `hreflang` ve `lang de` sözleşmesi doğrulandı. `/de/` kalıcı olarak `/de`ye 301
 yönlenir; canlı sitemap Almanca canonical URL'yi taşır.
+
+## Faz 21.13 · PINGPONG.COM: Güvenli 8088 Dijital Arkeolojisi — CODEX — 2 Ağustos 2026
+
+- `/usr/games/PINGPONG.COM`, SpaceCatOS dosya sistemine ana `help` ve TAB indeksinin
+  dışında yerleştirildi. Keşif, mevcut `tree /`, `cd`, `ls`, `cat` ve DOS `.COM`
+  davranışını kullanır; yeni görünür menü veya CTA eklenmedi.
+- Çalıştırılan program gerçek virüs değildir. Tek DOM glyph'ini `requestAnimationFrame`
+  ile cihazın görünür viewport'unda hareket ettiren, oturumluk bir Ping-Pong saygı
+  duruşudur. Disk, Black Box, cookie, localStorage, IndexedDB, service worker ve ağ
+  yüzeylerine dokunmaz.
+- Topun fizik sınırı `visualViewport`, güncel ekran ölçüsü ve sabit Command Deck'in üst
+  kenarından her karede yeniden hesaplanır. Böylece mobil klavye, safe-area ve viewport
+  değişimleri sırasında terminalin en hayati alanı açık kalır.
+- Experience Kernel'e `LEGACY` şeridi altında `pingpong` ve `pongscan` kaynakları eklendi.
+  Tek cleanup; animation frame'i iptal eder, glyph'i kaldırır, geçici CRT hit sınıflarını
+  temizler ve oturum durumunu sıfırlar.
+- `MEM`, `CHKDSK` ve gizli `SCAN` zinciri kuruldu. Kullanıcı `CHKDSK` ile resident video
+  imzasını teşhis eder, `SCAN /REMOVE` ile temizler. Sonuç; kaç duvar interrupt'ı ve kaç
+  saniye resident kaldığını, ayrıca sıfır dosya değişikliği/sıfır paket gerçeğini bildirir.
+- Reduced-motion aktifken hareket durur ama kurgu ile kurtarma yolu korunur. Ball
+  `aria-hidden`; terminalin erişilebilirlik status kanalı başlangıç ve temizleme durumunu
+  açıklar.
+- `docs/EXPERIENCE_BIBLE.md`, LEGACY deneyim şeridi ve zararsız display-artifact sözleşmesiyle
+  güncellendi. `web/README.md` keşif/kurtarma yolunu ve yeni test paketini kaydeder.
+
+**Doğrulama:** `tools/test_web_pingpong.js` 27 statik güvenlik/deneyim kontrolü ekledi.
+Tam seri 27 paket ve **1165 kontrol** ile başarılıdır. Gerçek tarayıcıda masaüstü ve
+390×844 mobil akışlarda top hareketi, Command Deck koruması, sıfır yatay taşma ve tam
+`SCAN /REMOVE` cleanup doğrulandı.
+
+**Production:** `77c289d3` · `https://spacecat.watch` `HTTP 200`; `PINGPONG.COM`,
+`CHKDSK` teşhisi ve yerel VSAFE kurtarma yolu canlıdır. Ek API, cron, backend, abonelik
+ve aylık maliyet yoktur.

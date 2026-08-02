@@ -116,6 +116,8 @@ OG kartın kaynağı scratchpad'te üretildi; yeniden üretmek için: 1200×630 
   metadata + görünür metin, JSON-LD entity graphı, sitemap otomasyonu ve IndexNow
 - Gizli legacy bakım katmanı: `/var/log/.maintenance` izinden keşfedilen DOS araçları ve
   tamamen yerel `tracert`/`nmap`/non-destructive `format` reaksiyonları
+- `/usr/games/PINGPONG.COM`: 8088 dönemine saygı duruşu olan, oturumluk ve zararsız
+  Ping-Pong görüntü artefaktı; `CHKDSK → SCAN /REMOVE` kurtarma zinciri, ağ/persistence yok
 - Gizli Booster Lander: `/usr/games` dosya izinden keşfedilen; açık `PAD01`, yaklaşma
   koridoru, guidance, motor alevi/dumanı, S–F debrief, deterministik ASCII fizik,
   klavye + press-and-hold touch kontrolü, `SC GAME SYSTEM` intro/GAME OVER kabini ve
@@ -186,6 +188,7 @@ node tools/test_web_exoplanet.js
 node tools/test_web_horizons.js
 node tools/test_web_satnogs.js
 node tools/test_web_cosmos.js
+node tools/test_web_pingpong.js
 ```
 
 SEO/discovery dağıtım akışı:

@@ -1052,3 +1052,32 @@ başarılıdır.
 **Production:** `b1a9b7e4` · `https://spacecat.watch/de` `HTTP 200`; Almanca canonical,
 `de_DE`, JSON-LD, sitemap, altılı `hreflang` ve açıklama kataloğu canlı kaynakta
 doğrulandı. `/de/`, `/de`ye `301` yönlenir.
+
+## 54. PINGPONG.COM: 8088 LEGACY DISPLAY ARTIFACT — 2 AĞUSTOS 2026 — CODEX
+
+- `/usr/games` altına `PINGPONG.COM` yerleştirildi. Program `help` ve TAB tamamlamada
+  görünmez; dosya ağacını gezen operatör `tree / → cd /usr/games → ls` yoluyla keşfeder.
+- `.COM` çalıştırıldığında tek, parlak DOS topu görünür viewport sınırlarında sekmeye
+  başlar. Command Deck daima üst katmanda ve çalışır kalır; top masaüstünde, telefonda,
+  mobil klavye açıkken ve safe-area sınırlarında prompt'u örtemez.
+- Duvar temasları terminal satırlarında çok kısa CRT sarsıntısı üretir. Terminal metni,
+  dosyalar ve Black Box değiştirilmez. Artefakt yalnız o tarayıcı oturumunda yaşar;
+  localStorage, IndexedDB, cookie, service worker, ağ isteği veya dış payload yoktur.
+- `MEM` resident 2K kaydını gösterir. `CHKDSK`, `INT 10h` imzasını teşhis edip
+  `SCAN /REMOVE` yolunu verir. Tarayıcı bütün animasyon kaynağını kaldırır ve sonucu
+  `0 files changed · 0 packets sent` olarak mühürler.
+- `prefers-reduced-motion` kullanıcısında top sabitlenir, teşhis/kurtarma mantığı korunur.
+  Dekoratif işaret erişilebilirlik ağacından gizlidir; başlangıç ve temizleme durumu
+  ekran okuyucu kanalına bildirilir.
+- `tools/test_web_pingpong.js`, filesystem keşfi, Experience Kernel kaydı, viewport/
+  Command Deck sınırı, reduced-motion, recovery ve ağ/persistence yokluğu için 27 kalıcı
+  kontrol ekledi.
+
+**Doğrulama:** Masaüstü gerçek tarayıcıda top hareketi iki ayrı koordinatta ölçüldü;
+Command Deck görünür, yatay taşma sıfır ve `CHKDSK → SCAN /REMOVE` cleanup başarılıdır.
+390×844 mobil QA'da top viewport içinde, dock üstünde ve komut satırı erişilebilir kaldı.
+27 paket toplam **1165 kontrol** ile başarılıdır.
+
+**Production:** `77c289d3` · `https://spacecat.watch` `HTTP 200`; canlı kaynakta
+`PINGPONG.COM`, resident-memory teşhisi, `SCAN /REMOVE` ve güvenli cleanup sözleşmesi
+doğrulandı. Yeni API, backend veya maliyet yoktur.

@@ -47,6 +47,7 @@ uçuş terminaline girdiğini hissetmelidir.
 | ARCHIVE | Bakım gerektirmeyen tarihî derinlik | `replay`, tape dosyaları |
 | AMBIENT | Odağı çalmayan atmosfer | CAPCOM `radio`, küçük CRT hareketi |
 | SECRET | Merak eden kullanıcıya mikro ödül | `ping felicette`, gizli dosyalar |
+| LEGACY | Eski bilgisayar kültüründen güvenli dijital arkeoloji | `PINGPONG.COM` |
 | SIMULATION | Kurallı, tekrar oynanabilir terminal programı | gelecekte ASCII Lunar Lander |
 
 Bir özellik birden fazla şeride ihtiyaç duyuyorsa bölünür. Şeridi belli değilse yapılmaz.
@@ -139,6 +140,25 @@ Ana `help` listesinde görünmezler. Keşif zinciri:
 
 `NMAP` ve `FORMAT` terminal tecrübesi olan kullanıcıların doğal denemelerine bırakılır.
 Paket yeni API, backend, hesap, veri yazımı veya gerçek ağ taraması oluşturmaz.
+
+### Faz 9.2A — PINGPONG.COM Legacy Display Artifact — TAMAMLANDI
+
+- `/usr/games/PINGPONG.COM`, ana `help` ve TAB listesinden gizli; `tree /`, `cd`, `ls`,
+  `cat` ve doğrudan `.COM` çalıştırma davranışıyla keşfedilir.
+- Program gerçek zararlı yazılım değildir: tek bir DOM karakterini görünür viewport içinde
+  hareket ettiren, oturumluk ve cihaz-yerel bir 8088/Ping-Pong saygı duruşudur. Ağ, cookie,
+  IndexedDB, localStorage, service worker, dosya yazımı veya dış payload kullanmaz.
+- Top Command Deck'in üst sınırında seker; prompt her an görünür ve çalışır. Mobil klavye
+  açıldığında `visualViewport` sınırları yeniden hesaplanır.
+- Duvar vuruşları yalnız kısa CRT karakter sarsıntısı üretir; terminal içeriği silinmez veya
+  değiştirilmez. Sayfa yenilemek bütün oturum kalıntısını doğal olarak kaldırır.
+- `CHKDSK` yerleşik video-memory imzasını teşhis eder, `SCAN /REMOVE` kernel kaynaklarını ve
+  görsel kalıntıyı tek cleanup yolundan kaldırır; sonuç ekranı sıfır dosya değişikliği ve
+  sıfır ağ paketi sınırını görünür biçimde raporlar.
+- `prefers-reduced-motion` etkinse top hareket etmez; anomali ve kurtarma yolu anlamını
+  korur. Ekran okuyucuya başlangıç/temizleme durumu bildirilir, dekoratif top gizlenir.
+- Bu deneyim oyun kataloğu değildir ve `help`e yeni komut eklemez; eski bir diskte unutulmuş
+  yürütülebilir dosya gibi davranır.
 
 ### Faz 9.3 — Mobile Release Gate — TAMAMLANDI
 

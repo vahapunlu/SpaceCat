@@ -220,6 +220,22 @@
   @keyframes blink{50%{opacity:0}}
   .hint{color:var(--grey);text-shadow:none;font-size:13px;margin-top:2px}
 
+  /* Harmless, session-only homage to the DOS-era Ping-Pong display artifact. */
+  .pingpong-ball{
+    position:fixed;left:0;top:0;z-index:70;width:14px;height:14px;
+    display:grid;place-items:center;pointer-events:none;user-select:none;
+    color:#e9f1ee;font:900 15px/14px var(--mono);letter-spacing:0;
+    text-shadow:0 0 4px #fff,0 0 10px rgba(0,230,138,.95);
+    will-change:transform;contain:layout paint style
+  }
+  .pingpong-ball::before{content:'●'}
+  .pingpong-hit{animation:pingpongHit .12s steps(2,end)}
+  @keyframes pingpongHit{
+    0%{transform:translateX(0);filter:none}
+    45%{transform:translateX(var(--pong-jolt,1px));filter:brightness(1.7)}
+    100%{transform:translateX(0);filter:none}
+  }
+
   pre.cat{color:var(--amber);font-size:12px;line-height:1.1;margin:6px 0;overflow-x:auto;text-shadow:0 0 8px rgba(255,184,108,.4)}
   pre.qrbox{background:#f2f5f4;color:#0a0d12;display:inline-block;line-height:1;
     font-size:clamp(5px,1.6vw,8px);letter-spacing:0;padding:14px;border-radius:4px;
@@ -440,9 +456,11 @@
     .source-copy{padding-left:0}
     pre.cat,pre.moon{max-width:100%;overflow-x:auto}
     pre.cosmos-ascii{font-size:clamp(7px,2.25vw,10px)}
+    .pingpong-ball{width:12px;height:12px;font-size:13px;line-height:12px}
   }
   @media (prefers-reduced-motion:reduce){
     .lander-screen[data-mode="intro"],.lander-screen[data-mode="gameover"]{animation:none}
+    .pingpong-hit{animation:none}
   }
   @media (max-width:340px){
     body{font-size:14px}
@@ -946,6 +964,8 @@
     lander:{lane:'TRAINING',mode:'dominant',motion:'medium',source:'deterministic local physics',exit:'ESC / TAP',audio:false},
     radio:{lane:'AMBIENT',mode:'ambient',motion:'none',source:'WebAudio local',exit:'radio off',audio:true},
     ping:{lane:'SECRET',mode:'micro',motion:'low',source:'local',exit:'automatic',audio:false},
+    pingpong:{lane:'LEGACY',mode:'ambient',motion:'medium',source:'device-local 8088 display fiction',exit:'SCAN /REMOVE or reload',audio:false},
+    pongscan:{lane:'LEGACY',mode:'micro',motion:'none',source:'device-local simulation',exit:'automatic',audio:false},
     trace:{lane:'SECRET',mode:'micro',motion:'low',source:'local simulation',exit:'automatic',audio:false},
     lighttime:{lane:'SIMULATION',mode:'ambient',motion:'none',source:'JPL Horizons range + local clock',exit:'automatic',audio:false},
     'dsn-training':{lane:'SIMULATION',mode:'ambient',motion:'none',source:'JPL Horizons range + device-local queue',exit:'automatic',audio:false},
@@ -3385,7 +3405,8 @@
     if(path==='/usr')return [fsEntry('games','dir')];
     if(path==='/usr/games')return [
       fsEntry('README.TXT'),fsEntry('LANDER.COM','file','-r-xr-xr-x'),
-      fsEntry('DOCKING.COM','file','-r-xr-xr-x'),fsEntry('SCORES.DAT')
+      fsEntry('DOCKING.COM','file','-r-xr-xr-x'),fsEntry('PINGPONG.COM','file','-r-xr-xr-x'),
+      fsEntry('SCORES.DAT')
     ];
     if(path==='/var')return [fsEntry('log','dir'),fsEntry('spool','dir')];
     if(path==='/var/spool')return [fsEntry('uplink','dir')];
@@ -3723,6 +3744,10 @@
     if(path==='/usr/games/DOCKING.COM')return {binary:true,content:
       'MZ SC-FDL 20\nSPACE CAT ORBITAL RENDEZVOUS TRAINING PROGRAM\nEXECUTABLE docking\n'+
       'HOLD POINT 25 / HOLD POINT 12 / FINE RCS FINAL / DEVICE-LOCAL SCORE'};
+    if(path==='/usr/games/PINGPONG.COM')return {binary:true,content:
+      'SC 50 49 4E 47 50 4F 4E 47\n8088 DISPLAY RESIDENT · ORIGIN UNKNOWN\n'+
+      'INTERRUPT VIDEO / CONVENTIONAL MEMORY 2K\nEXECUTABLE PINGPONG.COM\n'+
+      'BOUNDARY DEVICE-LOCAL VISUAL FICTION / NO DISK WRITE / NO NETWORK'};
     if(path==='/usr/games/SCORES.DAT')return {content:landerStatsText()};
     recordMatch=path.match(/^\/home\/visitor\/flight-records\/sealed-(\d{2})\.log$/);
     if(recordMatch){
@@ -4288,6 +4313,7 @@
       '  FREE             '+String(640-used).padStart(4,' ')+'K\n'+
       '  EXTENDED         16384K\n'+
       '  BLACK BOX        '+String(readLogbook().length).padStart(5,' ')+' sealed sector(s)\n'+
+      (state.pingPong?'  RESIDENT VIDEO       2K  PINGPONG.COM\n':'')+
       '  EXPERIENCE HEAP  '+String(resources).padStart(5,' ')+' active resource(s)\n\n'+
       '<span class="dim">640K remains enough for anyone who can reach orbit in ASCII.</span>';
   }
@@ -4297,9 +4323,13 @@
       '  '+String(roots.length).padStart(3,' ')+' mounted root director'+(roots.length===1?'y':'ies')+'\n'+
       '  '+String(records.length).padStart(3,' ')+' sealed Black Box sector(s)\n'+
       '  '+String(anomalies.length).padStart(3,' ')+' conditional anomaly record(s)\n'+
+      '  '+String(state.pingPong?1:0).padStart(3,' ')+' resident video-memory artifact(s)\n'+
       '    0 bad sectors\n'+
       '    0 lost allocation units\n\n'+
-      '<span class="amber">SPACE CAT found no problems.</span>\n'+
+      (state.pingPong
+        ?'<span class="red">WARNING: PINGPONG signature resident at INT 10h.</span>\n'+
+          '<span class="dim">No disk sectors changed. Run SCAN /REMOVE to restore display memory.</span>\n'
+        :'<span class="amber">SPACE CAT found no problems.</span>\n')+
       '<span class="dim">carrier route diagnostics available: TRACERT felicette.orbit</span>';
   }
   function traceRouteCommand(a){
@@ -4347,13 +4377,128 @@
       '<span class="dim">0 bytes written · Black Box intact · this command is permanently non-destructive.</span>';
   }
 
+  /* ── PING-PONG.COM — harmless, session-only 8088 display fiction ──
+     This deliberately has no persistence, socket, file write, worker or
+     external payload. It moves one DOM glyph inside the visible viewport. */
+  function pingPongBounds(ball){
+    var vv=window.visualViewport;
+    var viewLeft=vv?vv.offsetLeft:0, viewTop=vv?vv.offsetTop:0;
+    var viewRight=viewLeft+(vv?vv.width:window.innerWidth);
+    var viewBottom=viewTop+(vv?vv.height:window.innerHeight);
+    var dockTop=commandDock&&!commandDock.hidden?commandDock.getBoundingClientRect().top:viewBottom;
+    var size=Math.max(ball.offsetWidth||12,ball.offsetHeight||12);
+    var minX=viewLeft+5, minY=viewTop+5;
+    var maxX=Math.max(minX,viewRight-size-5);
+    var maxY=Math.max(minY,Math.min(viewBottom,dockTop)-size-5);
+    return {minX:minX,minY:minY,maxX:maxX,maxY:maxY};
+  }
+  function pingPongImpact(axis){
+    var session=state.pingPong;
+    if(!session)return;
+    session.bounces++;
+    if(!reduce){
+      var lines=out.querySelectorAll('.ln');
+      if(lines.length){
+        var line=lines[session.bounces%lines.length];
+        line.style.setProperty('--pong-jolt',axis==='x'?(session.vx>0?'1px':'-1px'):'1px');
+        line.classList.remove('pingpong-hit');
+        void line.offsetWidth;
+        line.classList.add('pingpong-hit');
+      }
+    }
+    if(session.bounces===6){
+      pulseHint('<span class="red">VIDEO MEMORY INTERRUPT</span> · <span class="kbd">CHKDSK</span> may know more ▾');
+      srStatus.textContent='Legacy Ping-Pong display artifact active. The command prompt remains available.';
+    }
+  }
+  function pingPongStart(){
+    if(state.pingPong)return '<span class="dim">PINGPONG.COM already resident · '+state.pingPong.bounces+' wall interrupts</span>';
+    experienceStart('pingpong');
+    var session={active:true,bounces:0,startedAt:Date.now(),vx:innerWidth<=600?92:126,vy:innerWidth<=600?76:104,cleaning:false};
+    state.pingPong=session;
+    experienceTimeout('pingpong',function(){
+      if(state.pingPong!==session)return;
+      var ball=document.createElement('span');
+      ball.className='pingpong-ball';ball.setAttribute('aria-hidden','true');
+      document.body.appendChild(ball);session.ball=ball;
+      var bounds=pingPongBounds(ball);
+      session.x=bounds.minX+(bounds.maxX-bounds.minX)*.31;
+      session.y=bounds.minY+(bounds.maxY-bounds.minY)*.37;
+      var frame=0,last=performance.now();
+      function cleanup(){
+        if(frame)cancelAnimationFrame(frame);
+        if(ball.parentNode)ball.parentNode.removeChild(ball);
+        var hits=out.querySelectorAll('.pingpong-hit');
+        for(var i=0;i<hits.length;i++)hits[i].classList.remove('pingpong-hit');
+        if(state.pingPong===session)state.pingPong=null;
+      }
+      experienceResource('pingpong',cleanup);
+      ball.style.transform='translate3d('+Math.round(session.x)+'px,'+Math.round(session.y)+'px,0)';
+      srStatus.textContent=reduce
+        ?'Legacy Ping-Pong display artifact detected. Motion is paused by your reduced-motion preference.'
+        :'Legacy Ping-Pong display artifact active. The command prompt remains available.';
+      if(reduce){
+        pulseHint('<span class="red">VIDEO MEMORY INTERRUPT</span> · motion held · try <span class="kbd">CHKDSK</span> ▾');
+        return;
+      }
+      function tick(now){
+        if(state.pingPong!==session)return;
+        var dt=Math.min(.045,Math.max(0,(now-last)/1000));last=now;
+        bounds=pingPongBounds(ball);
+        session.x+=session.vx*dt;session.y+=session.vy*dt;
+        if(session.x<=bounds.minX||session.x>=bounds.maxX){
+          session.x=Math.max(bounds.minX,Math.min(bounds.maxX,session.x));
+          session.vx*=-1;pingPongImpact('x');
+        }
+        if(session.y<=bounds.minY||session.y>=bounds.maxY){
+          session.y=Math.max(bounds.minY,Math.min(bounds.maxY,session.y));
+          session.vy*=-1;pingPongImpact('y');
+        }
+        ball.style.transform='translate3d('+Math.round(session.x)+'px,'+Math.round(session.y)+'px,0)';
+        frame=requestAnimationFrame(tick);
+      }
+      frame=requestAnimationFrame(tick);
+    },reduce?0:420);
+    return null;
+  }
+  function pingPongRemove(){
+    var session=state.pingPong;
+    if(!session)return {bounces:0,seconds:0};
+    var report={bounces:session.bounces,seconds:Math.max(0,Math.round((Date.now()-session.startedAt)/1000))};
+    experienceClear('pingpong');state.pingPong=null;
+    return report;
+  }
+  function pingPongScan(a){
+    var remove=a.some(function(x){return /^\/(remove|clean|f)$/.test(String(x).toLowerCase());});
+    if(!state.pingPong)return 'SPACE CAT VSAFE 1.963\n\nConventional memory .......... CLEAN\n'+
+      'Video interrupt table ........ CLEAN\n<span class="amber">No resident artifacts found.</span>';
+    if(!remove)return 'SPACE CAT VSAFE 1.963\n\n<span class="red">PINGPONG SIGNATURE DETECTED</span>\n'+
+      'LOCATION     INT 10h / DISPLAY MEMORY\nDISK WRITE   NONE\nNETWORK      NONE\n'+
+      'ACTION       SCAN /REMOVE';
+    if(state.pingPong.cleaning)return '<span class="dim">VSAFE removal already in progress.</span>';
+    state.pingPong.cleaning=true;experienceStart('pongscan');
+    el('SPACE CAT VSAFE 1.963\n<span class="dim">Scanning conventional memory …</span>');
+    experienceTimeout('pongscan',function(){el('<span class="dim">INT 10h vector .............. PINGPONG</span>');},reduce?0:360);
+    experienceTimeout('pongscan',function(){el('<span class="dim">Restoring display memory .........</span>');},reduce?0:760);
+    experienceTimeout('pongscan',function(){
+      var report=pingPongRemove();
+      el('<span class="amber">PINGPONG REMOVED</span>\n'+
+        '<span class="dim">'+report.bounces+' wall interrupts · '+report.seconds+' sec resident · 0 files changed · 0 packets sent</span>');
+      srStatus.textContent='Legacy Ping-Pong display artifact removed. Terminal display restored.';
+      pulseHint('<span class="amber">DISPLAY RESTORED</span> · terminal integrity nominal ▾');
+      experienceClear('pongscan');
+    },reduce?0:1180);
+    return null;
+  }
+
   /* ── COMMANDS ─────────────────────────────────────────────────── */
   var HIDDEN_SHELL_COMMANDS={
     whoami:1,who:1,id:1,uname:1,hostname:1,env:1,printenv:1,uptime:1,ps:1,
     mount:1,df:1,free:1,ss:1,netstat:1,ip:1,ifconfig:1,systemctl:1,crontab:1,
     find:1,ssh:1,su:1,chmod:1,curl:1,wget:1,nmap:1,ping:1,tracert:1,traceroute:1,
     dsn:1,probe:1,telemetry:1,antenna:1,uplink:1,
-    ver:1,dir:1,type:1,mem:1,chkdsk:1,echo:1,format:1,rm:1,sl:1,exit:1,meow:1,
+    ver:1,dir:1,type:1,mem:1,chkdsk:1,scan:1,'pingpong.com':1,'./pingpong.com':1,
+    '/usr/games/pingpong.com':1,echo:1,format:1,rm:1,sl:1,exit:1,meow:1,
     wargames:1,joshua:1,launch:1
   };
   function helpRow(command,args,description){
@@ -4614,6 +4759,10 @@
     type:function(a){return a.length?fsCat(a):'<span class="red">Required parameter missing</span>\nusage: TYPE &lt;file&gt;';},
     mem:function(){return memoryCommand();},
     chkdsk:function(){return checkDiskCommand();},
+    scan:function(a){return pingPongScan(a);},
+    'pingpong.com':function(){return pingPongStart();},
+    './pingpong.com':function(){return pingPongStart();},
+    '/usr/games/pingpong.com':function(){return pingPongStart();},
     tracert:function(a){intrusionRecord('ROUTE_ENUM',a.join(' ')||'felicette.orbit',1);traceRouteCommand(a);return null;},
     traceroute:function(a){intrusionRecord('ROUTE_ENUM',a.join(' ')||'felicette.orbit',1);traceRouteCommand(a);return null;},
     echo:function(a){
