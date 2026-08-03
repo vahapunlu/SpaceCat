@@ -117,6 +117,13 @@ Mevcut launch/live motoruna yeni motor eklemeden durum varyasyonları:
 - Pad gündüz/gece/şafak/alacakaranlık durumu koordinat + UTC ile onboard hesaplanır.
 - Open-Meteo'dan alınan güncel pad havası 30 dakika cihazda cache edilir. Açık biçimde
   “CURRENT PAD CONDITIONS · not a T-0 forecast” olarak etiketlenir.
+- Ana hero için ayrı bir T-0 forecast kanalı vardır. Yalnız görev saati 16 günlük saatlik
+  pencere içindeyse, pad koordinatı mevcutsa ve en yakın forecast örneği T-0'dan en fazla
+  90 dakika uzaktaysa çalışır. Bu kanal `T-0 WX` olarak etiketlenir; güncel `WX NOW`
+  telemetrisiyle karıştırılmaz.
+- `CLEAR` imza sahneyi değiştirmez. `CLOUD / RAIN / SNOW / FOG / WIND / STORM`, kediyi,
+  roketi ve pad siluetini bozmadan yalnız boş atmosfer hücrelerini dönüştürür. Mevcut göz
+  kırpma timer'ını paylaşır; ikinci animasyon döngüsü kurulmaz.
 - Simülasyon bitişi artık gerçek yörünge başarısı iddia etmez. Canlı sonuç LL2 teyit edene
   kadar `RESULT PENDING`; teyit geldiğinde success/failure/scrub sonucu gösterilir.
 - Karar motoru `tools/test_web_phase9.js` ile deterministik regresyon testine sahiptir.
@@ -392,6 +399,18 @@ abonelik veya editoryal bakım yoktur.
   nefes payı ayrılır. CRT aynı alt boşluğu ikinci kez üretmez.
 - Safe-area Command Deck içinde, sanal klavye konumu `visualViewport` içinde korunur. Bu
   sadeleşme hiçbir ekran genişliğinde prompt'un üstünün kapanmasına izin vermez.
+
+### Faz 21.16 — T-0 forecast pad atmosferi — TAMAMLANDI
+
+- Pad cam, sıradaki gerçek görevin Open-Meteo saatlik T-0 forecast'inden yalnız anlamlı
+  atmosfer farklarını taşır. Açık gökyüzü orijinal Félicette/roket sahnesidir.
+- Weather code, yağış olasılığı, bulut, görüş, rüzgâr ve gust aynı saatlik örnekten gelir.
+  En yakın örnek 90 dakikadan uzaktaysa veya görev 16 günlük forecast ufkunun dışındaysa
+  hiçbir hava resmi çizilmez.
+- Forecast, görev kararı değildir. Hava katmanı `GO / HOLD / SCRUB` üretmez; `T-0 WX` ve
+  `OPEN-METEO` etiketleriyle kaynağını ve kapsamını açık tutar.
+- Bulut/yağmur/kar/sis/rüzgâr/fırtına mevcut düşük-hareketli pad timer'ını paylaşır.
+  Reduced-motion, mobil genişlik ve ASCII imza silueti sözleşmeleri değişmez.
 
 ## 7. Kopyalanma yaklaşımı
 

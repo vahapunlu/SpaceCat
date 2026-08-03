@@ -21,6 +21,11 @@ OG kartın kaynağı scratchpad'te üretildi; yeniden üretmek için: 1200×630 
 - `stream [n]` — iki kaynaktaki güvenli YouTube/X/Bilibili webcast sinyalini birleştirir.
   Embed veya autoplay yoktur; resmî yayın yalnız kullanıcı tıklamasıyla açılır.
 - **Uzay hava durumu:** NOAA SWPC'nin anahtarsız planetary K-index verisi (`solar`; 15 dk tarayıcı cache ve son iyi veri fallback'i)
+- **Yaşayan pad havası:** Ana hero, koordinatı ve 16 günlük saatlik forecast penceresi olan
+  gerçek sıradaki görev için Open-Meteo'dan T-0'a en yakın saati seçer. Açık hava imza
+  sahnesini değiştirmez; bulut, yağmur, kar, sis, güçlü rüzgâr ve fırtına aynı düşük
+  hareketli ASCII pad cam içinde görünür. `T-0 WX` satırı forecast/source ayrımını korur;
+  veri yoksa katman sessizce devre dışıdır. Cihaz cache'i 30 dakikadır.
 - **NASA/JPL CNEOS:** `fireball` son atmosferik olayları koordinat işaretli, mobil-uyumlu
   bir ASCII dünya gridinde ve eşleşen arşiv satırlarında gösterir; raporlanan hava patlaması
   konumu hiçbir zaman doğrulanmış yer çarpması diye sunulmaz. `approach` önümüzdeki 60 gün

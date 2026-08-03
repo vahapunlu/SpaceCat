@@ -1141,3 +1141,33 @@ güvenlik politikası tarafından engellendi; production HTTPS testinde ana ekra
 **Maliyet:** Sıfır; yeni API, Worker, storage, ağ isteği veya bakım yüzeyi yoktur.
 
 **Production:** `bbaf1748` · `https://spacecat.watch` canlıdır.
+
+## 57. T-0 FORECAST İLE YAŞAYAN PAD CAM — 3 AĞUSTOS 2026 — CODEX
+
+- Sevilen Félicette + roket açılış sahnesi korunarak gerçek sıradaki görevin beklenen
+  T-0 havasına bağlandı. Açık hava özgün sahneyi değiştirmez; `CLOUD`, `RAIN`, `SNOW`,
+  `FOG`, `WIND` ve `STORM` yalnız boş ASCII atmosfer hücrelerine çizilir.
+- Yeni `getT0PadWeather`, Open-Meteo'nun saatlik `weather_code`, yağış olasılığı/miktarı,
+  bulut, rüzgâr/yön/gust ve görüş alanlarını GMT olarak 16 güne kadar ister. T-0'a en yakın
+  saat seçilir; fark 90 dakikayı aşarsa veri reddedilir.
+- Forecast yalnız pad koordinatı mevcut ve görev saati -6 saat / +16 gün güvenli pencerede
+  ise istenir. Normal cache 30 dakika, ağ arızasında aynı görev için en fazla 6 saatlik son
+  iyi forecast açıkça `LAST KNOWN` etiketiyle kullanılabilir.
+- Panelde `T-0 WX · CONDITION · °C · PRECIP · GUST · OPEN-METEO` satırı görünür. Bu bilgi
+  görev otoritesi değildir; `GO`, `HOLD` veya `SCRUB` kararı üretmez. Sinema/live içindeki
+  mevcut `WX NOW` güncel koşul kanalı ayrı ve değişmeden kalır.
+- Hava katmanı yeni timer kurmaz; mevcut 900 ms pad-cam göz kırpma karesini paylaşır.
+  Kedi, `|S C|` roketi, Félicette yazısı, reduced-motion ve mobil Command Deck korunur.
+
+**Gerçek veri provası:** 4 Ağustos 2026 08:50 UTC Wenchang görevi için en yakın saat
+09:00 UTC seçildi; Open-Meteo `RAIN`, 27°C, %86 yağış olasılığı ve 30.6 km/h gust döndürdü.
+
+**Doğrulama:** Yeni `tools/test_web_hero_weather.js` **33** deterministik kontrol ekledi;
+Mobile Release Gate **38** kontrole çıktı. Tam seri 28 paket ve **1221 kontrol** başarılıdır.
+Production tarayıcı QA'sında gerçek `RAIN` sahnesi 1280×720, 390×844 ve 320×700
+ölçülerinde doğrulandı; yatay taşma 0, Command Deck görünür, konsol hata/uyarı sayısı 0'dır.
+
+**Maliyet:** Sıfır; anahtarsız mevcut Open-Meteo kaynağı ve 30 dakikalık cihaz cache'i
+kullanılır. Yeni Worker, cron, veritabanı veya abonelik yoktur.
+
+**Production:** `f76f012e` · `https://spacecat.watch` canlıdır.

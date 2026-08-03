@@ -25,6 +25,7 @@ ok(index.includes('-webkit-text-size-adjust:100%'), 'iOS text inflation is contr
 ok(index.includes('@media (max-width:600px)'), 'phone breakpoint exists');
 ok(index.includes('.cmdfield{font-size:16px}'), 'terminal input avoids iOS focus zoom');
 ok(index.includes('.hero{display:block}'), 'phone hero cannot enter the 430px flex overflow gap');
+ok(index.includes('class="row hero-wx-row" id="heroWx" hidden'), 'T-0 weather reuses the compact mission row on phones');
 ok(index.includes('.help-screen{max-width:92ch;white-space:normal;word-break:normal'), 'help overrides preformatted line wrapping');
 ok(index.includes('.help-row{') && index.includes('grid-template-columns:minmax(18ch,25ch) minmax(0,1fr)'), 'desktop help uses semantic columns');
 ok(index.includes('.help-row{display:block;padding:5px 0 4px}'), 'phone help stacks each command and description');

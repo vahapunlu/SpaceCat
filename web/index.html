@@ -1610,7 +1610,8 @@
   }
 
   function weatherCacheKey(m){
-    return m&&isFinite(m.lat)&&isFinite(m.lng)?m.lat.toFixed(2)+','+m.lng.toFixed(2):null;
+    return m&&m.lat!=null&&m.lng!=null&&isFinite(Number(m.lat))&&isFinite(Number(m.lng))?
+      Number(m.lat).toFixed(2)+','+Number(m.lng).toFixed(2):null;
   }
   function getPadWeather(m,force){
     var key=weatherCacheKey(m);if(!key)return Promise.resolve(null);
@@ -1632,6 +1633,56 @@
   }
   function primePadWeather(m){
     getPadWeather(m).then(function(wx){if(wx)m.wx=wx;});
+  }
+  function t0WeatherCacheKey(m){
+    var pad=weatherCacheKey(m), net=m&&new Date(m.net).getTime();
+    return pad&&isFinite(net)?pad+'@'+Math.round(net/3600000):null;
+  }
+  function openMeteoUtcMs(value){
+    var raw=String(value||'');
+    return Date.parse(/[zZ]$|[+-]\d\d:\d\d$/.test(raw)?raw:raw+'Z');
+  }
+  function pickT0Forecast(hourly,targetMs){
+    if(!hourly||!Array.isArray(hourly.time)||!hourly.time.length||!isFinite(targetMs))return null;
+    var best=-1,bestDelta=Infinity;
+    hourly.time.forEach(function(value,i){
+      var stamp=openMeteoUtcMs(value),delta=Math.abs(stamp-targetMs);
+      if(isFinite(stamp)&&delta<bestDelta){best=i;bestDelta=delta;}
+    });
+    if(best<0||bestDelta>90*60*1000)return null;
+    function at(name){
+      var values=hourly[name], value=Array.isArray(values)?Number(values[best]):NaN;
+      return isFinite(value)?value:null;
+    }
+    var stamp=openMeteoUtcMs(hourly.time[best]);
+    return {
+      temp:at('temperature_2m'),prob:at('precipitation_probability'),
+      precip:at('precipitation'),code:at('weather_code'),cloud:at('cloud_cover'),
+      wind:at('wind_speed_10m'),direction:at('wind_direction_10m'),
+      gust:at('wind_gusts_10m'),visibility:at('visibility'),
+      forecastFor:new Date(stamp).toISOString(),source:'Open-Meteo',stale:false
+    };
+  }
+  function getT0PadWeather(m,force){
+    var key=t0WeatherCacheKey(m),target=m&&new Date(m.net).getTime(),now=Date.now();
+    if(!key||!isFinite(target)||target<now-6*60*60*1000||target>now+16*24*60*60*1000)
+      return Promise.resolve(null);
+    var cached=null;
+    try{cached=JSON.parse(localStorage.getItem('sc_pad_t0_wx_v1')||'null');}catch(e){}
+    if(!force&&cached&&cached.key===key&&now-cached.t<30*60*1000)
+      return Promise.resolve(cached.d);
+    return fetchWithTimeout('https://api.open-meteo.com/v1/forecast?latitude='+Number(m.lat)+
+      '&longitude='+Number(m.lng)+
+      '&hourly=temperature_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m,visibility'+
+      '&timezone=GMT&forecast_days=16&wind_speed_unit=kmh',{headers:{Accept:'application/json'}},5000)
+      .then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(payload){
+        var data=pickT0Forecast(payload&&payload.hourly,target);if(!data)throw 0;
+        try{localStorage.setItem('sc_pad_t0_wx_v1',JSON.stringify({key:key,t:Date.now(),d:data}));}catch(e){}
+        return data;
+      }).catch(function(){
+        return cached&&cached.key===key&&now-cached.t<6*60*60*1000?
+          Object.assign({},cached.d,{stale:true}):null;
+      });
   }
   function weatherTelemetry(wx){
     if(!wx)return '';
@@ -1760,9 +1811,64 @@
     if(disposition.code==='GO'&&diff<=10000)return 'ignition';
     return 'pad';
   }
-  function heroArt(f,phase){
+  function heroWeatherNumber(value){
+    if(value==null||value==='')return null;
+    var number=Number(value);return isFinite(number)?number:null;
+  }
+  function heroWeatherState(wx){
+    if(!wx)return null;
+    var code=heroWeatherNumber(wx.code),cloud=heroWeatherNumber(wx.cloud),
+      wind=heroWeatherNumber(wx.wind),gust=heroWeatherNumber(wx.gust),
+      visibility=heroWeatherNumber(wx.visibility);
+    if([95,96,99].indexOf(code)>=0)return {kind:'STORM',visual:true};
+    if([71,73,75,77,85,86].indexOf(code)>=0)return {kind:'SNOW',visual:true};
+    if((code>=51&&code<=67)||(code>=80&&code<=82))return {kind:'RAIN',visual:true};
+    if(code===45||code===48||(visibility!=null&&visibility<2000))return {kind:'FOG',visual:true};
+    if((gust!=null&&gust>=45)||(wind!=null&&wind>=30))return {kind:'WIND',visual:true};
+    if(code===2||code===3||(cloud!=null&&cloud>=55))return {kind:'CLOUD',visual:true};
+    return {kind:'CLEAR',visual:false};
+  }
+  function heroWeatherSummary(wx,state){
+    if(!wx||!state)return '';
+    var temp=heroWeatherNumber(wx.temp),prob=heroWeatherNumber(wx.prob),gust=heroWeatherNumber(wx.gust),
+      parts=[state.kind];
+    if(temp!=null)parts.push(Math.round(temp)+'°C');
+    if(prob!=null&&prob>=20)parts.push('PRECIP '+Math.round(prob)+'%');
+    if(gust!=null)parts.push('GUST '+Math.round(gust)+' KM/H');
+    parts.push(wx.stale?'LAST KNOWN':'OPEN-METEO');
+    return parts.join(' · ');
+  }
+  function applyHeroWeather(lines,state,f){
+    var art=lines.slice();
+    if(!state||!state.visual)return art;
+    function left(row,text){
+      var source=art[row]||'';
+      art[row]=text+source.slice(text.length);
+    }
+    if(state.kind==='CLOUD'){
+      left(0,f?'  .--.   ':'    .--. ');left(1,f?' (____)  ':'  (____) ');
+    }else if(state.kind==='RAIN'){
+      left(0,f?'  .--.   ':' .--.    ');left(1,' (____)  ');
+      left(2,f?'  / /    ':' / /     ');left(3,f?' / /     ':'  / /    ');left(4,'  / /    ');
+    }else if(state.kind==='SNOW'){
+      left(0,f?' *  .  * ':'.  *  .  ');left(1,f?'  .  *   ':' *  .    ');
+      left(2,f?'.  *  .  ':'  *  . * ');left(4,f?' *   .   ':'.   *   ');
+    }else if(state.kind==='FOG'){
+      left(5,f?' ~~~~~~~ ':'  ~~~~~~~');left(6,f?'  ~~~~~~~':' ~~~~~~~ ');
+      left(7,f?' ~~~~~~~ ':'  ~~~~~~~');left(8,f?'  ~~~~~~~':' ~~~~~~~ ');
+    }else if(state.kind==='WIND'){
+      left(0,f?' >>>>    ':'  >>>>   ');left(2,f?'   >>>   ':' >>>     ');
+      left(6,f?' ~~~>    ':'  ~~~>   ');left(8,f?'  ~~~>   ':' ~~~>    ');
+    }else if(state.kind==='STORM'){
+      left(0,f?'  .--. / ':' / .--.  ');left(1,' (____)  ');
+      left(2,f?'   /     ':' /       ');left(3,f?' / /     ':'   / /   ');left(5,'  /      ');
+    }
+    return art;
+  }
+  function heroArt(f,phase,wx){
     var b=f?'*':'·', v=f?'~':' ', eye=f?'o.o':'-.-';
-    if(phase==='ignition')return [
+    var weather=heroWeatherState(wx),lines;
+    if(phase==='ignition')lines=[
 "                 "+b,
 "            _    |",
 "           |=|   ^",
@@ -1776,7 +1882,8 @@
 " ( "+eye+" )     "+(f?'|||':' : '),
 "==========================",
 " IGNITION WATCH · SYMBOLIC"
-    ].join('\n');
+    ];
+    if(lines)return applyHeroWeather(lines,weather,f).join('\n');
     if(phase==='ascent')return [
 "        .             "+b,
 "              /\\",
@@ -1852,7 +1959,7 @@
 " MISSION ANOMALY · SOURCE",
 " NO FLIGHT PATH INFERRED"
     ].join('\n');
-    if(phase==='awaiting')return [
+    if(phase==='awaiting')lines=[
 "                 "+b,
 "            _    |",
 "           |=|   ^",
@@ -1866,8 +1973,9 @@
 " ( "+eye+" )   SIGNAL ...",
 "==========================",
 " T-0 PASSED · AWAIT STATUS"
-    ].join('\n');
-    return [
+    ];
+    if(lines)return applyHeroWeather(lines,weather,f).join('\n');
+    lines=[
 "                 "+b,
 "            _    |",
 "           |=|   ^",
@@ -1881,7 +1989,8 @@
 " ( "+eye+" )   |=||_|___|_|",
 "==========================",
 "  PAD CAM 01 · CREW: FÉLICETTE"
-    ].join('\n');
+    ];
+    return applyHeroWeather(lines,weather,f).join('\n');
   }
   function heroMount(){
     var d=el('<div class="hero">'+
@@ -1893,10 +2002,22 @@
     var f=0, m=DEMO, off=true, heroNotice='', heroNoticeUntil=0;
     function paintHero(){
       var phase=heroPhase(m,new Date(m.net).getTime()-Date.now(),off);
-      art.textContent=heroArt(f,phase);
+      var weather=heroWeatherState(m.t0wx);
+      art.textContent=heroArt(f,phase,m.t0wx);
       art.dataset.phase=phase;
-      art.setAttribute('aria-label','Symbolic launch state: '+phase+'; source status: '+String(m.status||'unknown'));
+      art.dataset.weather=weather?weather.kind.toLowerCase():'none';
+      art.setAttribute('aria-label','Symbolic launch state: '+phase+'; source status: '+
+        String(m.status||'unknown')+(weather?'; T-0 weather forecast: '+weather.kind:''));
       return phase;
+    }
+    function paintHeroWeatherRow(){
+      var row=panel.querySelector('#heroWx'), weather=heroWeatherState(m.t0wx);
+      if(!row)return;
+      row.hidden=off||!weather;
+      if(weather){
+        row.querySelector('.val').textContent=heroWeatherSummary(m.t0wx,weather);
+        row.title='Pad forecast nearest scheduled T-0 · '+m.t0wx.forecastFor+' · '+m.t0wx.source;
+      }
     }
     paintHero();
     if(!reduce)heroArtTimer=setInterval(function(){f=1-f;paintHero();},900);
@@ -1947,6 +2068,7 @@
         '<div class="row"><span class="lbl">VEHICLE</span><span class="val">'+esc(m.rocket)+'</span></div>'+
         '<div class="row"><span class="lbl">AGENCY</span><span class="val">'+esc(m.agency)+'</span></div>'+
         '<div class="row"><span class="lbl">PAD</span><span class="val">'+esc(trunc(m.pad+' · '+m.loc,44))+'</span></div>'+
+        '<div class="row hero-wx-row" id="heroWx" hidden><span class="lbl">T-0 WX</span><span class="dim val"></span></div>'+
         '<div class="row"><span class="lbl">STATUS</span><span class="amber val">'+esc(m.status)+
           (m.prob!=null?' <span class="dim">· GO ODDS '+m.prob+'%</span>':'')+'</span></div>'+
         '<div class="row"><span class="lbl">PROFILE</span><span class="dim val">'+esc(timelineAuthority(tl.profile))+'</span></div>'+
@@ -1961,6 +2083,11 @@
         ev.preventDefault();if(!state.busy)run('track');
       });
       tick();
+      var weatherKey=t0WeatherCacheKey(m);
+      if(!off&&weatherKey)getT0PadWeather(m).then(function(wx){
+        if(weatherKey!==t0WeatherCacheKey(m))return;
+        m.t0wx=wx;paintHero();paintHeroWeatherRow();
+      });
     }
 
     function tick(){
@@ -1968,6 +2095,7 @@
       var diff=new Date(m.net).getTime()-Date.now();
       var t=tMinus(m.net);
       var phase=paintHero();
+      paintHeroWeatherRow();
       applyWatchCondition(off?null:m);
       var priority=off?null:(Date.now()<heroNoticeUntil?
         {text:heroNotice,amber:!/hold|abort/i.test(heroNotice)}:

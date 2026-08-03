@@ -1711,3 +1711,36 @@ otomasyona açılmadı. Production HTTPS QA'da 1280×720 çalışma akışında 
 **Maliyet:** Sıfır; tamamı mevcut statik CSS/JavaScript kabuğundadır.
 
 **Production:** `bbaf1748` · `https://spacecat.watch` canlıdır.
+
+## Faz 21.16 · T-0 Forecast Reactive Pad Cam — CODEX — 3 Ağustos 2026
+
+- Ana hero'nun imza kedi/roket kompozisyonu, sıradaki gerçek görevin planlanan T-0 hava
+  tahminiyle yaşayan fakat bakım istemeyen bir atmosfer katmanına yükseltildi.
+- `getT0PadWeather`, görevin public pad koordinatı + T-0 saatini kullanır. Open-Meteo
+  saatlik forecast'i GMT ve 16 günlük ufukla ister; en yakın örnek 90 dakikadan uzaksa
+  reddeder. Koordinatsız veya forecast ufku dışındaki görev hiçbir istek üretmez.
+- WMO sınıflandırması `CLEAR / CLOUD / RAIN / SNOW / FOG / WIND / STORM` olarak merkezîdir.
+  Fırtına yağmur/rüzgâra, kar yağmura önceliklidir; eksik/null numerik alanlar sahte sis veya
+  sıfır telemetri üretmez.
+- `CLEAR` özgün ASCII'yi bire bir korur. Diğer koşullar yalnız roket/kedi dışındaki sol
+  atmosfer hücrelerini değiştirir; göz kırpan kedi, `|S C|`, Félicette ve pad çizgisi
+  kalıcıdır. İkinci timer yoktur; mevcut düşük-hareketli 900 ms hero karesi paylaşılır.
+- `T-0 WX` satırı condition, sıcaklık, anlamlı yağış olasılığı, gust ve `OPEN-METEO` veya
+  `LAST KNOWN` kaynak durumunu verir. Forecast asla GO/HOLD/SCRUB'a çevrilmez ve mevcut
+  `WX NOW · not a T-0 forecast` kanalıyla karıştırılmaz.
+- Device cache anahtarı pad grid + T-0 saatidir: 30 dakika normal tazelik, kesintide aynı
+  görev için en fazla 6 saat açıkça stale fallback. Yeni API anahtarı veya backend yoktur.
+
+**Gerçek veri provası:** Wenchang Commercial LC-1, 4 Ağustos 2026 08:50 UTC görevi 09:00
+UTC forecast örneğiyle eşleşti: `weather_code 80 / RAIN`, 27°C, %86 yağış olasılığı,
+30.6 km/h gust.
+
+**Doğrulama:** `tools/test_web_hero_weather.js` 33 kontrol; Mobile Release Gate 38 kontrol;
+tam seri 28 paket ve **1221 kontrol** başarılıdır.
+Production browser QA'da 1280×720, 390×844 ve 320×700 gerçek `RAIN` sahnesi ölçüldü:
+`data-weather=rain`, görünür `T-0 WX`, yatay taşma 0, Command Deck görünür ve console
+error/warning 0. ASCII art mobil genişliği artırmadı.
+
+**Maliyet:** Sıfır; mevcut anahtarsız Open-Meteo ve cihaz cache'i kullanılır.
+
+**Production:** `f76f012e` · `https://spacecat.watch` canlıdır.
